@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+
+    <Properties>
+        <Property name="LOG_PATTERN">%d [%t] %-5level %msg%n</Property>
+    </Properties>
+
+    <Appenders>
+        <File name="ShortLogFile" fileName="logs/short_log.log" append="false">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
+
+        <RollingFile name="FullLogFile" fileName="logs/full_log.log" append="true"
+                     filePattern="logs/$${date:yyyy-MM-dd}/full_log-%d{MM-dd-yyyy}-%i.log">
+            <Policies>
+                <!--maksymalny rozmiar jednego pliku-->
+                <SizeBasedTriggeringPolicy size="30KB"/>
+            </Policies>
+            <!--
+            max: maksymalna ilość plików w folderze, które będą archwiowane, stare zostaną usunięte
+            fileIndex: min oznacza, że pliki z indeksem 1 będą najnowsze, default to max
+            -->
+            <DefaultRolloverStrategy max="3" fileIndex="min"/>
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <LevelRangeFilter minLevel="FATAL" maxLevel="TRACE" onMatch="ACCEPT" onMismatch="DENY"/>
+        </RollingFile>
+
+        <Console name="Console-info" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <Console name="Console-debug" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <Console name="Console-error" target="SYSTEM_ERR">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="ShortLogFile"/>
+            <AppenderRef ref="FullLogFile"/>
+            <AppenderRef ref="Console-info"/>
+            <AppenderRef ref="Console-error"/>
+            <AppenderRef ref="Console-debug"/>
+        </Root>
+        <Logger name="Console-info" level="info">
+            <AppenderRef ref="Console-info"/>
+        </Logger>
+        <Logger name="Console-error" level="error">
+            <AppenderRef ref="Console-error"/>
+        </Logger>
+        <Logger name="Console-debug" level="debug">
+            <AppenderRef ref="Console-debug"/>
+        </Logger>
+    </Loggers>
+</Configuration>
