@@ -24,6 +24,22 @@ public class GetFunctions extends BaseFunction {
         return value;
     }
 
+    public String getTextFromParentElement(WebElement element) {
+        element = element.findElement(By.xpath(".."));
+        log.debug("Get text from element {" + getElementInfo(element) + "}");
+
+        String value = element.getAttribute("value");
+
+        if (value == null)
+            value = element.getText().trim();
+        else
+            value = value.trim();
+
+        log.debug("Got value {" + (value.length() < 70 ? value : value.replaceAll("\\s", "")
+                .substring(0, 70).concat("...")) + "}");
+        return value;
+    }
+
     public String getAttributeFromElement(WebElement element, String attribute) {
         return element.getAttribute(attribute);
     }

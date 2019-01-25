@@ -30,7 +30,8 @@ public class MainPage extends PageBase {
 
     private void firstMethod() {
         browser.openPage(Gui.getInstance().getSearchLinkAddress());
-
+        browser.scrollPageBy(100, 400);
+        sleeper(2000);
 
     }
 

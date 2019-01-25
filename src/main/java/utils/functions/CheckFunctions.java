@@ -53,4 +53,21 @@ public class CheckFunctions extends BaseFunction {
         }
         return false;
     }
+
+    public boolean isElementClickable(WebElement element){
+        changeImplicitlyWaitTime(0);
+        try{
+            new WebDriverWait(driver.getDriver(), 5, 40)
+                    .until(ExpectedConditions.elementToBeClickable(element));
+            changeBackImplicitlyWaitTime();
+            return true;
+        }catch(TimeoutException e){
+            changeBackImplicitlyWaitTime();
+            return false;
+        }
+    }
+
+    public boolean isElementSelected(WebElement element) {
+        return element.isSelected();
+    }
 }

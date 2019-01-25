@@ -47,7 +47,6 @@ public class Gui extends JFrame {
         JPanel myPanel = new JPanel();
         myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
         myPanel.requestFocus();
-
         myPanel.add(new Label("email:"));
         myPanel.add(emailField);
         myPanel.add(new Label("password:"));
