@@ -3,7 +3,9 @@ package main.java.utils;
 import main.java.tools.ConfigurationParser;
 
 import javax.swing.*;
+import javax.swing.text.Highlighter;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -39,19 +41,25 @@ public class Gui extends JPanel {
     public void openJPanel() {
         // <== buttons ==>
         JTextField emailField = new JTextField(ConfigurationParser.getInstance().getLoginEmail(), 15);
+        emailField.selectAll();
 
         JTextField passwordField = new JTextField(ConfigurationParser.getInstance().getLoginPassword(), 12);
+        passwordField.selectAll();
 
         JTextField searchLinkField = new JTextField(ConfigurationParser.getInstance().getSearchLinkAddress(), 80);
+        searchLinkField.selectAll();
 
         JTextField fileNameField = new JTextField("name", 80);
+        fileNameField.selectAll();
 
         JTextField limitField = new JTextField("10", 5);
+        limitField.selectAll();
 
         JCheckBox headlessCheckBox = new JCheckBox("start in headless mode", true);
         headlessCheckBox.setFont(new Font("Arial", Font.BOLD, 14));
 
         JPanel myPanel = new JPanel();
+        myPanel.setPreferredSize(new Dimension(350, 250));
         myPanel.setFont(new Font("Arial", Font.BOLD, 14));
         myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
         myPanel.requestFocus();
@@ -66,6 +74,7 @@ public class Gui extends JPanel {
         myPanel.add(new Label("sampleInt"));
         myPanel.add(limitField);
         myPanel.add(headlessCheckBox);
+
         int result = JOptionPane.showConfirmDialog(null, myPanel,
                 "Please enter values", 2, 1, new ImageIcon(thumbs.toAbsolutePath().toString() + "/sample.png"));
 
@@ -86,7 +95,7 @@ public class Gui extends JPanel {
         JPanel myPanel = new JPanel();
         myPanel.setForeground(Color.black);
         myPanel.setLocation(220, 10);
-        JTextArea textArea = new JTextArea(getTextFromFile(Paths.get("logs").toAbsolutePath().toString().concat("/full_log.log")));
+        JTextArea textArea = new JTextArea(getTextFromFile(Paths.get("logs").toAbsolutePath().toString().concat("/short_log.log")), 28, 75);
         textArea.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
         textArea.setBackground(Color.black);
         textArea.setForeground(new Color(80, 80, 255));
@@ -94,13 +103,12 @@ public class Gui extends JPanel {
         textArea.setWrapStyleWord(true);
 
         JScrollPane jScrollPane = new JScrollPane(textArea);
-
         jScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_AS_NEEDED);
         jScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         add(jScrollPane);
         setVisible(true);
-        setSize(800, 500);
+//        setSize(800, 500);
         myPanel.add(jScrollPane);
         add(myPanel);
 
