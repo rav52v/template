@@ -7,14 +7,16 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
-public class Gui extends JFrame {
+public class Gui extends JPanel {
     private static Gui instance;
 
+    private final Path thumbs = Paths.get("src", "main", "resources", "thumbs");
     private String sampleMail;
     private String samplePassword;
     private String sampleLink;
@@ -33,18 +35,24 @@ public class Gui extends JFrame {
         return instance;
     }
 
+
     public void openJPanel() {
         // <== buttons ==>
         JTextField emailField = new JTextField(ConfigurationParser.getInstance().getLoginEmail(), 15);
+
         JTextField passwordField = new JTextField(ConfigurationParser.getInstance().getLoginPassword(), 12);
+
         JTextField searchLinkField = new JTextField(ConfigurationParser.getInstance().getSearchLinkAddress(), 80);
+
         JTextField fileNameField = new JTextField("name", 80);
+
         JTextField limitField = new JTextField("10", 5);
+
         JCheckBox headlessCheckBox = new JCheckBox("start in headless mode", true);
         headlessCheckBox.setFont(new Font("Arial", Font.BOLD, 14));
 
-
         JPanel myPanel = new JPanel();
+        myPanel.setFont(new Font("Arial", Font.BOLD, 14));
         myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
         myPanel.requestFocus();
         myPanel.add(new Label("email:"));
@@ -58,9 +66,8 @@ public class Gui extends JFrame {
         myPanel.add(new Label("sampleInt"));
         myPanel.add(limitField);
         myPanel.add(headlessCheckBox);
-
         int result = JOptionPane.showConfirmDialog(null, myPanel,
-                "Please enter values", JOptionPane.OK_CANCEL_OPTION);
+                "Please enter values", 2, 1, new ImageIcon(thumbs.toAbsolutePath().toString() + "/sample.png"));
 
         // <== setter ==>
         if (result == JOptionPane.OK_OPTION) {
@@ -77,23 +84,27 @@ public class Gui extends JFrame {
     public void showLogInfo() {
 
         JPanel myPanel = new JPanel();
-        myPanel.setBackground(Color.cyan);
+        myPanel.setForeground(Color.black);
         myPanel.setLocation(220, 10);
-        JTextArea textArea = new JTextArea(getTextFromFile(Paths.get("logs").toAbsolutePath().toString().concat("/short_log.log")), 28, 70);
-        textArea.setBackground(Color.cyan);
+        JTextArea textArea = new JTextArea(getTextFromFile(Paths.get("logs").toAbsolutePath().toString().concat("/full_log.log")));
+        textArea.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+        textArea.setBackground(Color.black);
+        textArea.setForeground(new Color(80, 80, 255));
+        textArea.setEditable(false);
+        textArea.setWrapStyleWord(true);
 
         JScrollPane jScrollPane = new JScrollPane(textArea);
+
         jScrollPane.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_AS_NEEDED);
         jScrollPane.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         add(jScrollPane);
-        setTitle("Summary");
         setVisible(true);
         setSize(800, 500);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         myPanel.add(jScrollPane);
-
         add(myPanel);
+
+        JOptionPane.showMessageDialog(null, myPanel, "Log", JOptionPane.PLAIN_MESSAGE, null);
     }
 
     public String getSampleMail() {
@@ -116,13 +127,13 @@ public class Gui extends JFrame {
         return fileName;
     }
 
-    public int getSampleInt(){
+    public int getSampleInt() {
         return sampleInt;
     }
 
-    private String getTextFromFile(String fullFilePath){
+    private String getTextFromFile(String fullFilePath) {
         String content = "";
-        try{
+        try {
             BufferedReader reader;
             reader = new BufferedReader(new FileReader(fullFilePath));
             StringBuilder sb = new StringBuilder();

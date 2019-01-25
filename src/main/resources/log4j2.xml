@@ -53,12 +53,15 @@
             <AppenderRef ref="Console-error"/>
             <AppenderRef ref="Console-debug"/>
         </Root>
+
         <Logger name="Console-info" level="info">
             <AppenderRef ref="Console-info"/>
         </Logger>
+
         <Logger name="Console-error" level="error">
             <AppenderRef ref="Console-error"/>
         </Logger>
+
         <Logger name="Console-debug" level="debug">
             <AppenderRef ref="Console-debug"/>
         </Logger>
