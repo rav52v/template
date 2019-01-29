@@ -15,7 +15,6 @@ public class Driver {
     private static Map <Integer, WebDriver> driverMap = new HashMap<>();
     private final static int key = new Random().nextInt(9999);
 
-    private WebDriver webDriverInstance;
     private String path = Paths.get("src", "main", "resources").toAbsolutePath().toString();
     private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
 
@@ -61,7 +60,6 @@ public class Driver {
         } else
             chromeOptions.addArguments("--start-maximized");
 
-        webDriverInstance = new ChromeDriver(chromeOptions);
-        driverMap.put(key, webDriverInstance);
+        driverMap.put(key, new ChromeDriver(chromeOptions));
     }
 }
