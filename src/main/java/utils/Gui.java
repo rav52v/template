@@ -4,6 +4,8 @@ import main.java.tools.ConfigurationParser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,7 +37,6 @@ public class Gui extends JPanel {
         return instance;
     }
 
-
     public void openJPanel() {
         // <== buttons ==>
         JTextField emailField = new JTextField(ConfigurationParser.getInstance().getLoginEmail(), 15);
@@ -53,9 +54,8 @@ public class Gui extends JPanel {
         JTextField limitField = new JTextField("10", 5);
         limitField.selectAll();
 
-        JCheckBox headlessCheckBox = new JCheckBox("start in headless mode", true);
-        headlessCheckBox.setFont(new Font("Arial", Font.BOLD, 14));
-
+        JCheckBox headlessCheckBox = new JCheckBox("headless", true);
+        headlessCheckBox.setFont(new Font("Arial", Font.BOLD, 12));
         JPanel myPanel = new JPanel();
         myPanel.setPreferredSize(new Dimension(350, 250));
         myPanel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -71,6 +71,17 @@ public class Gui extends JPanel {
         myPanel.add(fileNameField);
         myPanel.add(new Label("sampleInt"));
         myPanel.add(limitField);
+        headlessCheckBox.addActionListener(e -> {
+            if (!headlessCheckBox.isSelected()){
+                headlessCheckBox.setForeground(Color.red);
+                headlessCheckBox.setText("headless (suggested only for debugging!)");
+            }
+            else{
+                headlessCheckBox.setForeground(Color.black);
+                headlessCheckBox.setText("headless");
+            }
+
+        });
         myPanel.add(headlessCheckBox);
 
         int result = JOptionPane.showConfirmDialog(null, myPanel,
@@ -106,7 +117,6 @@ public class Gui extends JPanel {
 
         add(jScrollPane);
         setVisible(true);
-//        setSize(800, 500);
         myPanel.add(jScrollPane);
         add(myPanel);
 
