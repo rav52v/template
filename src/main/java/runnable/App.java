@@ -1,6 +1,6 @@
 package main.java.runnable;
 
-import main.java.poms.MainPage;
+import main.java.poms.SamplePage;
 import main.java.utils.Driver;
 import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +27,7 @@ public class App {
 
 
 
-        new MainPage();
+        new SamplePage();
 
 
 

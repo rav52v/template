@@ -11,13 +11,10 @@ import java.util.List;
 
 public class SamplePage extends PageBase {
 
-    private Calendar calendar;
-    private SimpleDateFormat time;
-
     @FindBy(css = "sample path")
     private List<WebElement> sampleList;
 
-    @FindBy(css = "sample path")
+    @FindBy(css = "button[data-analytics-interaction-value='closeIcon']")
     private WebElement sampleElement;
 
     private By sampleBy = By.cssSelector("span.actor-name");
@@ -25,7 +22,9 @@ public class SamplePage extends PageBase {
 
 
     public SamplePage() {
-
+        browser.openPage("https://allegro.pl/");
+        click.click(sampleElement);
+        sleeper(2000);
     }
 
 

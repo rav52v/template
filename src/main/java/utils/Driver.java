@@ -6,24 +6,30 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
-    private static WebDriver webDriverInstance;
+    private static Map <Integer, WebDriver> driverMap = new HashMap<>();
+    private final static int key = new Random().nextInt(9999);
+
+    private WebDriver webDriverInstance;
     private String path = Paths.get("src", "main", "resources").toAbsolutePath().toString();
     private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
 
     public WebDriver getDriver() {
-        if (webDriverInstance == null) {
+        if (driverMap.get(key) == null) {
             setProperties();
-            webDriverInstance.manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
-            webDriverInstance.get(ConfigurationParser.getInstance().getLinkAddress());
+            driverMap.get(key).manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
+            driverMap.get(key).get(ConfigurationParser.getInstance().getLinkAddress());
         }
-        return webDriverInstance;
+        return driverMap.get(key);
     }
 
     private void closeDriver() {
-        webDriverInstance.quit();
+        driverMap.get(key).quit();
         webDriverInstance = null;
     }
 
@@ -56,5 +62,6 @@ public class Driver {
             chromeOptions.addArguments("--start-maximized");
 
         webDriverInstance = new ChromeDriver(chromeOptions);
+        driverMap.put(key, webDriverInstance);
     }
 }
