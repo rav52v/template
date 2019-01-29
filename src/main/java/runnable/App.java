@@ -22,8 +22,8 @@ public class App {
         Gui.getInstance().openJPanel();
 
         log.info("Opening browser in {" + (Gui.getInstance().isHeadless() ? "headless" : "normal") + "} mode.");
-        Driver driver = new Driver();
         //      TODO
+
 
 
 
@@ -33,7 +33,6 @@ public class App {
 
 
         //      TODO
-        driver.afterTest(0);
         log.info("The browser has been closed.");
 
         log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");

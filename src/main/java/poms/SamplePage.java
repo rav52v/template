@@ -1,5 +1,6 @@
 package main.java.poms;
 
+import main.java.utils.Gui;
 import main.java.utils.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -24,7 +25,10 @@ public class SamplePage extends PageBase {
     public SamplePage() {
         browser.openPage("https://allegro.pl/");
         click.click(sampleElement);
-        sleeper(2000);
+        browser.closeDriver(2000);
+
+        browser.openPage(Gui.getInstance().getSearchLinkAddress());
+        browser.closeDriver(2000);
     }
 
 

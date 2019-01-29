@@ -2,6 +2,7 @@ package main.java.utils.functions;
 
 import main.java.tools.ConfigurationParser;
 import main.java.utils.Driver;
+import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;

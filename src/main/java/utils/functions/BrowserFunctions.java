@@ -19,6 +19,10 @@ public class BrowserFunctions extends BaseFunction {
         log.debug("Current page {" + driver.getDriver().getCurrentUrl() + "}");
     }
 
+    public void closeDriver(int delayMillis) {
+        driver.afterTest(delayMillis);
+    }
+
     public void scrollPageBy(int widthToScroll, int heightToScroll) {
         JavascriptExecutor js = (JavascriptExecutor) driver.getDriver();
         js.executeScript("window.scrollBy(arguments[0],arguments[1])", widthToScroll, heightToScroll);

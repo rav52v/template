@@ -30,7 +30,7 @@ public class Driver {
 
     private void closeDriver() {
         driverMap.get(key).quit();
-        webDriverInstance = null;
+        driverMap.put(key, null);
     }
 
     public void afterTest(int sleepAfter) {
