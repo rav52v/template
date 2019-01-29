@@ -6,9 +6,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
+import java.util.List;
 
-public class FileFunctions  extends BaseFunction {
+public class FileFunctions extends BaseFunction {
 
     public void captureScreenshot(String fileName, int zoom) {
         JavascriptExecutor js = (JavascriptExecutor) driver.getDriver();
@@ -70,4 +72,56 @@ public class FileFunctions  extends BaseFunction {
         }
     }
 
+    /**
+     * @param fileName file name e.g. "sample.txt"
+     * @return full text value from file with line separators
+     */
+    public String getTextFromFile(String fileName) {
+        String result = "";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(
+                    pathInputFolder.toAbsolutePath().toString() + "/" + fileName));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            String ls = System.getProperty("line.separator");
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+                sb.append(ls);
+            }
+            reader.close();
+
+            result = sb.toString();
+        } catch (FileNotFoundException e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    /**
+     * @param elementList  List<WebElement> containing URL address in attribute
+     * @param attribute  name of attribute containing URL e.g. "src"
+     * @param fileName  output file name
+     * @param fileFormat  file format e.g. "jpg"
+     */
+    public void saveImageFromUrl(List<WebElement> elementList, String attribute, String fileName, String fileFormat) {
+        String targetPart = pathOutputFolder.toAbsolutePath().toString() + "/";
+        int counter = 0;
+        for (WebElement x : elementList) {
+            String source = x.getAttribute(attribute);
+            try {
+                URL imageURL = new URL(source);
+                BufferedImage saveImage = ImageIO.read(imageURL);
+                ImageIO.write(saveImage, fileFormat, new File(targetPart + String.format("%03d ", counter++)
+                        + fileName + "." + fileFormat));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        log.debug("Downloaded {" + counter + " images}");
+    }
 }

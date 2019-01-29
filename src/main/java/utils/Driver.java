@@ -27,10 +27,6 @@ public class Driver {
         webDriverInstance = null;
     }
 
-    public void beforeTest() {
-        getDriver().manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
-    }
-
     public void afterTest(int sleepAfter) {
         try {
             Thread.sleep(sleepAfter);

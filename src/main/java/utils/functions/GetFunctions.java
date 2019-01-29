@@ -3,7 +3,7 @@ package main.java.utils.functions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -49,19 +49,23 @@ public class GetFunctions extends BaseFunction {
                 + getElementInfo(element) + "} and get text");
 
         String result = "";
-        try {
-            result = element.findElement(by).getText();
-        } catch (StaleElementReferenceException e) {
+        for (int i = 0; i < 5; i++) {
             try {
-                PageFactory.initElements(driver.getDriver(), this);
-                Thread.sleep(2000);
                 result = element.findElement(by).getText();
-            } catch (StaleElementReferenceException x) {
-                result = "";
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
+                break;
+            } catch (StaleElementReferenceException e) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                if (i == 4) {
+                    result = "";
+                    log.error("Element {" + getElementInfo(element) + "} was stale, tried 4 times.");
+                }
             }
         }
+
         return result;
     }
 
@@ -70,18 +74,23 @@ public class GetFunctions extends BaseFunction {
                 + getElementInfo(element) + "} and get attribute {" + attributeName + "}");
 
         String result = "";
-        try {
-            result = element.findElement(by).getAttribute(attributeName);
-        } catch (StaleElementReferenceException e) {
+        for (int i = 0; i < 5; i++) {
             try {
-                Thread.sleep(2000);
                 result = element.findElement(by).getAttribute(attributeName);
-            } catch (StaleElementReferenceException x) {
-                result = "";
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
+                break;
+            } catch (StaleElementReferenceException e) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                if (i == 4) {
+                    result = "";
+                    log.error("Element {" + getElementInfo(element) + "} was stale, tried 4 times.");
+                }
             }
         }
+
         return result;
     }
 
@@ -89,6 +98,11 @@ public class GetFunctions extends BaseFunction {
         return driver.getDriver().getCurrentUrl();
     }
 
+    /**
+     * @param elementList list of given elements
+     * @param regex       text value to find - regex allowed
+     * @return WebElement containing given regex value
+     */
     public WebElement getElementContaingRegexValue(List<WebElement> elementList, String regex) {
         if (elementList.size() == 0) {
             log.error("Given list is empty");
@@ -102,5 +116,21 @@ public class GetFunctions extends BaseFunction {
 
         log.debug("List doesn't contain given regex value {" + regex + "}");
         return null;
+    }
+
+    /**
+     * @param selectElement  Select type element
+     * @return  all selected options as List<WebElement>
+     */
+    public List<WebElement> getAllSelectedOptions(WebElement selectElement) {
+        return new Select(selectElement).getAllSelectedOptions();
+    }
+
+    /**
+     * @param selectElement  Select type element
+     * @return  all options List<WebElement>
+     */
+    public List<WebElement> getAllOptions(WebElement selectElement) {
+        return new Select(selectElement).getOptions();
     }
 }

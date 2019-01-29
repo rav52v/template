@@ -22,6 +22,7 @@ abstract class BaseFunction {
     Driver driver;
     final Logger log = LogManager.getLogger(this);
     final Path pathOutputFolder = Paths.get("src", "outputFolder");
+    final Path pathInputFolder = Paths.get("src", "inputFolder");
     private final int PAGE_LOAD_TIME = ConfigurationParser.getInstance().getPageLoadTime();
 
     private Calendar calendar;

@@ -23,7 +23,6 @@ public class App {
 
         log.info("Opening browser in {" + (Gui.getInstance().isHeadless() ? "headless" : "normal") + "} mode.");
         Driver driver = new Driver();
-        driver.beforeTest();
         //      TODO
 
 

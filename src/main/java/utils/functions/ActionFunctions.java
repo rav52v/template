@@ -19,8 +19,11 @@ public class ActionFunctions extends BaseFunction {
         return new Actions(driver.getDriver());
     }
 
-    public JavascriptExecutor getJavaScriptExecutor() {
-        return ((JavascriptExecutor) driver.getDriver());
+    public void executeJavaScriptExecutor(String script) {
+        ((JavascriptExecutor) driver.getDriver()).executeScript(script);
+    }
+
+    public void executeJavaScriptExecutor(String script, Object... args) {
+        ((JavascriptExecutor) driver.getDriver()).executeScript(script, args);
     }
 }
-
