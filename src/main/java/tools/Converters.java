@@ -2,14 +2,6 @@ package main.java.tools;
 
 public class Converters {
 
-    public String getDateFromDateOfIssue(String dateOfIssue) {
-        return convertDateToSqlFormat(dateOfIssue.replaceAll("^.+, ", ""));
-    }
-
-    public String getDateFromPierwszaRejestracja(String pierwszaRejestracja) {
-        return convertDateToSqlFormat(pierwszaRejestracja);
-    }
-
     private String convertDateToSqlFormat(String date) {
         return String.format("%04d-%02d-%02d", getYear(date), getMonth(date), getDay(date));
     }
@@ -64,7 +56,6 @@ public class Converters {
     private int getDay(String date) {
         if (!Character.isDigit(date.charAt(0)))
             return 1;
-
         return Integer.parseInt(date.replaceAll(" .+ \\d{4}$", ""));
     }
 }

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static javax.swing.JFrame.setDefaultLookAndFeelDecorated;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
@@ -24,14 +25,11 @@ public class Gui extends JPanel {
     private String fileName;
     private int sampleInt;
 
-    private Gui() {
-
-    }
+    private Gui() {}
 
     public static Gui getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new Gui();
-        }
         return instance;
     }
 
@@ -50,8 +48,6 @@ public class Gui extends JPanel {
         fileNameField.selectAll();
 
         JTextField limitField = new JTextField("10", 5);
-        limitField.selectAll();
-
         JCheckBox headlessCheckBox = new JCheckBox("headless", true);
         headlessCheckBox.setFont(new Font("Arial", Font.BOLD, 12));
         JPanel myPanel = new JPanel();

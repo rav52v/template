@@ -1,7 +1,6 @@
 package main.java.runnable;
 
 import main.java.poms.SamplePage;
-import main.java.utils.Driver;
 import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,8 +19,6 @@ public class App {
 
         log.info("Opening Gui.");
         Gui.getInstance().openJPanel();
-
-        log.info("Opening browser in {" + (Gui.getInstance().isHeadless() ? "headless" : "normal") + "} mode.");
         //      TODO
 
 

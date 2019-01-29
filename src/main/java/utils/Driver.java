@@ -1,6 +1,7 @@
 package main.java.utils;
 
 import main.java.tools.ConfigurationParser;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,23 +14,24 @@ import java.util.concurrent.TimeUnit;
 
 public class Driver {
     private static Map <Integer, WebDriver> driverMap = new HashMap<>();
-    private final static int key = new Random().nextInt(9999);
+    private final static int KEY = new Random().nextInt(9999);
 
     private String path = Paths.get("src", "main", "resources").toAbsolutePath().toString();
     private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
 
     public WebDriver getDriver() {
-        if (driverMap.get(key) == null) {
+        if (driverMap.get(KEY) == null) {
+            LogManager.getLogger(this).info("Opening browser in {" + (Gui.getInstance().isHeadless() ? "headless" : "normal") + "} mode.");
             setProperties();
-            driverMap.get(key).manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
-            driverMap.get(key).get(ConfigurationParser.getInstance().getLinkAddress());
+            driverMap.get(KEY).manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
+            driverMap.get(KEY).get(ConfigurationParser.getInstance().getLinkAddress());
         }
-        return driverMap.get(key);
+        return driverMap.get(KEY);
     }
 
     private void closeDriver() {
-        driverMap.get(key).quit();
-        driverMap.put(key, null);
+        driverMap.get(KEY).quit();
+        driverMap.put(KEY, null);
     }
 
     public void afterTest(int sleepAfter) {
@@ -60,6 +62,6 @@ public class Driver {
         } else
             chromeOptions.addArguments("--start-maximized");
 
-        driverMap.put(key, new ChromeDriver(chromeOptions));
+        driverMap.put(KEY, new ChromeDriver(chromeOptions));
     }
 }
