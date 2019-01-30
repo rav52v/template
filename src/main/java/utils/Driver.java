@@ -14,24 +14,24 @@ import java.util.concurrent.TimeUnit;
 
 public class Driver {
     private static Map <Integer, WebDriver> driverMap = new HashMap<>();
-    private final static int KEY = new Random().nextInt(9999);
+    private int key;
 
     private String path = Paths.get("src", "main", "resources").toAbsolutePath().toString();
     private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
 
     public WebDriver getDriver() {
-        if (driverMap.get(KEY) == null) {
+        if (driverMap.get(key) == null ) {
             LogManager.getLogger(this).info("Opening browser in {" + (Gui.getInstance().isHeadless() ? "headless" : "normal") + "} mode.");
             setProperties();
-            driverMap.get(KEY).manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
-            driverMap.get(KEY).get(ConfigurationParser.getInstance().getLinkAddress());
+            driverMap.get(key).manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
+            driverMap.get(key).get(ConfigurationParser.getInstance().getLinkAddress());
         }
-        return driverMap.get(KEY);
+        return driverMap.get(key);
     }
 
     private void closeDriver() {
-        driverMap.get(KEY).quit();
-        driverMap.put(KEY, null);
+        driverMap.get(key).quit();
+        driverMap.put(key, null);
     }
 
     public void afterTest(int sleepAfter) {
@@ -62,6 +62,7 @@ public class Driver {
         } else
             chromeOptions.addArguments("--start-maximized");
 
-        driverMap.put(KEY, new ChromeDriver(chromeOptions));
+        key = new Random().nextInt(9999);
+        driverMap.put(key, new ChromeDriver(chromeOptions));
     }
 }
