@@ -2,6 +2,7 @@ package main.java.utils.functions;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -9,6 +10,43 @@ import java.util.List;
 
 public class BrowserFunctions extends BaseFunction {
 
+    private String mainWindowHandle;
+    private WebDriver driver1;
+
+    /**
+     * Switches to window, which is not main window
+     * This method support only one additional window
+     */
+    public void switchToSecondTab() {
+        if (mainWindowHandle == null)
+            mainWindowHandle = driver.getMainWindowHandle();
+        for (String winHandle : driver.getDriver().getWindowHandles()) {
+            if (!winHandle.equals(mainWindowHandle))
+                driver.setDriver(driver.getDriver().switchTo().window(winHandle));
+        }
+    }
+
+    /**
+     * Switches back to main tab
+     */
+    public void switchToMainTab() {
+        driver.setDriver(driver.getDriver().switchTo().window(mainWindowHandle));
+    }
+
+    /**
+     * Closes focused tab
+     */
+    public void closeTab() {
+        driver.getDriver().close();
+    }
+
+    /**
+     * Opens new tab and focus
+     */
+    public void openNewTab() {
+        ((JavascriptExecutor) driver.getDriver()).executeScript("window.open();");
+        switchToSecondTab();
+    }
 
     public void openPage(String linkAddress) {
         log.debug("Loading page (expected) {" + linkAddress + "}");

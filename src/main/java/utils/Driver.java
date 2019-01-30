@@ -13,20 +13,28 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
-    private static Map <Integer, WebDriver> driverMap = new HashMap<>();
-    private int key;
+    private static Map<Integer, WebDriver> driverMap = new HashMap<>();
+    private static int key;
 
     private String path = Paths.get("src", "main", "resources").toAbsolutePath().toString();
     private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
 
     public WebDriver getDriver() {
-        if (driverMap.get(key) == null ) {
+        if (driverMap.get(key) == null) {
             LogManager.getLogger(this).info("Opening browser in {" + (Gui.getInstance().isHeadless() ? "headless" : "normal") + "} mode.");
             setProperties();
             driverMap.get(key).manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
             driverMap.get(key).get(ConfigurationParser.getInstance().getLinkAddress());
         }
         return driverMap.get(key);
+    }
+
+    public String getMainWindowHandle() {
+        return driverMap.get(key).getWindowHandle();
+    }
+
+    public void setDriver(WebDriver newDriver) {
+        driverMap.put(key, newDriver);
     }
 
     private void closeDriver() {
@@ -43,6 +51,20 @@ public class Driver {
         closeDriver();
     }
 
+    private ChromeOptions setChromeOptions() {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--disable-infobars");
+        boolean headless = Gui.getInstance().isHeadless();
+        chromeOptions.setHeadless(headless);
+        if (headless) {
+            chromeOptions.addArguments("--window-size=1500,4000");
+            chromeOptions.addArguments("--disable-gpu");
+        } else
+            chromeOptions.addArguments("--start-maximized");
+
+        return chromeOptions;
+    }
+
     private void setProperties() {
         if (PLATFORM.startsWith("win"))
             System.setProperty("webdriver.chrome.driver", path + "/chromedriver.exe");
@@ -50,19 +72,7 @@ public class Driver {
             System.setProperty("webdriver.chrome.driver", path + "/chromedriver");
 //        TODO: implement for linux
 
-        ChromeOptions chromeOptions = new ChromeOptions();
-
-        chromeOptions.addArguments("--disable-infobars");
-
-        boolean headless = Gui.getInstance().isHeadless();
-        chromeOptions.setHeadless(headless);
-        if (headless) {
-            chromeOptions.addArguments("--window-size=2000,4000");
-            chromeOptions.addArguments("--disable-gpu");
-        } else
-            chromeOptions.addArguments("--start-maximized");
-
         key = new Random().nextInt(9999);
-        driverMap.put(key, new ChromeDriver(chromeOptions));
+        driverMap.put(key, new ChromeDriver(setChromeOptions()));
     }
 }
