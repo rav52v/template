@@ -5,10 +5,12 @@ import main.java.tools.ConfigurationParser;
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Random;
 
 import static javax.swing.JFrame.setDefaultLookAndFeelDecorated;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
@@ -79,7 +81,7 @@ public class Gui extends JPanel {
         myPanel.add(headlessCheckBox);
 
         int result = JOptionPane.showConfirmDialog(null, myPanel,
-                "Please enter values", 2, 1, new ImageIcon(thumbs.toAbsolutePath().toString() + "/sample.png"));
+                "Please enter values", 2, 1, new ImageIcon(getRandomThumbIcon(thumbs.toFile())));
 
         // <== setter ==>
         if (result == JOptionPane.OK_OPTION) {
@@ -159,5 +161,9 @@ public class Gui extends JPanel {
             e.printStackTrace();
         }
         return content;
+    }
+
+    public String getRandomThumbIcon(final File folder) {
+        return folder.listFiles()[new Random().nextInt(folder.listFiles().length)].getAbsolutePath();
     }
 }

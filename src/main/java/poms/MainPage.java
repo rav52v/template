@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class MainPage extends PageBase {
-    @FindBy(css = "img")
+    @FindBy(css = "a")
     private List<WebElement> sample1;
 
     @FindBy(css = "#ctl00_lnkCopyright")
@@ -29,20 +29,7 @@ public class MainPage extends PageBase {
 
 
     private void firstMethod() {
-        browser.openPage(Gui.getInstance().getSearchLinkAddress());
-        sleeper(1000);
 
-        browser.openNewTab();
-        browser.openPage("https://www.youtube.com/?hl=pl&gl=PL");
-        file.captureScreenshot("not main", 0);
-        browser.switchToMainTab();
-        browser.openPage("https://translate.google.com/?hl=pl");
-        file.captureScreenshot("main", 0);
-        browser.switchToSecondTab();
-        browser.openPage("https://translate.google.com/?hl=pl");
-        browser.closeTab();
-
-        browser.closeDriver(2000);
     }
 
 

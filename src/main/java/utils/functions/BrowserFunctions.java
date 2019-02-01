@@ -1,8 +1,8 @@
 package main.java.utils.functions;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -11,7 +11,6 @@ import java.util.List;
 public class BrowserFunctions extends BaseFunction {
 
     private String mainWindowHandle;
-    private WebDriver driver1;
 
     /**
      * Switches to window, which is not main window
@@ -91,5 +90,9 @@ public class BrowserFunctions extends BaseFunction {
         while (refreshingListAfterSize > refreshingListSize);
 
         log.debug("Found {" + elementList.size() + " elements}, operation took {" + getPastTimeInMillis(startTime) + "}");
+    }
+
+    public Alert getAlertControl() {
+        return driver.getDriver().switchTo().alert();
     }
 }

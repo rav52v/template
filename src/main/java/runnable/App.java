@@ -7,12 +7,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
 public class App {
     public static void main(String[] args) {
+
         long start = System.currentTimeMillis();
 
         Logger log = LogManager.getLogger(App.class);
@@ -25,7 +28,7 @@ public class App {
 
 
         new MainPage();
-//        new SamplePage();
+        new SamplePage();
 
 
 
