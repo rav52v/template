@@ -4,6 +4,8 @@ import main.java.tools.ConfigurationParser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -37,19 +39,21 @@ public class Gui extends JPanel {
 
     public void openJPanel() {
         // <== buttons ==>
-        JTextField emailField = new JTextField(ConfigurationParser.getInstance().getLoginEmail(), 15);
-        emailField.selectAll();
+        JTextField emailField = new JTextField(ConfigurationParser.getInstance().getLoginEmail());
+        emailField.addMouseListener(addMouseListenerForTextField(emailField));
 
-        JTextField passwordField = new JTextField(ConfigurationParser.getInstance().getLoginPassword(), 12);
-        passwordField.selectAll();
+        JPasswordField passwordField = new JPasswordField(ConfigurationParser.getInstance().getLoginPassword());
+        passwordField.addMouseListener(addMouseListenerForTextField(passwordField));
 
-        JTextField searchLinkField = new JTextField(ConfigurationParser.getInstance().getSearchLinkAddress(), 80);
-        searchLinkField.selectAll();
+        JTextField searchLinkField = new JTextField(ConfigurationParser.getInstance().getSearchLinkAddress());
+        searchLinkField.addMouseListener(addMouseListenerForTextField(searchLinkField));
 
-        JTextField fileNameField = new JTextField("name", 80);
-        fileNameField.selectAll();
+        JTextField fileNameField = new JTextField("name");
+        fileNameField.addMouseListener(addMouseListenerForTextField(fileNameField));
 
-        JTextField limitField = new JTextField("10", 5);
+        JTextField limitField = new JTextField("10");
+        limitField.addMouseListener(addMouseListenerForTextField(limitField));
+
         JCheckBox headlessCheckBox = new JCheckBox("headless", true);
         headlessCheckBox.setFont(new Font("Arial", Font.BOLD, 12));
         JPanel myPanel = new JPanel();
@@ -69,19 +73,28 @@ public class Gui extends JPanel {
         myPanel.add(limitField);
         headlessCheckBox.addActionListener(e -> {
             if (!headlessCheckBox.isSelected()){
-                headlessCheckBox.setForeground(Color.red);
                 headlessCheckBox.setText("headless (suggested only for debugging!)");
             }
             else{
-                headlessCheckBox.setForeground(Color.black);
                 headlessCheckBox.setText("headless");
             }
 
         });
+        headlessCheckBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                headlessCheckBox.setForeground(Color.RED);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                headlessCheckBox.setForeground(Color.BLACK);
+            }
+        });
         myPanel.add(headlessCheckBox);
 
         int result = JOptionPane.showConfirmDialog(null, myPanel,
-                "Please enter values", 2, 1, new ImageIcon(getRandomThumbIcon(thumbs.toFile())));
+                "Please enter values", 2, 1, getRandomThumbIcon());
 
         // <== setter ==>
         if (result == JOptionPane.OK_OPTION) {
@@ -163,7 +176,32 @@ public class Gui extends JPanel {
         return content;
     }
 
-    public String getRandomThumbIcon(final File folder) {
-        return folder.listFiles()[new Random().nextInt(folder.listFiles().length)].getAbsolutePath();
+    private ImageIcon getRandomThumbIcon() {
+        return new ImageIcon(thumbs.toFile().listFiles()[new Random().nextInt(thumbs.toFile().listFiles().length)].getAbsolutePath());
+    }
+
+    private MouseAdapter addMouseListenerForTextField(JTextField component) {
+        component.setEditable(false);
+        final int[] maxClickToSelect = {0};
+        return new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                maxClickToSelect[0]++;
+                if (maxClickToSelect[0] == 1)
+                component.selectAll();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                component.setForeground(Color.RED);
+                component.setEditable(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                component.setForeground(Color.BLACK);
+                component.setEditable(false);
+            }
+        };
     }
 }

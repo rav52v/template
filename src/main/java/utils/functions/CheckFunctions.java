@@ -30,6 +30,7 @@ public class CheckFunctions extends BaseFunction {
         log.debug("Check if element is found (using list), max waiting time {"
                 + maxWaitTimeMillis + " milliseconds}");
 
+
         changeImplicitlyWaitTime(maxWaitTimeMillis);
         if (!element.isEmpty()) {
             changeBackImplicitlyWaitTime();

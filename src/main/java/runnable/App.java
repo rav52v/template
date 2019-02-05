@@ -2,14 +2,14 @@ package main.java.runnable;
 
 import main.java.poms.MainPage;
 import main.java.poms.SamplePage;
+import main.java.tools.Email;
+import main.java.utils.Generators;
 import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -27,8 +27,9 @@ public class App {
 
 
 
-        new MainPage();
-        new SamplePage();
+
+//        new MainPage();
+//        new SamplePage();
 
 
 
