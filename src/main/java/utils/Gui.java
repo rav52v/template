@@ -7,14 +7,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
 
-import static javax.swing.JFrame.setDefaultLookAndFeelDecorated;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
@@ -29,7 +27,8 @@ public class Gui extends JPanel {
     private String fileName;
     private int sampleInt;
 
-    private Gui() {}
+    private Gui() {
+    }
 
     public static Gui getInstance() {
         if (instance == null)
@@ -56,11 +55,13 @@ public class Gui extends JPanel {
 
         JCheckBox headlessCheckBox = new JCheckBox("headless", true);
         headlessCheckBox.setFont(new Font("Arial", Font.BOLD, 12));
+        headlessCheckBox.setForeground(new Color(50, 50, 50));
+
         JPanel myPanel = new JPanel();
         myPanel.setPreferredSize(new Dimension(350, 250));
-        myPanel.setFont(new Font("Arial", Font.BOLD, 14));
+        myPanel.setFont(new Font("Arial", Font.PLAIN, 14));
         myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
-        myPanel.requestFocus();
+
         myPanel.add(new Label("email:"));
         myPanel.add(emailField);
         myPanel.add(new Label("password:"));
@@ -72,10 +73,9 @@ public class Gui extends JPanel {
         myPanel.add(new Label("sampleInt"));
         myPanel.add(limitField);
         headlessCheckBox.addActionListener(e -> {
-            if (!headlessCheckBox.isSelected()){
+            if (!headlessCheckBox.isSelected()) {
                 headlessCheckBox.setText("headless (suggested only for debugging!)");
-            }
-            else{
+            } else {
                 headlessCheckBox.setText("headless");
             }
 
@@ -83,18 +83,21 @@ public class Gui extends JPanel {
         headlessCheckBox.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                headlessCheckBox.setForeground(Color.RED);
+                headlessCheckBox.setForeground(Color.black);
+                headlessCheckBox.setFont(new Font("Arial", Font.BOLD, 12));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                headlessCheckBox.setForeground(Color.BLACK);
+                headlessCheckBox.setForeground(new Color(50, 50, 50));
+                headlessCheckBox.setFont(new Font("Arial", Font.PLAIN, 12));
             }
         });
         myPanel.add(headlessCheckBox);
 
         int result = JOptionPane.showConfirmDialog(null, myPanel,
                 "Please enter values", 2, 1, getRandomThumbIcon());
+
 
         // <== setter ==>
         if (result == JOptionPane.OK_OPTION) {
@@ -109,7 +112,6 @@ public class Gui extends JPanel {
     }
 
     public void showLogInfo() {
-
         JPanel myPanel = new JPanel();
         myPanel.setForeground(Color.black);
         myPanel.setLocation(220, 10);
@@ -181,26 +183,35 @@ public class Gui extends JPanel {
     }
 
     private MouseAdapter addMouseListenerForTextField(JTextField component) {
+        component.setForeground(new Color(50, 50, 50));
         component.setEditable(false);
         final int[] maxClickToSelect = {0};
         return new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                component.setCursor(new Cursor(Cursor.TEXT_CURSOR));
                 maxClickToSelect[0]++;
                 if (maxClickToSelect[0] == 1)
-                component.selectAll();
+                    component.selectAll();
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                component.setForeground(Color.RED);
+                component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                component.setForeground(Color.BLACK);
                 component.setEditable(true);
+                component.setFont(new Font("Arial", Font.BOLD, 14));
             }
+
 
             @Override
             public void mouseExited(MouseEvent e) {
-                component.setForeground(Color.BLACK);
+                component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                component.setForeground(new Color(50, 50, 50));
                 component.setEditable(false);
+                maxClickToSelect[0] = 0;
+                component.select(0, 0);
+                component.setFont(new Font("Arial", Font.PLAIN, 12));
             }
         };
     }
