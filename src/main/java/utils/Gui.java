@@ -27,8 +27,7 @@ public class Gui extends JPanel {
     private String fileName;
     private int sampleInt;
 
-    private Gui() {
-    }
+    private Gui() {}
 
     public static Gui getInstance() {
         if (instance == null)

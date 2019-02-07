@@ -40,7 +40,8 @@ public class ConfigurationParser {
         LogManager.getLogger(this).info("Config created.");
         this.propertiesFileName = "config.properties";
         prop = new Properties();
-        path = Paths.get("src", "main", "resources").toAbsolutePath().toString().concat("/config.properties");
+        path = Paths.get("src", "main", "resources")
+                .toAbsolutePath().toString().concat("/config.properties");
         try {
             inputStream = new FileInputStream(path);
         } catch (FileNotFoundException e) {

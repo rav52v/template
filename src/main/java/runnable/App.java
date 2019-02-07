@@ -2,9 +2,6 @@ package main.java.runnable;
 
 import main.java.poms.MainPage;
 import main.java.poms.SamplePage;
-import main.java.tools.Email;
-import main.java.utils.Database;
-import main.java.utils.Generators;
 import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

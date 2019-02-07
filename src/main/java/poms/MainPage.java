@@ -1,6 +1,5 @@
 package main.java.poms;
 
-import main.java.utils.Gui;
 import main.java.utils.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

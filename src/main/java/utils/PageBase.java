@@ -1,13 +1,7 @@
 package main.java.utils;
 
 import main.java.utils.functions.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.PageFactory;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.concurrent.TimeUnit;
 
 public abstract class PageBase {
     protected BrowserFunctions browser;

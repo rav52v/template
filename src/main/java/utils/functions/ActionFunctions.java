@@ -11,8 +11,8 @@ public class ActionFunctions extends BaseFunction {
     }
 
     public void changeElementAttributeValue(WebElement element, String attributeName, String value) {
-        JavascriptExecutor js = (JavascriptExecutor) driver.getDriver();
-        js.executeScript("arguments[0].style.arguments[1]='arguments[2]';", element, attributeName, value);
+        ((JavascriptExecutor) driver.getDriver())
+                .executeScript("arguments[0].style.arguments[1]='arguments[2]';", element, attributeName, value);
     }
 
     public Actions getActions() {

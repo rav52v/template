@@ -10,32 +10,26 @@ public class Database {
     private static Database instance;
 
     private Connection con;
-    private String conUrl;
-    private String pass;
-    private String login;
     private Logger log;
 
 
     private Database() {
         log = LogManager.getLogger(this);
-
-        conUrl = ConfigurationParser.getInstance().getConUrl();
-        login = ConfigurationParser.getInstance().getSqlLogin();
-        pass = ConfigurationParser.getInstance().getSqlPassword();
-
         try {
-            con = DriverManager.getConnection(conUrl, login, pass);
+            con = DriverManager.getConnection(
+                    ConfigurationParser.getInstance().getConUrl(),
+                    ConfigurationParser.getInstance().getSqlLogin(),
+                    ConfigurationParser.getInstance().getSqlPassword());
             con.setAutoCommit(true);
-            log.info("Connected to database {" + conUrl + "}");
+            log.info("Connected to database {" + ConfigurationParser.getInstance().getConUrl() + "}");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static Database getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new Database();
-        }
         return instance;
     }
 

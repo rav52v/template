@@ -12,7 +12,8 @@ import java.io.IOException;
 public class Excel {
 
     private String[] columns = {"Column1", "Column2", "Column3", "Column4", "Column5", "Column6"};
-    private final String FILE_NAME = new File("").toPath().toAbsolutePath().toString() + "/" + Gui.getInstance().getFileName() + ".xlsx";
+    private final String FILE_NAME = new File("").toPath().toAbsolutePath().toString() + "/"
+            + Gui.getInstance().getFileName() + ".xlsx";
 
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;

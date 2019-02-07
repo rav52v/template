@@ -3,7 +3,6 @@ package main.java.poms;
 import main.java.utils.Gui;
 import main.java.utils.PageBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 

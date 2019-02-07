@@ -101,7 +101,8 @@ abstract class BaseFunction {
     }
 
     protected void changeBackImplicitlyWaitTime() {
-        driver.getDriver().manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().getImplicitlyWaitTime(), TimeUnit.SECONDS);
+        driver.getDriver().manage().timeouts().implicitlyWait(ConfigurationParser.getInstance().
+                getImplicitlyWaitTime(), TimeUnit.SECONDS);
     }
 
     protected long getPastTimeInMillis(long startTime) {

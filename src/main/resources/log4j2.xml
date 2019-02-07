@@ -45,6 +45,7 @@
             <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
         </Console>
     </Appenders>
+
     <Loggers>
         <Root level="all">
             <AppenderRef ref="ShortLogFile"/>
