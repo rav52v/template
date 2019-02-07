@@ -12,6 +12,11 @@ import java.util.List;
 
 public class FileFunctions extends BaseFunction {
 
+    public FileFunctions() {
+        if (new File(pathOutputFolder.toAbsolutePath().toString()).mkdirs())
+            log.debug("Created directory {" + pathOutputFolder.toAbsolutePath().toString() + "}");
+    }
+
     public void captureScreenshot(String fileName, int zoom) {
         JavascriptExecutor js = (JavascriptExecutor) driver.getDriver();
         js.executeScript("document.body.style.zoom='" + zoom + "%'");

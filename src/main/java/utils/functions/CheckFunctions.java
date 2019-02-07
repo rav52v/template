@@ -71,4 +71,6 @@ public class CheckFunctions extends BaseFunction {
     public boolean isElementSelected(WebElement element) {
         return element.isSelected();
     }
+
+
 }

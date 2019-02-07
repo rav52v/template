@@ -48,12 +48,14 @@ public class BrowserFunctions extends BaseFunction {
     }
 
     public void openPage(String linkAddress) {
+        long startTime = System.currentTimeMillis();
         log.debug("Loading page (expected) {" + linkAddress + "}");
 
         driver.getDriver().get(linkAddress);
         waitForPageLoading();
 
-        log.debug("Current page {" + driver.getDriver().getCurrentUrl() + "}");
+        log.debug("Page loaded {" + driver.getDriver().getCurrentUrl() + "}, operation took {"
+                + getPastTimeInMillis(startTime) + "}");
     }
 
     public void closeDriver(int delayMillis) {
