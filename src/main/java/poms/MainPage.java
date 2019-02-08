@@ -1,5 +1,6 @@
 package main.java.poms;
 
+import main.java.utils.Gui;
 import main.java.utils.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -28,7 +29,8 @@ public class MainPage extends PageBase {
 
 
     private void firstMethod() {
-
+        browser.openPage(Gui.getInstance().getSearchLinkAddress());
+        browser.closeDriver(2000);
     }
 
 

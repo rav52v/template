@@ -21,8 +21,8 @@ import java.util.concurrent.TimeUnit;
 abstract class BaseFunction {
     Driver driver;
     final Logger log = LogManager.getLogger(this);
-    final Path pathOutputFolder = Paths.get("src", "outputFolder");
-    final Path pathInputFolder = Paths.get("src", "inputFolder");
+    final Path pathOutputFolder = Paths.get("outputFolder");
+    final Path pathInputFolder = Paths.get("inputFolder");
     private final int PAGE_LOAD_TIME = ConfigurationParser.getInstance().getPageLoadTime();
 
     private Calendar calendar;

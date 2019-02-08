@@ -1,5 +1,6 @@
 package main.java.tools;
 
+import main.java.runnable.App;
 import org.apache.logging.log4j.LogManager;
 
 import java.io.FileInputStream;
@@ -40,11 +41,10 @@ public class ConfigurationParser {
         LogManager.getLogger(this).info("Config created.");
         this.propertiesFileName = "config.properties";
         prop = new Properties();
-        path = Paths.get("src", "main", "resources")
-                .toAbsolutePath().toString().concat("/config.properties");
+        path = null;
         try {
-            inputStream = new FileInputStream(path);
-        } catch (FileNotFoundException e) {
+            inputStream = App.class.getClassLoader().getResourceAsStream("config.properties");
+        } catch (Exception e) {
             e.printStackTrace();
         }
         try {

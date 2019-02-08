@@ -1,5 +1,6 @@
 package main.java.utils;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import main.java.tools.ConfigurationParser;
 import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
@@ -66,13 +67,7 @@ public class Driver {
     }
 
     private void setProperties() {
-        if (PLATFORM.startsWith("win"))
-            System.setProperty("webdriver.chrome.driver", path + "/chromedriver.exe");
-        else if (PLATFORM.startsWith("mac"))
-            System.setProperty("webdriver.chrome.driver", path + "/chromedriverMac");
-        else if (PLATFORM.contains("nix") || PLATFORM.contains("nux") || PLATFORM.contains("aix"))
-            System.setProperty("webdriver.chrome.driver", path + "/chromedriverLinux");
-
+        WebDriverManager.chromedriver().setup();
         key = new Random().nextInt(9999);
         driverMap.put(key, new ChromeDriver(setChromeOptions()));
     }

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -19,7 +20,7 @@ import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 public class Gui extends JPanel {
     private static Gui instance;
 
-    private final Path thumbs = Paths.get("src", "main", "resources", "thumbs");
+    private File[] thumbs;
     private String sampleMail;
     private String samplePassword;
     private String sampleLink;
@@ -27,7 +28,14 @@ public class Gui extends JPanel {
     private String fileName;
     private int sampleInt;
 
-    private Gui() {}
+    private Gui() {
+        try {
+            thumbs = new File(new File("").getCanonicalFile().toPath().toAbsolutePath().toString()
+                    + "/thumbs").listFiles();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Gui getInstance() {
         if (instance == null)
@@ -178,7 +186,8 @@ public class Gui extends JPanel {
     }
 
     private ImageIcon getRandomThumbIcon() {
-        return new ImageIcon(thumbs.toFile().listFiles()[new Random().nextInt(thumbs.toFile().listFiles().length)].getAbsolutePath());
+//        TODO: compile /thumbs/ in jar file
+        return new ImageIcon(thumbs[new Random().nextInt(thumbs.length)].getAbsolutePath());
     }
 
     private MouseAdapter addMouseListenerForTextField(JTextField component) {

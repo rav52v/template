@@ -6,6 +6,7 @@ import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class App {
 
 
 
-//        new MainPage();
+        new MainPage();
 //        new SamplePage();
 
 
