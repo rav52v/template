@@ -17,9 +17,6 @@ public class Driver {
     private static Map<Integer, WebDriver> driverMap = new HashMap<>();
     private static int key;
 
-    private String path = Paths.get("src", "main", "resources").toAbsolutePath().toString();
-    private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
-
     public WebDriver getDriver() {
         if (driverMap.get(key) == null) {
             LogManager.getLogger(this).info("Opening browser in {" + (Gui.getInstance().isHeadless() ? "headless" : "normal") + "} mode.");
