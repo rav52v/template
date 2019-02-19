@@ -30,7 +30,18 @@ public class MainPage extends PageBase {
 
     private void firstMethod() {
         browser.openPage(Gui.getInstance().getSearchLinkAddress());
+        browser.openNewTab();
+        browser.switchToSecondTab();
+        browser.openPage("https://www.youtube.com/?hl=pl&gl=PL");
+        sleeper(1000);
+        browser.switchToMainTab();
+        browser.openPage("http://www.google.pl/");
+        browser.switchToSecondTab();
+        browser.closeTab();
+        browser.switchToMainTab();
         browser.closeDriver(2000);
+
+
     }
 
 

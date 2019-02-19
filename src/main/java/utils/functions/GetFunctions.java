@@ -19,8 +19,8 @@ public class GetFunctions extends BaseFunction {
         else
             value = value.trim();
 
-        log.debug("Got value {" + (value.length() < 70 ? value : value.replaceAll("\\s", "")
-                .substring(0, 70).concat("...")) + "}");
+        log.debug("Got value {" + (value.length() < 50 ? value : value.substring(0, 50).concat("..."))
+                .replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
         return value;
     }
 

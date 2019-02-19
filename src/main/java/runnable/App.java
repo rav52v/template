@@ -9,8 +9,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.*;
 
 public class App {
     public static void main(String[] args) {
@@ -21,16 +20,13 @@ public class App {
         log.info("Log created.");
 
         log.info("Opening Gui.");
-        Gui.getInstance().openJPanel();
+//        Gui.getInstance().openJPanel();
         //      TODO
 
 
 
-
-        new MainPage();
+//        new MainPage();
 //        new SamplePage();
-
-
 
 
         //      TODO
@@ -38,7 +34,7 @@ public class App {
 
         log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
 
-        Gui.getInstance().showLogInfo();
+//        Gui.getInstance().showLogInfo();
     }
 
     private static String calculatePastTime(long start) {
@@ -48,3 +44,11 @@ public class App {
         return df.format(new Date(elapsed));
     }
 }
+
+
+
+
+
+
+
+
