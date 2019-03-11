@@ -1,0 +1,5 @@
+general:
+  linkAddress: about:blank
+  implicitlyWaitTime: 8
+  pageLoadTime: 60
+  searchLinkAddress: https://www.google.com/

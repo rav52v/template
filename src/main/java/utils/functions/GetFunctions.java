@@ -9,128 +9,128 @@ import java.util.List;
 
 public class GetFunctions extends BaseFunction {
 
-    public String getTextFromElement(WebElement element) {
-        log.debug("Get text from element {" + getElementInfo(element) + "}");
+  public String getTextFromElement(WebElement element) {
+    log.debug("Get text from element {" + getElementInfo(element) + "}");
 
-        String value = element.getAttribute("value");
+    String value = element.getAttribute("value");
 
-        if (value == null)
-            value = element.getText().trim();
-        else
-            value = value.trim();
+    if (value == null)
+      value = element.getText().trim();
+    else
+      value = value.trim();
 
-        log.debug("Got value {" + (value.length() < 50 ? value : value.substring(0, 50).concat("..."))
-                .replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
-        return value;
-    }
+    log.debug("Got value {" + (value.length() < 50 ? value : value.substring(0, 50).concat("..."))
+            .replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
+    return value;
+  }
 
-    public String getTextFromParentElement(WebElement element) {
-        element = element.findElement(By.xpath(".."));
-        log.debug("Get text from element {" + getElementInfo(element) + "}");
+  public String getTextFromParentElement(WebElement element) {
+    element = element.findElement(By.xpath(".."));
+    log.debug("Get text from element {" + getElementInfo(element) + "}");
 
-        String value = element.getAttribute("value");
+    String value = element.getAttribute("value");
 
-        if (value == null)
-            value = element.getText().trim();
-        else
-            value = value.trim();
+    if (value == null)
+      value = element.getText().trim();
+    else
+      value = value.trim();
 
-        log.debug("Got value {" + (value.length() < 50 ? value : value.substring(0, 50).concat("..."))
-                .replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
-        return value;
-    }
+    log.debug("Got value {" + (value.length() < 50 ? value : value.substring(0, 50).concat("..."))
+            .replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
+    return value;
+  }
 
-    public String getAttributeFromElement(WebElement element, String attribute) {
-        return element.getAttribute(attribute);
-    }
+  public String getAttributeFromElement(WebElement element, String attribute) {
+    return element.getAttribute(attribute);
+  }
 
-    public String searchElementInElementAndGetText(WebElement element, By by) {
-        log.debug("Search element located By {" + by + "} in element {"
-                + getElementInfo(element) + "} and get text");
+  public String searchElementInElementAndGetText(WebElement element, By by) {
+    log.debug("Search element located By {" + by + "} in element {"
+            + getElementInfo(element) + "} and get text");
 
-        String result = "";
-        for (int i = 0; i < 5; i++) {
-            try {
-                result = element.findElement(by).getText();
-                break;
-            } catch (StaleElementReferenceException e) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
-                if (i == 4) {
-                    result = "";
-                    log.error("Element {" + getElementInfo(element) + "} was stale, tried 4 times.");
-                }
-            }
+    String result = "";
+    for (int i = 0; i < 5; i++) {
+      try {
+        result = element.findElement(by).getText();
+        break;
+      } catch (StaleElementReferenceException e) {
+        try {
+          Thread.sleep(500);
+        } catch (InterruptedException e1) {
+          e1.printStackTrace();
         }
-
-        return result;
-    }
-
-    public String searchElementInElementAndGetAttribute(WebElement element, By by, String attributeName) {
-        log.debug("Search element located By {" + by + "} in element {"
-                + getElementInfo(element) + "} and get attribute {" + attributeName + "}");
-
-        String result = "";
-        for (int i = 0; i < 5; i++) {
-            try {
-                result = element.findElement(by).getAttribute(attributeName);
-                break;
-            } catch (StaleElementReferenceException e) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
-                if (i == 4) {
-                    result = "";
-                    log.error("Element {" + getElementInfo(element) + "} was stale, tried 4 times.");
-                }
-            }
+        if (i == 4) {
+          result = "";
+          log.error("Element {" + getElementInfo(element) + "} was stale, tried 4 times.");
         }
-
-        return result;
+      }
     }
 
-    public String getCurrentUrl() {
-        return driver.getDriver().getCurrentUrl();
-    }
+    return result;
+  }
 
-    /**
-     * @param elementList list of given elements
-     * @param regex       text value to find - regex allowed
-     * @return WebElement containing given regex value
-     */
-    public WebElement getElementContaingRegexValue(List<WebElement> elementList, String regex) {
-        if (elementList.size() == 0) {
-            log.error("Given list is empty");
-            return null;
+  public String searchElementInElementAndGetAttribute(WebElement element, By by, String attributeName) {
+    log.debug("Search element located By {" + by + "} in element {"
+            + getElementInfo(element) + "} and get attribute {" + attributeName + "}");
+
+    String result = "";
+    for (int i = 0; i < 5; i++) {
+      try {
+        result = element.findElement(by).getAttribute(attributeName);
+        break;
+      } catch (StaleElementReferenceException e) {
+        try {
+          Thread.sleep(500);
+        } catch (InterruptedException e1) {
+          e1.printStackTrace();
         }
-
-        for (WebElement element : elementList) {
-            if (element.getText().matches(regex))
-                return element;
+        if (i == 4) {
+          result = "";
+          log.error("Element {" + getElementInfo(element) + "} was stale, tried 4 times.");
         }
-
-        log.debug("List doesn't contain given regex value {" + regex + "}");
-        return null;
+      }
     }
 
-    /**
-     * @param selectElement  Select type element
-     * @return  all selected options as List<WebElement>
-     */
-    public List<WebElement> getAllSelectedOptions(WebElement selectElement) {
-        return new Select(selectElement).getAllSelectedOptions();
+    return result;
+  }
+
+  public String getCurrentUrl() {
+    return driver.getDriver().getCurrentUrl();
+  }
+
+  /**
+   * @param elementList list of given elements
+   * @param regex       text value to find - regex allowed
+   * @return WebElement containing given regex value
+   */
+  public WebElement getElementContaingRegexValue(List<WebElement> elementList, String regex) {
+    if (elementList.isEmpty()) {
+      log.error("Given list is empty");
+      return null;
     }
 
-    /**
-     * @param selectElement  Select type element
-     * @return  all options List<WebElement>
-     */
-    public List<WebElement> getAllOptions(WebElement selectElement) {
-        return new Select(selectElement).getOptions();
+    for (WebElement element : elementList) {
+      if (element.getText().matches(regex))
+        return element;
     }
+
+    log.debug("List doesn't contain given regex value {" + regex + "}");
+    return null;
+  }
+
+  /**
+   * @param selectElement Select type element
+   * @return all selected options as List<WebElement>
+   */
+  public List<WebElement> getAllSelectedOptions(WebElement selectElement) {
+    return new Select(selectElement).getAllSelectedOptions();
+  }
+
+  /**
+   * @param selectElement Select type element
+   * @return all options List<WebElement>
+   */
+  public List<WebElement> getAllOptions(WebElement selectElement) {
+    return new Select(selectElement).getOptions();
+  }
 }
