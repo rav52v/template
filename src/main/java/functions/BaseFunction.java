@@ -1,4 +1,4 @@
-package main.java.utils.functions;
+package main.java.functions;
 
 import main.java.utils.Driver;
 import org.apache.logging.log4j.LogManager;
@@ -8,7 +8,6 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.nio.file.Path;
@@ -17,33 +16,34 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-import static main.java.tools.ConfigService.getConfigService;
+import static main.java.utils.ConfigService.getConfigService;
 
 abstract class BaseFunction {
   Driver driver;
-  final Logger log = LogManager.getLogger(this);
-  final Path pathOutputFolder = Paths.get("outputFolder");
+  final Logger log = LogManager.getLogger();
   final Path pathInputFolder = Paths.get("inputFolder");
-  private final long PAGE_LOAD_TIME = getConfigService().getLongProperty("general.pageLoadTime");
-
-  private Calendar calendar;
-  private SimpleDateFormat time;
+  final Path pathOutputFolder = Paths.get("outputFolder");
 
   BaseFunction() {
     driver = new Driver();
   }
 
-  protected void waitForPageLoading() {
-    // wait for Ajax actions to begin
+  public void sleeper(int milliseconds) {
     try {
-      Thread.sleep(1000);
+      Thread.sleep(milliseconds);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+  }
+
+  public void waitForPageLoading() {
+    // wait for Ajax actions to begin
+    sleeper(1000);
 
     changeImplicitlyWaitTime(0);
 
-    getDefaultWebDriverWait().until(new ExpectedCondition<Boolean>() {
+    new WebDriverWait(driver.getDriver(), getConfigService().getLongProperty("general.pageLoadTime"))
+            .ignoring(StaleElementReferenceException.class).until(new ExpectedCondition<Boolean>() {
 
       private final int MAX_NO_JQUERY_COUNTER = 3;
       private int noJQueryCounter = 0;
@@ -71,69 +71,58 @@ abstract class BaseFunction {
         return "complete".equals(documentReadyState) && jQueryActive == 0;
       }
     });
-    changeBackImplicitlyWaitTime();
+    turnOnImplicitlyWaitTime();
 
     // wait for Ajax responses to be processed
-    try {
-      Thread.sleep(500);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    sleeper(500);
   }
 
-  protected void waitForElement(WebElement element) {
-    long startTime = System.currentTimeMillis();
-    log.debug("Wait for element {" + getElementInfo(element) + "} to be visible");
-
-    changeImplicitlyWaitTime(0);
-    new WebDriverWait(driver.getDriver(), 20, 10).until(ExpectedConditions
-            .visibilityOf(element));
-    changeBackImplicitlyWaitTime();
-
-    log.debug("Waiting completed, it took {" + getPastTimeInMillis(startTime) + " milliseconds}");
-  }
-
-  protected String getElementInfo(WebElement element) {
+  String getElementInfo(WebElement element) {
     return (element.toString()).replaceAll("(^.*-> )|(]$)", "");
   }
 
-  protected void changeImplicitlyWaitTime(int milliSeconds) {
+  void changeImplicitlyWaitTime(int milliSeconds) {
     driver.getDriver().manage().timeouts().implicitlyWait(milliSeconds, TimeUnit.MILLISECONDS);
   }
 
-  protected void changeBackImplicitlyWaitTime() {
+  void turnOnImplicitlyWaitTime() {
     driver.getDriver().manage().timeouts().implicitlyWait(getConfigService()
             .getLongProperty("general.implicitlyWaitTime"), TimeUnit.SECONDS);
   }
 
-  protected long getPastTimeInMillis(long startTime) {
+  long getPastTimeInMillis(long startTime) {
     return System.currentTimeMillis() - startTime;
   }
 
-  protected String getEstTime(long startTime, int thingsDone, int allThings) {
+  String getEstTime(long startTime, int thingsDone, int allThings) {
     double percentDone = Double.parseDouble(String.format("%.2f", (100.0 * ((double) (thingsDone)
             / (double) allThings))).replaceAll(",", "."));
     double passedTimeInMinutes = (System.currentTimeMillis() - startTime) / 60000.0;
     double timeLeftInMinutes = (100.0 / percentDone) * (passedTimeInMinutes) - passedTimeInMinutes + 1.0;
-    calendar = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.MINUTE, (int) timeLeftInMinutes);
-    time = new SimpleDateFormat("HH:mm");
 
-    return time.format(calendar.getTime());
+    return  new SimpleDateFormat("HH:mm").format(calendar.getTime());
   }
 
-  protected void changePageLoadTimeout(int seconds) {
-    driver.getDriver().manage().timeouts().pageLoadTimeout(seconds, TimeUnit.SECONDS);
-  }
+  void scrollToElement(WebElement element, int scrollValue) {
+    JavascriptExecutor js = (JavascriptExecutor) driver.getDriver();
+    int elementYPosition = element.getLocation().getY();
+    int browserYSize = ((Number) js.executeScript("return window.innerHeight")).intValue();
+    int scrollTempValue = 0;
 
-  protected void changeBackPageLoadTimeout() {
-    driver.getDriver().manage().timeouts().pageLoadTimeout(60000, TimeUnit.MILLISECONDS);
-  }
-
-  private WebDriverWait getDefaultWebDriverWait() {
-    WebDriverWait defaultWebDriverWait = new WebDriverWait(driver.getDriver(), PAGE_LOAD_TIME);
-    defaultWebDriverWait.ignoring(StaleElementReferenceException.class);
-
-    return defaultWebDriverWait;
+    if (browserYSize - 350 < elementYPosition) {
+      scrollTempValue = Math.abs(browserYSize - elementYPosition);
+      if (scrollTempValue < 100)
+        scrollTempValue += scrollValue;
+      else if (scrollTempValue < 200)
+        scrollTempValue += scrollValue - 100;
+      else if (scrollTempValue < 300)
+        scrollTempValue += scrollValue - 200;
+      else
+        scrollTempValue += scrollValue;
+    }
+    log.debug("Scrolled by " + scrollTempValue + "px");
+    js.executeScript("window.scrollBy(0," + scrollTempValue + ")");
   }
 }

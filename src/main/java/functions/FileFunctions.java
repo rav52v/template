@@ -1,4 +1,4 @@
-package main.java.utils.functions;
+package main.java.functions;
 
 import org.openqa.selenium.*;
 
@@ -128,5 +128,9 @@ public class FileFunctions extends BaseFunction {
     }
 
     log.debug("Downloaded {" + counter + " images}");
+  }
+
+  public String getRelativePathToFile(String fileName) {
+    return pathInputFolder.toAbsolutePath().toString() + "\\" + fileName;
   }
 }

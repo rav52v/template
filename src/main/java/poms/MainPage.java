@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
+import static main.java.utils.ConfigService.getConfigService;
+
 public class MainPage extends PageBase {
   @FindBy(css = "a")
   private List<WebElement> sample1;
@@ -24,27 +26,27 @@ public class MainPage extends PageBase {
   private By cloud = By.cssSelector("._5v-0._53im");
 
   public MainPage() {
-    secondMethod();
+    firstMethod();
   }
 
 
   private void firstMethod() {
-    browser.openPage(Gui.getInstance().getSearchLinkAddress());
+    browser.openPage(getConfigService().getStringProperty("general.linkAddress"));
     browser.openNewTab();
     browser.switchToSecondTab();
     browser.openPage("https://www.youtube.com/?hl=pl&gl=PL");
-    sleeper(1000);
+    browser.sleeper(500);
     browser.switchToMainTab();
     browser.openPage("http://www.google.pl/");
     browser.switchToSecondTab();
     browser.closeTab();
     browser.switchToMainTab();
-    browser.closeDriver(2000);
+    browser.closeDriver(1000);
   }
 
   private void secondMethod() {
     browser.openPage(Gui.getInstance().getSearchLinkAddress());
-    sleeper(2000);
+    browser.sleeper(2000);
 //        action.executeJavaScriptExecutor("arguments[0].removeAttribute('disabled');", sample4);
     input.sendKeysToElement(sample4, "C:\\Users\\p_florys\\Idea Workspace\\PageObjectModelBase\\src\\main\\resources\\config.properties");
   }

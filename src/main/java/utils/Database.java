@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
-import static main.java.tools.ConfigService.getConfigService;
+import static main.java.utils.ConfigService.getConfigService;
 
 public class Database {
   private static Database instance;

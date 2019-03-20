@@ -2,57 +2,49 @@
 <Configuration status="info">
 
   <Properties>
-    <Property name="LOG_PATTERN">%d [%t] %-5level %msg%n</Property>
+    <Property name="LOG_FILE_PATTERN">%d [%t] %-5level %msg%n</Property>
+    <Property name="LOG_CONSOLE_PATTERN">%d [%t] %-5level [%l] %msg%n</Property>
   </Properties>
 
   <Appenders>
-    <File name="ShortLogFile" fileName="logs/short_log.log" append="false">
+    <File name="CurrentTest" fileName="logs/last_test_log.log" append="false">
       <PatternLayout>
-        <Pattern>${LOG_PATTERN}</Pattern>
+        <Pattern>${LOG_FILE_PATTERN}</Pattern>
       </PatternLayout>
-      <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+      <LevelRangeFilter minLevel="FATAL" maxLevel="TRACE" onMatch="ACCEPT" onMismatch="DENY"/>
     </File>
 
-    <RollingFile name="FullLogFile" fileName="logs/full_log.log" append="true"
-                 filePattern="logs/$${date:yyyy-MM-dd}/full_log-%d{MM-dd-yyyy}-%i.log">
+    <RollingFile name="FullLogFile" fileName="logs/log.log" append="true"
+                 filePattern="logs/$${date:yyyy-MM-dd}/log-%d{MM-dd-yyyy}-%i.log">
       <Policies>
-        <!--maksymalny rozmiar jednego pliku-->
         <SizeBasedTriggeringPolicy size="30KB"/>
       </Policies>
-      <!--
-      max: maksymalna ilość plików w folderze, które będą archwiowane, stare zostaną usunięte
-      fileIndex: min oznacza, że pliki z indeksem 1 będą najnowsze, default to max
-      -->
       <DefaultRolloverStrategy max="3" fileIndex="min"/>
       <PatternLayout>
-        <Pattern>${LOG_PATTERN}</Pattern>
+        <Pattern>${LOG_FILE_PATTERN}</Pattern>
       </PatternLayout>
       <LevelRangeFilter minLevel="FATAL" maxLevel="TRACE" onMatch="ACCEPT" onMismatch="DENY"/>
     </RollingFile>
 
     <Console name="Console-info" target="SYSTEM_OUT">
-      <PatternLayout pattern="${LOG_PATTERN}"/>
+      <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
       <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
     </Console>
 
-    <Console name="Console-debug" target="SYSTEM_OUT">
-      <PatternLayout pattern="${LOG_PATTERN}"/>
-      <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
-    </Console>
 
     <Console name="Console-error" target="SYSTEM_ERR">
-      <PatternLayout pattern="${LOG_PATTERN}"/>
+      <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
       <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
     </Console>
   </Appenders>
 
   <Loggers>
+
     <Root level="all">
-      <AppenderRef ref="ShortLogFile"/>
       <AppenderRef ref="FullLogFile"/>
+      <AppenderRef ref="CurrentTest"/>
       <AppenderRef ref="Console-info"/>
       <AppenderRef ref="Console-error"/>
-      <AppenderRef ref="Console-debug"/>
     </Root>
 
     <Logger name="Console-info" level="info">
@@ -63,8 +55,5 @@
       <AppenderRef ref="Console-error"/>
     </Logger>
 
-    <Logger name="Console-debug" level="debug">
-      <AppenderRef ref="Console-debug"/>
-    </Logger>
   </Loggers>
 </Configuration>

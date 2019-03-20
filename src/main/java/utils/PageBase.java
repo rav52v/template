@@ -1,6 +1,6 @@
 package main.java.utils;
 
-import main.java.utils.functions.*;
+import main.java.functions.*;
 import org.openqa.selenium.support.PageFactory;
 
 public abstract class PageBase {
@@ -11,7 +11,6 @@ public abstract class PageBase {
   protected InputFunctions input;
   protected ActionFunctions action;
   protected GetFunctions get;
-
 
   protected PageBase() {
     browser = new BrowserFunctions();
@@ -24,13 +23,4 @@ public abstract class PageBase {
 
     PageFactory.initElements(new Driver().getDriver(), this);
   }
-
-  protected void sleeper(int milliseconds) {
-    try {
-      Thread.sleep(milliseconds);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-  }
-
 }

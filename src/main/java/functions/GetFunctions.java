@@ -1,10 +1,13 @@
-package main.java.utils.functions;
+package main.java.functions;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GetFunctions extends BaseFunction {
@@ -12,31 +15,31 @@ public class GetFunctions extends BaseFunction {
   public String getTextFromElement(WebElement element) {
     log.debug("Get text from element {" + getElementInfo(element) + "}");
 
-    String value = element.getAttribute("value");
+    String value = element.getText();
 
     if (value == null)
-      value = element.getText().trim();
+      value = element.getAttribute("value").trim();
     else
       value = value.trim();
 
-    log.debug("Got value {" + (value.length() < 50 ? value : value.substring(0, 50).concat("..."))
-            .replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
+    log.debug("Got value {" + (value.length() < 50 ? value.replaceAll("[\n]", "") : value
+            .substring(0, 50).concat("...")).replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
     return value;
   }
 
   public String getTextFromParentElement(WebElement element) {
-    element = element.findElement(By.xpath(".."));
+    element = element.findElement(By.xpath("./.."));
     log.debug("Get text from element {" + getElementInfo(element) + "}");
 
-    String value = element.getAttribute("value");
+    String value = element.getText();
 
     if (value == null)
-      value = element.getText().trim();
+      value = element.getAttribute("value").trim();
     else
       value = value.trim();
 
-    log.debug("Got value {" + (value.length() < 50 ? value : value.substring(0, 50).concat("..."))
-            .replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
+    log.debug("Got value {" + (value.length() < 50 ? value.replaceAll("[\n]", "") : value
+            .substring(0, 50).concat("...")).replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
     return value;
   }
 
@@ -132,5 +135,18 @@ public class GetFunctions extends BaseFunction {
    */
   public List<WebElement> getAllOptions(WebElement selectElement) {
     return new Select(selectElement).getOptions();
+  }
+
+  public Object returnJavaScriptValue(String script, Object... args) {
+    return ((JavascriptExecutor) driver.getDriver()).executeScript("return " + script, args);
+  }
+
+  public WebElement getElementWithDifferentCssProperty(List<WebElement> webElements, String cssProperty) {
+    List<String> values = new ArrayList<>();
+    webElements.forEach(element -> values.add(element.getCssValue(cssProperty)));
+    Collections.sort(values);
+    String differentValue = values.get(0).equals(values.get(1)) ? values.get(values.size() - 1) : values.get(0);
+    for (WebElement element : webElements) if (element.getCssValue(cssProperty).equals(differentValue)) return element;
+    throw new RuntimeException("Couldn't find element with one different cssProperty: " + cssProperty);
   }
 }

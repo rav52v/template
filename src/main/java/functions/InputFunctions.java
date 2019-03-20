@@ -1,4 +1,4 @@
-package main.java.utils.functions;
+package main.java.functions;
 
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -11,40 +11,25 @@ import java.util.List;
 public class InputFunctions extends BaseFunction {
 
   /**
-   * Use this method if input field requires click, before allows to send keys
-   *
-   * @param element input type element to click and to send keys
-   * @param value   CharSequence values
-   */
-  public void clickAndSendKeys(WebElement element, CharSequence... value) {
-    log.debug("Click ones and send keys {" + Arrays.toString(value)
-            + "} to element {" + getElementInfo(element) + "}");
-
-    element.clear();
-    new Actions(driver.getDriver()).moveToElement(element).click().sendKeys(value).perform();
-  }
-
-  /**
-   * @param elementToClick    element to click
+   * @param elementToClick    element to clickOn
    * @param elementToSendKeys input element to send keys
    * @param value             CharSequence values
    */
   public void clickElementAndSendKeysToAnother(WebElement elementToClick, WebElement elementToSendKeys, CharSequence... value) {
-    log.debug("Click ones element {" + getElementInfo(elementToClick) + "} and send keys {" + Arrays.toString(value)
-            + "} to element {" + getElementInfo(elementToSendKeys) + "}");
+    log.debug("Click element {" + getElementInfo(elementToClick) + "}...");
 
     new Actions(driver.getDriver()).moveToElement(elementToClick).click().sendKeys(value).perform();
-    elementToSendKeys.clear();
-    new Actions(driver.getDriver()).moveToElement(elementToSendKeys).sendKeys(value).perform();
+    sendKeysToElement(elementToSendKeys, value);
   }
 
   public void sendKeysToElement(WebElement element, CharSequence... value) {
     log.debug("Send keys {" + Arrays.toString(value) + "} to element {"
             + getElementInfo(element) + "}");
 
-    element.clear();
+    try {
+      element.clear();
+    } catch (Exception ignored) {}
     element.sendKeys(value);
-//        new Actions(driver.getDriver()).moveToElement(element).sendKeys(value).perform();
   }
 
   public void sendKeys(CharSequence... value) {

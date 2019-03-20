@@ -1,5 +1,7 @@
 package main.java.utils;
 
+import org.apache.logging.log4j.LogManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -13,7 +15,7 @@ import java.util.Random;
 
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
-import static main.java.tools.ConfigService.getConfigService;
+import static main.java.utils.ConfigService.getConfigService;
 
 public class Gui extends JPanel {
   private static Gui instance;
@@ -27,12 +29,17 @@ public class Gui extends JPanel {
   private int sampleInt;
 
   private Gui() {
+    LogManager.getLogger().info("Opening Gui.");
     try {
       thumbs = new File(new File("").getCanonicalFile().toPath().toAbsolutePath().toString()
               + "/thumbs").listFiles();
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public static boolean isGuiCreated() {
+    return instance != null;
   }
 
   public static Gui getInstance() {
@@ -120,7 +127,7 @@ public class Gui extends JPanel {
     JPanel myPanel = new JPanel();
     myPanel.setForeground(Color.black);
     myPanel.setLocation(220, 10);
-    JTextArea textArea = new JTextArea(getTextFromFile(Paths.get("logs").toAbsolutePath().toString().concat("/short_log.log")), 28, 75);
+    JTextArea textArea = new JTextArea(getTextFromFile(Paths.get("logs").toAbsolutePath().toString().concat("/last_test_log.log")), 28, 75);
     textArea.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
     textArea.setBackground(Color.black);
     textArea.setForeground(new Color(80, 80, 255));

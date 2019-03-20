@@ -1,6 +1,5 @@
-package main.java.tools;
+package main.java.utils;
 
-import main.java.runnable.App;
 import org.apache.logging.log4j.LogManager;
 import org.cfg4j.provider.ConfigurationProvider;
 import org.cfg4j.provider.ConfigurationProviderBuilder;
@@ -24,7 +23,7 @@ public class ConfigService {
   public static ConfigService getConfigService() {
     if (instance == null) {
       instance = new ConfigService();
-      LogManager.getLogger(App.class).info("Config created.");
+      LogManager.getLogger().info("Config created.");
     }
     return instance;
   }

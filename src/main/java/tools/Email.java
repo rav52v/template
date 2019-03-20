@@ -5,7 +5,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-import static main.java.tools.ConfigService.getConfigService;
+import static main.java.utils.ConfigService.getConfigService;
 
 public class Email {
 

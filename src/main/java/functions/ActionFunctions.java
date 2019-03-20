@@ -1,4 +1,4 @@
-package main.java.utils.functions;
+package main.java.functions;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,8 +12,8 @@ public class ActionFunctions extends BaseFunction {
   }
 
   public void changeElementAttributeValue(WebElement element, String attributeName, String value) {
-    ((JavascriptExecutor) driver.getDriver())
-            .executeScript("arguments[0].style.arguments[1]='arguments[2]';", element, attributeName, value);
+    ((JavascriptExecutor) driver.getDriver()).executeScript(
+            "arguments[0].setAttribute(arguments[1], arguments[2]);", element, attributeName, value);
   }
 
   public Actions getActions() {
