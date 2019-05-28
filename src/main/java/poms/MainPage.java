@@ -27,7 +27,7 @@ public class MainPage extends PageBase {
   private By cloud = By.cssSelector("#latest-ul > li.latest-doodle.on > div > div > a > img");
 
   public MainPage() {
-    secondMethod();
+    firstMethod();
   }
 
 

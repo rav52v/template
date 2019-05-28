@@ -9,11 +9,13 @@ import org.cfg4j.source.context.environment.ImmutableEnvironment;
 import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;
 import org.cfg4j.source.files.FilesConfigurationSource;
 
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ConfigService {
-
   private static final ConfigurationProvider configProvider = configProvider();
   private static ConfigService instance = null;
 
@@ -29,10 +31,23 @@ public class ConfigService {
   }
 
   private static ConfigurationProvider configProvider() {
-    ConfigFilesProvider configFilesProvider = () -> Arrays.asList(Paths.get("email.yaml"),
-            Paths.get("general.yaml"), Paths.get("linkedin.yaml"), Paths.get("sql.yaml"));
+    final String PATH_TO_CONFIG_PACKAGE = "./src/main/resources/config";
+    ConfigFilesProvider configFilesProvider = () -> {
+      File[] files = new File[0];
+      try {
+        files = new File(new File("").getCanonicalFile().toPath().toAbsolutePath().toString()
+                + PATH_TO_CONFIG_PACKAGE).listFiles();
+      } catch (IOException e) {
+        LogManager.getLogger().error("Something went wrong - check path to config package, message: " + e.getMessage());
+        e.printStackTrace();
+      }
+      ArrayList<Path> paths = new ArrayList<>();
+      Arrays.asList(files).forEach(file -> paths.add(file.toPath()));
+      return paths;
+    };
+
     ConfigurationSource source = new FilesConfigurationSource(configFilesProvider);
-    Environment env = new ImmutableEnvironment("./src/main/resources/config");
+    Environment env = new ImmutableEnvironment(PATH_TO_CONFIG_PACKAGE);
 
     return new ConfigurationProviderBuilder()
             .withConfigurationSource(source)
