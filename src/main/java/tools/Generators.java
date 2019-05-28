@@ -5,10 +5,14 @@ import java.util.Random;
 public class Generators {
 
   public enum Names {
-    MALE("Adam", "Adolf", "Adrian", "Albert", "Aleksander", "Aleksy", "Alfred", "Amadeusz", "Andrzej", "Antoni", "Arkadiusz", "Arnold", "Artur", "Bartłomiej", "Bartosz", "Benedykt",
-            "Beniamin", "Bernard", "Błażej", "Bogdan", "Bogumił", "Bogusław", "Bolesław", "Borys", "Bronisław", "Cezary", "Cyprian", "Cyryl", "Czesław", "Damian", "Daniel"),
-    FEMALE("Ada", "Adela", "Adelajda", "Adrianna", "Agata", "Agnieszka", "Aldona", "Aleksandra", "Alicja", "Alina", "Amanda", "Amelia", "Anastazja", "Andżelika", "Aneta", "Anita", "Anna",
-            "Barbara", "Beata", "Berenika", "Bernadeta", "Blanka", "Bogusława", "Bożena", "Cecylia", "Celina", "Czesława", "Dagmara", "Danuta", "Daria", "Diana", "Dominika", "Dorota");
+    MALE("Adam", "Adolf", "Adrian", "Albert", "Aleksander", "Aleksy", "Alfred", "Amadeusz", "Andrzej", "Antoni",
+            "Arkadiusz", "Arnold", "Artur", "Bartłomiej", "Bartosz", "Benedykt", "Beniamin", "Bernard", "Błażej",
+            "Bogdan", "Bogumił", "Bogusław", "Bolesław", "Borys", "Bronisław", "Cezary", "Cyprian", "Cyryl", "Czesław",
+            "Damian", "Daniel"),
+    FEMALE("Ada", "Adela", "Adelajda", "Adrianna", "Agata", "Agnieszka", "Aldona", "Aleksandra", "Alicja",
+            "Alina", "Amanda", "Amelia", "Anastazja", "Andżelika", "Aneta", "Anita", "Anna", "Barbara", "Beata",
+            "Berenika", "Bernadeta", "Blanka", "Bogusława", "Bożena", "Cecylia", "Celina", "Czesława", "Dagmara",
+            "Danuta", "Daria", "Diana", "Dominika", "Dorota");
 
     private String[] namesArray;
 
@@ -34,12 +38,12 @@ public class Generators {
   }
 
   public String gNumbers(int wordSize) {
-    String result = "";
+    StringBuilder result = new StringBuilder();
     for (int i = 0; i < wordSize; i++) {
       char temp = NUMBER.charAt(random.nextInt(NUMBER.length()));
-      result += String.valueOf(temp);
+      result.append(temp);
     }
-    return result;
+    return result.toString();
   }
 
   public int randomFromRange(int from, int to) {
@@ -47,36 +51,37 @@ public class Generators {
   }
 
   public String gLower(int wordSize) {
-    String result = "";
+    StringBuilder result = new StringBuilder();
     for (int i = 0; i < wordSize; i++) {
       char temp = LOWER.charAt(random.nextInt(LOWER.length()));
-      result += String.valueOf(temp);
+      result.append(temp);
     }
-    return result;
+    return result.toString();
   }
 
   public String gUpper(int wordSize) {
-    String result = "";
+    StringBuilder result = new StringBuilder();
     for (int i = 0; i < wordSize; i++) {
       char temp = UPPER.charAt(random.nextInt(UPPER.length()));
-      result += String.valueOf(temp);
+      result.append(temp);
     }
-    return result;
+    return result.toString();
   }
 
   public String gPass(int wordSize) {
-    String result = "";
+    StringBuilder result = new StringBuilder();
     for (int i = 0; i < wordSize; i++) {
       char[] charArray = {gLower(1).charAt(0), gUpper(1).charAt(0), gNumbers(1).charAt(0)};
       String temp = String.valueOf(charArray[random.nextInt(charArray.length)]);
-      result += temp;
+      result.append(temp);
     }
-    return result;
+    return result.toString();
   }
 
   public String gEmail() {
     String[] server = {"gmail", "googlemail", "outlook", "email", "yahoo", "aol", "outlook"};
     String[] suffix = {"pl", "com", "gf", "cz", "gb", "it", "sk", "tr", "cn", "be", "au", "is", "fr"};
-    return String.format("%s@%s.%s", gLower(10), server[random.nextInt(server.length)], suffix[random.nextInt(suffix.length)]);
+    return String.format("%s@%s.%s", gLower(10), server[random.nextInt(server.length)],
+            suffix[random.nextInt(suffix.length)]);
   }
 }

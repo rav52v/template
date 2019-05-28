@@ -1,6 +1,7 @@
 package main.java.poms;
 
-import main.java.utils.Gui;
+import main.java.tools.Email;
+import main.java.tools.Generators;
 import main.java.utils.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,22 +12,22 @@ import java.util.List;
 import static main.java.utils.ConfigService.getConfigService;
 
 public class MainPage extends PageBase {
-  @FindBy(css = "a")
+  @FindBy(css = "#tables-slider-1 a")
   private List<WebElement> sample1;
 
-  @FindBy(css = "#ctl00_lnkCopyright")
+  @FindBy(css = "#tsf > div:nth-child(2) > div > div.FPdoLc.VlcLAe > center > input[type=submit]:nth-child(2)")
   private WebElement sample2;
 
-  @FindBy(css = "label[for='filestyle-0']")
+  @FindBy(css = "#latest-ul > li.latest-doodle.on > div > div > a > img")
   private WebElement sample3;
 
   @FindBy(id = "filestyle-0")
   private WebElement sample4;
 
-  private By cloud = By.cssSelector("._5v-0._53im");
+  private By cloud = By.cssSelector("#latest-ul > li.latest-doodle.on > div > div > a > img");
 
   public MainPage() {
-    firstMethod();
+    secondMethod();
   }
 
 
@@ -45,11 +46,6 @@ public class MainPage extends PageBase {
   }
 
   private void secondMethod() {
-    browser.openPage(Gui.getInstance().getSearchLinkAddress());
-    browser.sleeper(2000);
-//        action.executeJavaScriptExecutor("arguments[0].removeAttribute('disabled');", sample4);
-    input.sendKeysToElement(sample4, "C:\\Users\\p_florys\\Idea Workspace\\PageObjectModelBase\\src\\main\\resources\\config.properties");
+
   }
-
-
 }
