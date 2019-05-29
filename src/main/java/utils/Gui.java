@@ -85,12 +85,8 @@ public class Gui extends JPanel {
     myPanel.add(new Label("sampleInt"));
     myPanel.add(limitField);
     headlessCheckBox.addActionListener(e -> {
-      if (!headlessCheckBox.isSelected()) {
-        headlessCheckBox.setText("headless (suggested only for debugging!)");
-      } else {
-        headlessCheckBox.setText("headless");
-      }
-
+      if (!headlessCheckBox.isSelected()) headlessCheckBox.setText("headless (suggested only for debugging!)");
+      else headlessCheckBox.setText("headless");
     });
     headlessCheckBox.addMouseListener(new MouseAdapter() {
       @Override

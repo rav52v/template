@@ -32,10 +32,10 @@ public class ExcelService {
     workbook = new XSSFWorkbook();
     sheet = workbook.createSheet();
     row = sheet.createRow(0);
-    XSSFCellStyle topCellStyle = workbook.createCellStyle();
     XSSFFont topFont = workbook.createFont();
     topFont.setBold(true);
     topFont.setFontHeight(15);
+    XSSFCellStyle topCellStyle = workbook.createCellStyle();
     topCellStyle.setAlignment(HorizontalAlignment.CENTER);
     topCellStyle.setFont(topFont);
 
@@ -47,10 +47,8 @@ public class ExcelService {
 
     for (int rowIndex = 1; rowIndex <= values.size(); rowIndex++) {
       row = sheet.createRow(rowIndex);
-      for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
-        XSSFCell cell = row.createCell(columnIndex);
-        cell.setCellValue(values.get(rowIndex - 1).get(columnIndex));
-      }
+      for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++)
+        row.createCell(columnIndex).setCellValue(values.get(rowIndex - 1).get(columnIndex));
     }
     for (int i = 0; i < columns.size(); i++) sheet.autoSizeColumn(i);
 
