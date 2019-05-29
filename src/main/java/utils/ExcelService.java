@@ -1,28 +1,24 @@
 package main.java.utils;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.xssf.usermodel.*;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class ExcelService {
 
   private static ExcelService instance;
 
-  private final String FILE_PATH = Paths.get("inputFolder").toAbsolutePath() + "\\skladkaTDmz.xls";
-  private Workbook workbook;
-  private Map<Integer, Map<String, String>> values;
-  private String[] columnKeys = {"Kierunek", "Cel pordóży", "Data wyjazdy", "Data powrotu", "Liczba osób dorosłych",
-          "Liczba dzieci", "Standardowa ochrona", "Pełny komfort", "Prestiżowa podróż"};
+  private final String OUTPUT_FILE_PATH = Paths.get("outputFolder").toAbsolutePath() + "\\";
+  private XSSFWorkbook workbook;
+  private XSSFRow row;
+  private XSSFSheet sheet;
 
   private ExcelService() {
-    initialize();
   }
 
   public static ExcelService getExcelService() {
@@ -32,32 +28,38 @@ public class ExcelService {
     return instance;
   }
 
-  private void initialize() {
-    Row row;
-    Map<String, String> rowMap;
+  public void createTable(List<String> columns, List<List<String>> values, String fileName) {
+    workbook = new XSSFWorkbook();
+    sheet = workbook.createSheet();
+    row = sheet.createRow(0);
+    XSSFCellStyle topCellStyle = workbook.createCellStyle();
+    XSSFFont topFont = workbook.createFont();
+    topFont.setBold(true);
+    topFont.setFontHeight(15);
+    topCellStyle.setAlignment(HorizontalAlignment.CENTER);
+    topCellStyle.setFont(topFont);
+
+    for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
+      XSSFCell cell = row.createCell(columnIndex);
+      cell.setCellStyle(topCellStyle);
+      cell.setCellValue(columns.get(columnIndex));
+    }
+
+    for (int rowIndex = 1; rowIndex <= values.size(); rowIndex++) {
+      row = sheet.createRow(rowIndex);
+      for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
+        XSSFCell cell = row.createCell(columnIndex);
+        cell.setCellValue(values.get(rowIndex - 1).get(columnIndex));
+      }
+    }
+    for (int i = 0; i < columns.size(); i++) sheet.autoSizeColumn(i);
+
     try {
-      workbook = WorkbookFactory.create(new File(FILE_PATH));
+      FileOutputStream out = new FileOutputStream(new File(OUTPUT_FILE_PATH + fileName + ".xlsx"));
+      workbook.write(out);
+      out.close();
     } catch (IOException e) {
       e.printStackTrace();
     }
-    Sheet sheet = workbook.getSheetAt(0);
-    values = new HashMap<>();
-
-    for (int rowIndex = 2; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
-      row = sheet.getRow(rowIndex);
-      rowMap = new HashMap<>();
-      for (int cellIndex = 1; cellIndex < 10; cellIndex++) {
-        try {
-          rowMap.put(columnKeys[cellIndex - 1], String.valueOf(row.getCell(cellIndex).getNumericCellValue()));
-        } catch (IllegalStateException e) {
-          rowMap.put(columnKeys[cellIndex - 1], row.getCell(cellIndex).getStringCellValue());
-        }
-      }
-      values.put(rowIndex - 1, rowMap);
-    }
-  }
-
-  public String getValue(int row, String columnName) {
-    return values.get(row).get(columnName);
   }
 }
