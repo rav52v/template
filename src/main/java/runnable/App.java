@@ -15,7 +15,7 @@ public class App {
     long start = System.currentTimeMillis();
     Logger log = LogManager.getLogger();
 
-    Gui.getInstance().openJPanel();
+//    Gui.getInstance().openJPanel();
 //              TODO
 
 
@@ -25,7 +25,7 @@ public class App {
 
 //              TODO
     log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
-    Gui.getInstance().showLogInfo();
+//    Gui.getInstance().showLogInfo();
   }
 
   private static String calculatePastTime(long start) {

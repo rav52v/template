@@ -13,7 +13,7 @@ public class MainPage extends PageBase {
   @FindBy(css = "#tables-slider-1 a")
   private List<WebElement> sample1;
 
-  @FindBy(css = "#tsf > div:nth-child(2) > div > div.FPdoLc.VlcLAe > center > input[type=submit]:nth-child(2)")
+  @FindBy(css = "body > div:nth-child(4) > div:nth-child(5) > div")
   private WebElement sample2;
 
   @FindBy(css = "#latest-ul > li.latest-doodle.on > div > div > a > img")
@@ -25,7 +25,7 @@ public class MainPage extends PageBase {
   private By cloud = By.cssSelector("#latest-ul > li.latest-doodle.on > div > div > a > img");
 
   public MainPage() {
-    firstMethod();
+    secondMethod();
   }
 
 
@@ -44,6 +44,8 @@ public class MainPage extends PageBase {
   }
 
   private void secondMethod() {
-
+    browser.openPage("https://www.tutorialspoint.com/");
+    browser.scrollIntoView(sample2, "start", true);
+    browser.closeDriver(3000);
   }
 }
