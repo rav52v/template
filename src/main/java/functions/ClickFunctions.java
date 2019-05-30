@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ClickFunctions extends BaseFunction {
 
-  public void clickOn(WebElement element, long...maxWaitTime) {
+  public void clickOn(WebElement element, long... maxWaitTime) {
     log.debug("Click element {" + getElementInfo(element) + "}");
 
     long timeOutInSeconds = maxWaitTime.length > 0 ? maxWaitTime[0] : DEFAULT_WEB_DRIVER_WAIT_TIME;
@@ -27,7 +27,7 @@ public class ClickFunctions extends BaseFunction {
     }
   }
 
-  public void clickOn(By by, long...maxWaitTime) {
+  public void clickOn(By by, long... maxWaitTime) {
     log.debug("Wait for element {" + by.toString() + "} to be clickable, then click it");
 
     long timeOutInSeconds = maxWaitTime.length > 0 ? maxWaitTime[0] : DEFAULT_WEB_DRIVER_WAIT_TIME;
@@ -45,7 +45,7 @@ public class ClickFunctions extends BaseFunction {
     }
   }
 
-  public void clickAndWaitForElement(WebElement element, By locator, long...maxWaitTime) {
+  public void clickAndWaitForElement(WebElement element, By locator, long... maxWaitTime) {
     try {
       clickOn(element, maxWaitTime);
       changeImplicitlyWaitTime(0);
@@ -58,7 +58,7 @@ public class ClickFunctions extends BaseFunction {
     }
   }
 
-  public void moveToElementThenClickAnother(WebElement element, By by, long...maxWaitTime) {
+  public void moveToElementThenClickAnother(WebElement element, By by, long... maxWaitTime) {
     try {
       new Actions(driver.getDriver()).moveToElement(element).build().perform();
       clickOn(by, maxWaitTime);
@@ -69,7 +69,7 @@ public class ClickFunctions extends BaseFunction {
     }
   }
 
-  public void moveToElementThenClickAnother(WebElement elementToMove, WebElement elementTClick, long...maxWaitTime) {
+  public void moveToElementThenClickAnother(WebElement elementToMove, WebElement elementTClick, long... maxWaitTime) {
     try {
       new Actions(driver.getDriver()).moveToElement(elementToMove).build().perform();
       clickOn(elementTClick, maxWaitTime);
@@ -80,7 +80,7 @@ public class ClickFunctions extends BaseFunction {
     }
   }
 
-  public void clickNTimes(WebElement element, int number, long...maxWaitTime) {
+  public void clickNTimes(WebElement element, int number, long... maxWaitTime) {
     log.debug("Click element " + number + " times {" + getElementInfo(element) + "}");
     for (int i = 0; i < number; i++) clickOn(element, maxWaitTime);
   }

@@ -105,7 +105,7 @@ abstract class BaseFunction {
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.MINUTE, (int) timeLeftInMinutes);
 
-    return  new SimpleDateFormat("HH:mm").format(calendar.getTime());
+    return new SimpleDateFormat("HH:mm").format(calendar.getTime());
   }
 
   void scrollToElement(WebElement element, int scrollValue) {

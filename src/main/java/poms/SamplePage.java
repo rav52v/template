@@ -41,5 +41,4 @@ public class SamplePage extends PageBase {
       System.out.printf("Score: %d --> Explicit: %d\n", (System.currentTimeMillis() - startTime), time);
     }
   }
-
 }

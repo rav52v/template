@@ -31,7 +31,8 @@ public class InputFunctions extends BaseFunction {
 
     try {
       element.clear();
-    } catch (Exception ignored) {}
+    } catch (Exception ignored) {
+    }
     element.sendKeys(value);
   }
 

@@ -1,7 +1,5 @@
 package main.java.poms;
 
-import main.java.tools.Email;
-import main.java.tools.Generators;
 import main.java.utils.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
