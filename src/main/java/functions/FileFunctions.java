@@ -17,17 +17,18 @@ public class FileFunctions extends BaseFunction {
       log.debug("Created directory {" + pathOutputFolder.toAbsolutePath().toString() + "}");
   }
 
+  /**
+   * @param fileName name of captured file
+   * @param zoom zoom in: [101-...], zoom out: [1-99]
+   */
   public void captureScreenshot(String fileName, int zoom) {
     JavascriptExecutor js = (JavascriptExecutor) driver.getDriver();
     js.executeScript("document.body.style.zoom='" + zoom + "%'");
     File scrFile = ((TakesScreenshot) driver.getDriver()).getScreenshotAs(OutputType.FILE);
     File target = new File(pathOutputFolder.toAbsolutePath().toString() + "/" + fileName + ".png");
     try {
-      if (target.exists())
-        target.delete();
-
+      if (target.exists()) target.delete();
       Files.copy(scrFile.toPath(), target.toPath());
-
       log.debug("File copied to {" + pathOutputFolder.toAbsolutePath().toString() + "\\" + fileName + ".png}");
     } catch (IOException e) {
       log.error(e.toString());

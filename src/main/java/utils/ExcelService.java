@@ -22,9 +22,7 @@ public class ExcelService {
   }
 
   public static ExcelService getExcelService() {
-    if (instance == null) {
-      instance = new ExcelService();
-    }
+    if (instance == null) instance = new ExcelService();
     return instance;
   }
 

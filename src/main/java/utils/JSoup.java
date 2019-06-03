@@ -14,9 +14,7 @@ public class JSoup {
   private static JSoup instance;
 
   public static JSoup getJSoup() {
-    if (instance == null) {
-      instance = new JSoup();
-    }
+    if (instance == null) instance = new JSoup();
     return instance;
   }
 

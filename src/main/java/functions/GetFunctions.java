@@ -14,7 +14,6 @@ public class GetFunctions extends BaseFunction {
 
   public String getTextFromElement(WebElement element) {
     log.debug("Get text from element {" + getElementInfo(element) + "}");
-
     String value = element.getText();
 
     if (value == null) value = element.getAttribute("value").trim();
@@ -28,7 +27,6 @@ public class GetFunctions extends BaseFunction {
   public String getTextFromParentElement(WebElement element) {
     element = element.findElement(By.xpath("./.."));
     log.debug("Get text from element {" + getElementInfo(element) + "}");
-
     String value = element.getText();
 
     if (value == null) value = element.getAttribute("value").trim();
@@ -71,18 +69,13 @@ public class GetFunctions extends BaseFunction {
   public String searchElementInElementAndGetAttribute(WebElement element, By by, String attributeName) {
     log.debug("Search element located By {" + by + "} in element {"
             + getElementInfo(element) + "} and get attribute {" + attributeName + "}");
-
     String result = "";
     for (int i = 0; i < 5; i++) {
       try {
         result = element.findElement(by).getAttribute(attributeName);
         break;
       } catch (StaleElementReferenceException e) {
-        try {
-          Thread.sleep(500);
-        } catch (InterruptedException e1) {
-          e1.printStackTrace();
-        }
+        sleeper(500);
         if (i == 4) {
           result = "";
           log.error("Element {" + getElementInfo(element) + "} was stale, tried 4 times.");
@@ -108,10 +101,8 @@ public class GetFunctions extends BaseFunction {
       return null;
     }
 
-    for (WebElement element : elementList) {
-      if (element.getText().matches(regex))
-        return element;
-    }
+    for (WebElement element : elementList) if (element.getText().matches(regex)) return element;
+
 
     log.debug("List doesn't contain given regex value {" + regex + "}");
     return null;

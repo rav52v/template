@@ -13,10 +13,10 @@ public class MainPage extends PageBase {
   @FindBy(css = "#tables-slider-1 a")
   private List<WebElement> sample1;
 
-  @FindBy(css = "body > div:nth-child(4) > div:nth-child(5) > div")
+  @FindBy(css = "body > div.mui-container.tp-select-readings.tp-home > div:nth-child(6) > div > a > img")
   private WebElement sample2;
 
-  @FindBy(css = "#latest-ul > li.latest-doodle.on > div > div > a > img")
+  @FindBy(css = "body > div.tp-search-widget > div > h4")
   private WebElement sample3;
 
   @FindBy(id = "filestyle-0")
@@ -45,7 +45,9 @@ public class MainPage extends PageBase {
 
   private void secondMethod() {
     browser.openPage("https://www.tutorialspoint.com/");
-    browser.scrollIntoView(sample2, "start", true);
+    file.captureScreenshot("test before", 120);
+    action.executeJavaScriptExecutor("arguments[0].click()", sample2);
+    file.captureScreenshot("test after", 120);
     browser.closeDriver(3000);
   }
 }

@@ -22,8 +22,7 @@ public class Driver {
 
   public WebDriver getDriver() {
     if (driverMap.get(key) == null) {
-      LogManager.getLogger().info("Opening browser in {" +
-              (headless ? "headless" : "normal") + "} mode.");
+      LogManager.getLogger().info("Opening browser in {" + (headless ? "headless" : "normal") + "} mode.");
       setProperties();
       driverMap.get(key).manage().timeouts().implicitlyWait(getConfigService()
               .getLongProperty("general.implicitlyWaitTime"), TimeUnit.SECONDS);
@@ -49,8 +48,7 @@ public class Driver {
   public void afterTest(int sleepAfter) {
     try {
       Thread.sleep(sleepAfter);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+    } catch (InterruptedException ignored) {
     }
     closeDriver();
   }
@@ -62,15 +60,14 @@ public class Driver {
     if (headless) {
       chromeOptions.addArguments("--window-size=1500,4000");
       chromeOptions.addArguments("--disable-gpu");
-    } else
-      chromeOptions.addArguments("--start-maximized");
+    } else chromeOptions.addArguments("--start-maximized");
 
     return chromeOptions;
   }
 
   private void setProperties() {
     WebDriverManager.chromedriver().setup();
-    key = new Random().nextInt(9999);
+    key = new Random().nextInt(1999999999);
     driverMap.put(key, new ChromeDriver(setChromeOptions()));
   }
 }

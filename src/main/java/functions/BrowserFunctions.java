@@ -53,7 +53,7 @@ public class BrowserFunctions extends BaseFunction {
     try {
       driver.getDriver().get(linkAddress);
       log.debug("Page loaded {" + driver.getDriver().getCurrentUrl() + "}, operation took {"
-              + getPastTimeInMillis(startTime) + "}");
+              + getPassedTimeInMillis(startTime) + "}");
     } catch (TimeoutException e) {
       log.debug("Page was loading too long, page load time is: "
               + getConfigService().getLongProperty("general.pageLoadTime"));
@@ -105,7 +105,7 @@ public class BrowserFunctions extends BaseFunction {
     }
     while (refreshingListAfterSize > refreshingListSize);
 
-    log.debug("Found {" + elementList.size() + " elements}, operation took {" + getPastTimeInMillis(startTime) + "}");
+    log.debug("Found {" + elementList.size() + " elements}, operation took {" + getPassedTimeInMillis(startTime) + "}");
   }
 
   public Alert getAlertControl() {

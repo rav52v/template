@@ -43,8 +43,7 @@ public class Gui extends JPanel {
   }
 
   public static Gui getInstance() {
-    if (instance == null)
-      instance = new Gui();
+    if (instance == null) instance = new Gui();
     return instance;
   }
 

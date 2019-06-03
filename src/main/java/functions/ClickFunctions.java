@@ -1,9 +1,6 @@
 package main.java.functions;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -28,7 +25,7 @@ public class ClickFunctions extends BaseFunction {
   }
 
   public void clickOn(By by, long... maxWaitTime) {
-    log.debug("Wait for element {" + by.toString() + "} to be clickable, then click it");
+    log.debug("Wait for element {" + by + "} to be clickable, then click it");
 
     long timeOutInSeconds = maxWaitTime.length > 0 ? maxWaitTime[0] : DEFAULT_WEB_DRIVER_WAIT_TIME;
     changeImplicitlyWaitTime(0);
@@ -43,6 +40,17 @@ public class ClickFunctions extends BaseFunction {
       sleeper(1000);
       click(element);
     }
+  }
+
+  public void clickUsingJavaScript(WebElement element) {
+    log.debug("Click element {" + getElementInfo(element) + "} using JavaScript.");
+    ((JavascriptExecutor) driver.getDriver()).executeScript("arguments[0].click()", element);
+  }
+
+  public void clickUsingJavaScript(By by) {
+    log.debug("Click element {" + by + "} using JavaScript.");
+    ((JavascriptExecutor) driver.getDriver())
+            .executeScript("arguments[0].click()", driver.getDriver().findElement(by));
   }
 
   public void clickAndWaitForElement(WebElement element, By locator, long... maxWaitTime) {

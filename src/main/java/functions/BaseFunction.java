@@ -93,7 +93,7 @@ abstract class BaseFunction {
             .getLongProperty("general.implicitlyWaitTime"), TimeUnit.SECONDS);
   }
 
-  long getPastTimeInMillis(long startTime) {
+  long getPassedTimeInMillis(long startTime) {
     return System.currentTimeMillis() - startTime;
   }
 

@@ -25,7 +25,7 @@ public class ConfigService {
   public static ConfigService getConfigService() {
     if (instance == null) {
       instance = new ConfigService();
-      LogManager.getLogger().info("Config created.");
+      LogManager.getLogger().debug("Config created.");
     }
     return instance;
   }
@@ -69,9 +69,8 @@ public class ConfigService {
 
   public <T> Object getProperty(String property, Class<T> tClass) {
     Object result = System.getProperty(property);
-    if (result == null) {
-      result = configProvider.getProperty(property, tClass);
-    } else {
+    if (result == null) result = configProvider.getProperty(property, tClass);
+    else {
       switch (tClass.getCanonicalName()) {
         case "java.lang.Boolean":
           result = Boolean.parseBoolean(System.getProperty(property));
