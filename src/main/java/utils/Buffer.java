@@ -12,8 +12,7 @@ public class Buffer {
   }
 
   public static Buffer getInstance() {
-    if (instance == null)
-      instance = new Buffer();
+    if (instance == null) instance = new Buffer();
     return instance;
   }
 

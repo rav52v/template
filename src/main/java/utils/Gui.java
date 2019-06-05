@@ -21,11 +21,8 @@ public class Gui extends JPanel {
   private static Gui instance;
 
   private File[] thumbs;
-  private String sampleMail;
-  private String samplePassword;
-  private String sampleLink;
+  private String sampleMail, samplePassword, sampleLink, fileName;
   private boolean headless;
-  private String fileName;
   private int sampleInt;
 
   private Gui() {

@@ -9,12 +9,7 @@ import static main.java.utils.ConfigService.getConfigService;
 
 public class Email {
 
-  private String to;
-  private String from;
-  private String username;
-  private String password;
-  private String host;
-
+  private String to, from, username, password, host;
   private Properties props;
   private Session session;
   private Message message;
