@@ -15,13 +15,21 @@ import static main.java.utils.ConfigService.getConfigService;
 import static main.java.utils.Gui.isGuiCreated;
 
 public class Driver {
+  private static Driver instance;
   private static Map<Integer, WebDriver> driverMap = new HashMap<>();
   private static int key;
   private boolean headless = isGuiCreated() ?
           Gui.getInstance().isHeadless() : getConfigService().getBooleanProperty("general.headless");
 
-  public WebDriver getDriver() {
-    if (driverMap.get(key) == null) {
+  private Driver(){}
+
+  public static Driver getDriverInstance() {
+    if (instance == null) instance = new Driver();
+    return instance;
+  }
+
+  public WebDriver getWebDriver() {
+    if (driverMap.isEmpty()) {
       LogManager.getLogger().info("Opening browser in {" + (headless ? "headless" : "normal") + "} mode.");
       setProperties();
       driverMap.get(key).manage().timeouts().implicitlyWait(getConfigService()
@@ -41,7 +49,7 @@ public class Driver {
 
   private void closeDriver() {
     driverMap.get(key).quit();
-    driverMap.put(key, null);
+    driverMap.clear();
     LogManager.getLogger().info("The browser has been closed.");
   }
 

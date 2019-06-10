@@ -1,5 +1,6 @@
 package main.java.utils;
 
+import main.java.enums.Packages;
 import org.apache.logging.log4j.LogManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,7 +38,8 @@ public class JSoup {
     }
     List<List<String>> values = new ArrayList<>();
     for (Element row : doc.select(cssRows)) values.add(new ArrayList<>(row.select(cssRecordsInRow).eachText()));
-    ExcelService.getExcelService().createTable(doc.select(cssColumnTitles).eachText(), values, fileName);
+    ExcelService.getExcelService().createTable(
+            doc.select(cssColumnTitles).eachText(), values, fileName, Packages.OUTPUT_FOLDER);
     LogManager.getLogger().info("Exported rows: " + values.size());
   }
 }

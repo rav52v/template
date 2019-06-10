@@ -1,5 +1,6 @@
 package main.java.functions;
 
+import main.java.enums.Packages;
 import main.java.utils.Driver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,13 +21,13 @@ import static main.java.utils.ConfigService.getConfigService;
 
 abstract class BaseFunction {
   Driver driver;
-  final Logger log = LogManager.getLogger();
-  final Path pathInputFolder = Paths.get("inputFolder");
-  final Path pathOutputFolder = Paths.get("outputFolder");
+  Logger log = LogManager.getLogger();
+  final String PATH_TO_INPUT_FOLDER = Packages.INPUT_FOLDER.getPackagePath();
+  final String PATH_TO_OUTPUT_FOLDER = Packages.OUTPUT_FOLDER.getPackagePath();
   final long DEFAULT_WEB_DRIVER_WAIT_TIME = getConfigService().getLongProperty("general.webDriverWait");
 
   BaseFunction() {
-    driver = new Driver();
+    driver = Driver.getDriverInstance();
   }
 
   public void sleeper(int milliseconds) {
@@ -38,12 +39,10 @@ abstract class BaseFunction {
   }
 
   public void waitForPageLoading() {
-    // wait for Ajax actions to begin
     sleeper(1000);
-
     changeImplicitlyWaitTime(0);
 
-    new WebDriverWait(driver.getDriver(), getConfigService().getLongProperty("general.pageLoadTime"))
+    new WebDriverWait(driver.getWebDriver(), getConfigService().getLongProperty("general.pageLoadTime"))
             .ignoring(StaleElementReferenceException.class).until(new ExpectedCondition<Boolean>() {
 
       private final int MAX_NO_JQUERY_COUNTER = 3;
@@ -57,26 +56,18 @@ abstract class BaseFunction {
         Long jQueryActive = (Long) ((JavascriptExecutor) driver)
                 .executeScript("if(window.jQuery) { return window.jQuery.active; } else { return -1; }");
 
-        log.debug(String.format("waitForPageLoading -> document.readyState: %s, jQuery.active: %d"
-                , documentReadyState, jQueryActive));
+        if (!documentReadyState.equals("complete")) log.debug("Page loading: waiting for JavaScript");
+        if (jQueryActive == -1) log.debug("Page loading: waiting for jQuery");
 
         if (jQueryActive == -1) {
           noJQueryCounter++;
-
-          if (noJQueryCounter >= MAX_NO_JQUERY_COUNTER) {
-            return true;
-          }
-
-        } else {
-          noJQueryCounter = 0;
-        }
+          if (noJQueryCounter >= MAX_NO_JQUERY_COUNTER) return true;
+        } else noJQueryCounter = 0;
 
         return "complete".equals(documentReadyState) && jQueryActive == 0;
       }
     });
     turnOnImplicitlyWaitTime();
-
-    // wait for Ajax responses to be processed
     sleeper(500);
   }
 
@@ -85,11 +76,11 @@ abstract class BaseFunction {
   }
 
   void changeImplicitlyWaitTime(int milliSeconds) {
-    driver.getDriver().manage().timeouts().implicitlyWait(milliSeconds, TimeUnit.MILLISECONDS);
+    driver.getWebDriver().manage().timeouts().implicitlyWait(milliSeconds, TimeUnit.MILLISECONDS);
   }
 
   void turnOnImplicitlyWaitTime() {
-    driver.getDriver().manage().timeouts().implicitlyWait(getConfigService()
+    driver.getWebDriver().manage().timeouts().implicitlyWait(getConfigService()
             .getLongProperty("general.implicitlyWaitTime"), TimeUnit.SECONDS);
   }
 
@@ -109,7 +100,7 @@ abstract class BaseFunction {
   }
 
   void scrollIntoView(WebElement element) {
-    ((JavascriptExecutor) driver.getDriver()).executeScript("arguments[0].scrollIntoView()", element);
+    ((JavascriptExecutor) driver.getWebDriver()).executeScript("arguments[0].scrollIntoView()", element);
   }
 }
 

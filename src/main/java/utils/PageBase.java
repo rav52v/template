@@ -21,6 +21,6 @@ public abstract class PageBase {
     action = new ActionFunctions();
     get = new GetFunctions();
 
-    PageFactory.initElements(new Driver().getDriver(), this);
+    PageFactory.initElements(Driver.getDriverInstance().getWebDriver(), this);
   }
 }

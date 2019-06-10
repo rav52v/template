@@ -41,6 +41,10 @@ public class GetFunctions extends BaseFunction {
     return element.getAttribute(attribute);
   }
 
+  public String getValueFromReadOnlyElement(WebElement element) {
+    return (String) ((JavascriptExecutor) driver).executeScript("return arguments[0].value", element);
+  }
+
   public String searchElementInElementAndGetText(WebElement element, By by) {
     log.debug("Search element located By {" + by + "} in element {"
             + getElementInfo(element) + "} and get text");
@@ -87,7 +91,7 @@ public class GetFunctions extends BaseFunction {
   }
 
   public String getCurrentUrl() {
-    return driver.getDriver().getCurrentUrl();
+    return driver.getWebDriver().getCurrentUrl();
   }
 
   /**
@@ -124,7 +128,7 @@ public class GetFunctions extends BaseFunction {
   }
 
   public Object returnJavaScriptValue(String script, Object... args) {
-    return ((JavascriptExecutor) driver.getDriver()).executeScript("return " + script, args);
+    return ((JavascriptExecutor) driver.getWebDriver()).executeScript("return " + script, args);
   }
 
   public WebElement getElementWithDifferentCssProperty(List<WebElement> webElements, String cssProperty) {
@@ -134,5 +138,14 @@ public class GetFunctions extends BaseFunction {
     String differentValue = values.get(0).equals(values.get(1)) ? values.get(values.size() - 1) : values.get(0);
     for (WebElement element : webElements) if (element.getCssValue(cssProperty).equals(differentValue)) return element;
     throw new RuntimeException("Couldn't find element with one different cssProperty: " + cssProperty);
+  }
+
+  public String getElementXPath(WebElement element) {
+    return (String) ((JavascriptExecutor) driver.getWebDriver()).executeScript(
+            "gPt = function (c) {if (c.id !== '') {return '//'+c.tagName + '[@id=\\'' + c.id + '\\']'}" +
+                    "if (c === document.body) {return c.tagName}var a = 0;var e = c.parentNode.childNodes;" +
+                    "for (var b = 0; b < e.length; b++) {var d = e[b];if (d === c) {return gPt(c.parentNode) " +
+                    "+ '/' + c.tagName + '[' + (a + 1) + ']'}if (d.nodeType === 1 && d.tagName === c.tagName) " +
+                    "{a++}}};return gPt(arguments[0]);", element);
   }
 }

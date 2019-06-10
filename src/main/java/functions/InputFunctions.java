@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.Select;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.util.Arrays;
-import java.util.List;
 
 public class InputFunctions extends BaseFunction {
 
@@ -20,7 +19,7 @@ public class InputFunctions extends BaseFunction {
    */
   public void clickElementAndSendKeysToAnother(WebElement elementToClick, WebElement elementToSendKeys, CharSequence... value) {
     log.debug("Click element {" + getElementInfo(elementToClick) + "}...");
-    new Actions(driver.getDriver()).moveToElement(elementToClick).click().sendKeys(value).perform();
+    new Actions(driver.getWebDriver()).moveToElement(elementToClick).click().sendKeys(value).perform();
     sendKeysToElement(elementToSendKeys, value);
   }
 
@@ -46,7 +45,7 @@ public class InputFunctions extends BaseFunction {
 
   public void sendKeys(CharSequence... value) {
     log.debug("Send keys {" + Arrays.toString(value) + "}");
-    new Actions(driver.getDriver()).sendKeys(value).perform();
+    new Actions(driver.getWebDriver()).sendKeys(value).perform();
   }
 
   protected void selectByVisibleTextWithRegex(WebElement selectElement, String regex) {

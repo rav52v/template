@@ -1,6 +1,7 @@
 package main.java.poms;
 
 import main.java.utils.PageBase;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,13 +20,13 @@ public class MainPage extends PageBase {
   @FindBy(css = "body > div.tp-search-widget > div > h4")
   private WebElement sample3;
 
-  @FindBy(id = "filestyle-0")
+  @FindBy(css = "body.graph:nth-child(2) div:nth-child(3) span:nth-child(1) > div.gotit:nth-child(6)")
   private WebElement sample4;
 
   private By cloud = By.cssSelector("#latest-ul > li.latest-doodle.on > div > div > a > img");
 
   public MainPage() {
-    secondMethod();
+    for (int i = 0; i < 30; i++) thirdMethod();
   }
 
 
@@ -33,14 +34,15 @@ public class MainPage extends PageBase {
     browser.openPage(getConfigService().getStringProperty("general.linkAddress"));
     browser.openNewTab();
     browser.switchToSecondTab();
-    browser.openPage("https://www.youtube.com/?hl=pl&gl=PL");
-    browser.sleeper(500);
+    browser.openPage("https://www.google.pl/");
+    browser.sleeper(200);
     browser.switchToMainTab();
-    browser.openPage("http://www.google.pl/");
+    LogManager.getLogger().info(get.getCurrentUrl());
+    browser.openPage("https://www.tutorialspoint.com/");
     browser.switchToSecondTab();
     browser.closeTab();
     browser.switchToMainTab();
-    browser.closeDriver(1000);
+    browser.closeDriver(0);
   }
 
   private void secondMethod() {
@@ -49,5 +51,16 @@ public class MainPage extends PageBase {
     action.executeJavaScriptExecutor("arguments[0].click()", sample2);
     file.captureScreenshot("test after", 120);
     browser.closeDriver(3000);
+  }
+
+  private void thirdMethod() {
+    browser.openPage("https://www.tutorialspoint.com/");
+    browser.openPage("https://www.google.pl/");
+    browser.openPage("https://www.udemy.com/java-tutorial/");
+    browser.openPage("https://www.guru99.com/java-tutorial.html");
+    browser.openPage("https://www.oracle.com/pl/index.html");
+    browser.openPage("https://www.javatpoint.com/java-tutorial");
+    browser.openPage("https://www.w3schools.com/");
+    browser.closeDriver(0);
   }
 }
