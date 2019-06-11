@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExcelService {
@@ -149,7 +150,7 @@ public class ExcelService {
 
     if (sheet.getLastRowNum() == 0) new_blank_row_index = 1;
     else {
-      for (int rowIndex = 1; rowIndex <= 9999999; rowIndex++) {
+      for (int rowIndex = 1; rowIndex <= 99999999; rowIndex++) {
         if (isCellEmpty(rowIndex, indexOfColumn, fileName, directory)) {
           new_blank_row_index = rowIndex;
           break;
@@ -170,6 +171,35 @@ public class ExcelService {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public List<String> getDataFromColumn(String regexColumnName, String fileName, Packages directory) {
+    List<String> values = new ArrayList<>();
+    String path = directory.getPackagePath() + fileName + ".xlsx";
+    try {
+      workbook = new XSSFWorkbook(new FileInputStream(path));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    sheet = workbook.getSheetAt(0);
+    int indexOfColumn = 0;
+    row = sheet.getRow(0);
+
+    for (int columnIndex = 0; columnIndex < row.getLastCellNum(); columnIndex++) {
+      if (row.getCell(columnIndex).getStringCellValue().matches(regexColumnName)) {
+        indexOfColumn = columnIndex;
+        break;
+      }
+    }
+
+    if (isCellEmpty(1, indexOfColumn, fileName, directory)) return null;
+    for (int rowIndex = 1; rowIndex <= 99999999; rowIndex++) {
+      if (!isCellEmpty(rowIndex, indexOfColumn, fileName, directory)) {
+        values.add(sheet.getRow(rowIndex).getCell(indexOfColumn).getStringCellValue());
+      } else break;
+    }
+    /* System.out.println(sheet.getRow(0).getCell(indexOfColumn).getStringCellValue()); */
+    return values;
   }
 
   /**

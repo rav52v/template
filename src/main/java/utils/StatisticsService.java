@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class StatisticsService {
 
@@ -40,20 +41,22 @@ public class StatisticsService {
     log.debug("Statistics - " + fileName + ".xlsx: added new value: " + value + " in column " + link);
   }
 
+  public long getAvgNumericValueFromColumn(String regexColumnName, String fileName){
+    List<String> values = ExcelService.getExcelService()
+            .getDataFromColumn(regexColumnName, fileName, Packages.STATISTICS_FOLDER);
+    return values.stream().mapToLong(Long::parseLong).sum() / values.size();
+  }
+
 
 //  public static void main(String[] args) {
-//    for (int i = 0; i < 5; i++) {
-//      StatisticsService.getStatisticsService().logPageLoadTime("https://www.google.com/", String.valueOf(new Generators().randomFromRange(2000, 4000)));
-//    }
-//
-//    for (int i = 0; i < 5; i++) {
-//      StatisticsService.getStatisticsService().logPageLoadTime("https://www.youtube.com/", String.valueOf(new Generators().randomFromRange(2000, 4000)));
-//    }
-//
-//    for (int i = 0; i < 5; i++) {
-//      StatisticsService.getStatisticsService().logPageLoadTime("https://www.allegro.pl/", String.valueOf(new Generators().randomFromRange(2000, 4000)));
-//    }
+//    long start = System.currentTimeMillis();
+//    System.out.println("oracle: " + StatisticsService.getStatisticsService().getAvgNumericValueFromColumn(".*oracle.*", "page_load_times"));
+//    System.out.println("google: " + StatisticsService.getStatisticsService().getAvgNumericValueFromColumn(".*google.*", "page_load_times"));
+//    System.out.println("udemy: " + StatisticsService.getStatisticsService().getAvgNumericValueFromColumn(".*udemy.*", "page_load_times"));
+//    System.out.println("w3schools: " + StatisticsService.getStatisticsService().getAvgNumericValueFromColumn(".*w3schools.*", "page_load_times"));
+//    System.out.println("tutorialspoint: " + StatisticsService.getStatisticsService().getAvgNumericValueFromColumn(".*tutorialspoint.*", "page_load_times"));
+//    System.out.println("javapoint: " + StatisticsService.getStatisticsService().getAvgNumericValueFromColumn("https://www.javatpoint.com/java-tutorial", "page_load_times"));
+//    System.out.println();
+//    System.out.println("time: " + (System.currentTimeMillis()-start));
 //  }
-
-
 }
