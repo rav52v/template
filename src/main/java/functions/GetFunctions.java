@@ -91,7 +91,7 @@ public class GetFunctions extends BaseFunction {
   }
 
   public String getCurrentUrl() {
-    return driver.getWebDriver().getCurrentUrl();
+    return driver.getDriver().getCurrentUrl();
   }
 
   /**
@@ -128,7 +128,7 @@ public class GetFunctions extends BaseFunction {
   }
 
   public Object returnJavaScriptValue(String script, Object... args) {
-    return ((JavascriptExecutor) driver.getWebDriver()).executeScript("return " + script, args);
+    return ((JavascriptExecutor) driver.getDriver()).executeScript("return " + script, args);
   }
 
   public WebElement getElementWithDifferentCssProperty(List<WebElement> webElements, String cssProperty) {
@@ -141,7 +141,7 @@ public class GetFunctions extends BaseFunction {
   }
 
   public String getElementXPath(WebElement element) {
-    return (String) ((JavascriptExecutor) driver.getWebDriver()).executeScript(
+    return (String) ((JavascriptExecutor) driver.getDriver()).executeScript(
             "gPt = function (c) {if (c.id !== '') {return '//'+c.tagName + '[@id=\\'' + c.id + '\\']'}" +
                     "if (c === document.body) {return c.tagName}var a = 0;var e = c.parentNode.childNodes;" +
                     "for (var b = 0; b < e.length; b++) {var d = e[b];if (d === c) {return gPt(c.parentNode) " +

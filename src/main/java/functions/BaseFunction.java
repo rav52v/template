@@ -11,8 +11,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +40,7 @@ abstract class BaseFunction {
     sleeper(1000);
     changeImplicitlyWaitTime(0);
 
-    new WebDriverWait(driver.getWebDriver(), getConfigService().getLongProperty("general.pageLoadTime"))
+    new WebDriverWait(driver.getDriver(), getConfigService().getLongProperty("general.pageLoadTime"))
             .ignoring(StaleElementReferenceException.class).until(new ExpectedCondition<Boolean>() {
 
       private final int MAX_NO_JQUERY_COUNTER = 3;
@@ -76,11 +74,11 @@ abstract class BaseFunction {
   }
 
   void changeImplicitlyWaitTime(int milliSeconds) {
-    driver.getWebDriver().manage().timeouts().implicitlyWait(milliSeconds, TimeUnit.MILLISECONDS);
+    driver.getDriver().manage().timeouts().implicitlyWait(milliSeconds, TimeUnit.MILLISECONDS);
   }
 
   void turnOnImplicitlyWaitTime() {
-    driver.getWebDriver().manage().timeouts().implicitlyWait(getConfigService()
+    driver.getDriver().manage().timeouts().implicitlyWait(getConfigService()
             .getLongProperty("general.implicitlyWaitTime"), TimeUnit.SECONDS);
   }
 
@@ -100,28 +98,6 @@ abstract class BaseFunction {
   }
 
   void scrollIntoView(WebElement element) {
-    ((JavascriptExecutor) driver.getWebDriver()).executeScript("arguments[0].scrollIntoView()", element);
+    ((JavascriptExecutor) driver.getDriver()).executeScript("arguments[0].scrollIntoView()", element);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

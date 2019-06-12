@@ -11,7 +11,7 @@ public class ClickFunctions extends BaseFunction {
     log.debug("Click element {" + getElementInfo(element) + "}");
     long timeOutInSeconds = maxWaitTime.length > 0 ? maxWaitTime[0] : DEFAULT_WEB_DRIVER_WAIT_TIME;
     changeImplicitlyWaitTime(0);
-    new WebDriverWait(driver.getWebDriver(), timeOutInSeconds).until(ExpectedConditions.elementToBeClickable(element));
+    new WebDriverWait(driver.getDriver(), timeOutInSeconds).until(ExpectedConditions.elementToBeClickable(element));
     turnOnImplicitlyWaitTime();
     try {
       click(element);
@@ -27,9 +27,9 @@ public class ClickFunctions extends BaseFunction {
     log.debug("Wait for element {" + by + "} to be clickable, then click it");
     long timeOutInSeconds = maxWaitTime.length > 0 ? maxWaitTime[0] : DEFAULT_WEB_DRIVER_WAIT_TIME;
     changeImplicitlyWaitTime(0);
-    new WebDriverWait(driver.getWebDriver(), timeOutInSeconds).until(ExpectedConditions.elementToBeClickable(by));
+    new WebDriverWait(driver.getDriver(), timeOutInSeconds).until(ExpectedConditions.elementToBeClickable(by));
     turnOnImplicitlyWaitTime();
-    WebElement element = driver.getWebDriver().findElement(by);
+    WebElement element = driver.getDriver().findElement(by);
     try {
       click(element);
     } catch (WebDriverException e) {
@@ -42,20 +42,20 @@ public class ClickFunctions extends BaseFunction {
 
   public void clickUsingJavaScript(WebElement element) {
     log.debug("Click element {" + getElementInfo(element) + "} using JavaScript.");
-    ((JavascriptExecutor) driver.getWebDriver()).executeScript("arguments[0].click()", element);
+    ((JavascriptExecutor) driver.getDriver()).executeScript("arguments[0].click()", element);
   }
 
   public void clickUsingJavaScript(By by) {
     log.debug("Click element {" + by + "} using JavaScript.");
-    ((JavascriptExecutor) driver.getWebDriver())
-            .executeScript("arguments[0].click()", driver.getWebDriver().findElement(by));
+    ((JavascriptExecutor) driver.getDriver())
+            .executeScript("arguments[0].click()", driver.getDriver().findElement(by));
   }
 
   public void clickAndWaitForElement(WebElement element, By locator, long... maxWaitTime) {
     try {
       clickOn(element, maxWaitTime);
       changeImplicitlyWaitTime(0);
-      new WebDriverWait(driver.getWebDriver(), DEFAULT_WEB_DRIVER_WAIT_TIME).until(ExpectedConditions
+      new WebDriverWait(driver.getDriver(), DEFAULT_WEB_DRIVER_WAIT_TIME).until(ExpectedConditions
               .visibilityOfElementLocated(locator));
       turnOnImplicitlyWaitTime();
     } catch (TimeoutException e) {
@@ -66,7 +66,7 @@ public class ClickFunctions extends BaseFunction {
 
   public void moveToElementThenClickAnother(WebElement element, By by, long... maxWaitTime) {
     try {
-      new Actions(driver.getWebDriver()).moveToElement(element).build().perform();
+      new Actions(driver.getDriver()).moveToElement(element).build().perform();
       clickOn(by, maxWaitTime);
       waitForPageLoading();
     } catch (WebDriverException e) {
@@ -77,7 +77,7 @@ public class ClickFunctions extends BaseFunction {
 
   public void moveToElementThenClickAnother(WebElement elementToMove, WebElement elementTClick, long... maxWaitTime) {
     try {
-      new Actions(driver.getWebDriver()).moveToElement(elementToMove).build().perform();
+      new Actions(driver.getDriver()).moveToElement(elementToMove).build().perform();
       clickOn(elementTClick, maxWaitTime);
       waitForPageLoading();
     } catch (WebDriverException e) {
@@ -93,10 +93,10 @@ public class ClickFunctions extends BaseFunction {
 
   public void doubleClick(WebElement element) {
     log.debug("Double click element {" + getElementInfo(element) + "}");
-    new Actions(driver.getWebDriver()).doubleClick(element).perform();
+    new Actions(driver.getDriver()).doubleClick(element).perform();
   }
 
   private void click(WebElement element) {
-    new Actions(driver.getWebDriver()).moveToElement(element).click().perform();
+    new Actions(driver.getDriver()).moveToElement(element).click().perform();
   }
 }

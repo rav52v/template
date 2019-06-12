@@ -3,6 +3,8 @@ package main.java.functions;
 import main.java.utils.StatisticsService;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -14,13 +16,13 @@ public class BrowserFunctions extends BaseFunction {
 
   /**
    * Switches to window, which is not main window
-   * This method support only one additional window
+   * This method supports only one additional window
    */
   public void switchToSecondTab() {
     log.debug("Switch to second tab");
     if (mainWindowHandle == null) mainWindowHandle = driver.getMainWindowHandle();
-    for (String winHandle : driver.getWebDriver().getWindowHandles())
-      if (!winHandle.equals(mainWindowHandle)) driver.setDriver(driver.getWebDriver().switchTo().window(winHandle));
+    for (String winHandle : driver.getDriver().getWindowHandles())
+      if (!winHandle.equals(mainWindowHandle)) driver.setDriver(driver.getDriver().switchTo().window(winHandle));
   }
 
   /**
@@ -28,14 +30,14 @@ public class BrowserFunctions extends BaseFunction {
    */
   public void switchToMainTab() {
     log.debug("Switch to main tab");
-    driver.setDriver(driver.getWebDriver().switchTo().window(mainWindowHandle));
+    driver.setDriver(driver.getDriver().switchTo().window(mainWindowHandle));
   }
 
   /**
    * Closes focused tab
    */
   public void closeTab() {
-    driver.getWebDriver().close();
+    driver.getDriver().close();
   }
 
   /**
@@ -43,7 +45,7 @@ public class BrowserFunctions extends BaseFunction {
    */
   public void openNewTab() {
     log.debug("Open new tab");
-    ((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open();");
+    ((JavascriptExecutor) driver.getDriver()).executeScript("window.open();");
     switchToSecondTab();
   }
 
@@ -51,8 +53,8 @@ public class BrowserFunctions extends BaseFunction {
     long startTime = System.currentTimeMillis();
     log.debug("Loading page (expected) {" + linkAddress + "}");
     try {
-      driver.getWebDriver().get(linkAddress);
-      log.debug("Page loaded {" + driver.getWebDriver().getCurrentUrl() + "}, operation took {"
+      driver.getDriver().get(linkAddress);
+      log.debug("Page loaded {" + driver.getDriver().getCurrentUrl() + "}, operation took {"
               + getPassedTimeInMillis(startTime) + "}");
     } catch (TimeoutException e) {
       log.debug("Page was loading too long, page load time is: "
@@ -69,12 +71,12 @@ public class BrowserFunctions extends BaseFunction {
   }
 
   public void scrollPageBy(int widthToScroll, int heightToScroll) {
-    ((JavascriptExecutor) driver.getWebDriver())
+    ((JavascriptExecutor) driver.getDriver())
             .executeScript("window.scrollBy(arguments[0],arguments[1])", widthToScroll, heightToScroll);
   }
 
   public void scrollIntoView(WebElement element) {
-    ((JavascriptExecutor) driver.getWebDriver()).executeScript("arguments[0].scrollIntoView()", element);
+    ((JavascriptExecutor) driver.getDriver()).executeScript("arguments[0].scrollIntoView()", element);
   }
 
   /**
@@ -83,14 +85,14 @@ public class BrowserFunctions extends BaseFunction {
    * @param alignment One of "start", "center", "end", or "nearest"
    */
   public void scrollIntoView(WebElement element, String alignment, boolean... smooth) {
-    ((JavascriptExecutor) driver.getWebDriver()).executeScript(
+    ((JavascriptExecutor) driver.getDriver()).executeScript(
             "arguments[0].scrollIntoView({behavior: \""
                     + (smooth.length == 0 ? "auto" : (smooth[0] ? "smooth" : "auto"))
                     + "\", block: \"" + alignment + "\"})", element);
   }
 
   public void refreshPage() {
-    driver.getWebDriver().navigate().refresh();
+    driver.getDriver().navigate().refresh();
   }
 
   /**
@@ -101,7 +103,7 @@ public class BrowserFunctions extends BaseFunction {
     int refreshingListSize, refreshingListAfterSize;
     do {
       refreshingListSize = elementList.size();
-      new Actions(driver.getWebDriver()).sendKeys(Keys.END).perform();
+      new Actions(driver.getDriver()).sendKeys(Keys.END).perform();
       waitForPageLoading();
       refreshingListAfterSize = elementList.size();
     }
@@ -111,6 +113,23 @@ public class BrowserFunctions extends BaseFunction {
   }
 
   public Alert getAlertControl() {
-    return driver.getWebDriver().switchTo().alert();
+    return driver.getDriver().switchTo().alert();
+  }
+
+  public void acceptAlert() {
+    changeImplicitlyWaitTime(0);
+    int i = 0;
+    while (i++ < 10) {
+      try {
+        Alert a = new WebDriverWait(driver.getDriver(), 5).until(ExpectedConditions.alertIsPresent());
+        a.accept();
+        log.debug("Accepted alert");
+        break;
+      } catch (NoAlertPresentException e) {
+        log.debug("Waiting for alert, attempt {" + i + "/10}");
+      } finally {
+        turnOnImplicitlyWaitTime();
+      }
+    }
   }
 }

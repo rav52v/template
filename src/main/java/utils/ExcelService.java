@@ -241,7 +241,6 @@ public class ExcelService {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    sheet = workbook.getSheetAt(0);
-    return sheet.getRow(rowIndex) != null;
+    return workbook.getSheetAt(0).getRow(rowIndex) != null;
   }
 }

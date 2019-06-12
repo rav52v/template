@@ -26,7 +26,7 @@ public class MainPage extends PageBase {
   private By cloud = By.cssSelector("#latest-ul > li.latest-doodle.on > div > div > a > img");
 
   public MainPage() {
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 10; i++)
     thirdMethod();
   }
 

@@ -23,9 +23,9 @@ public class FileFunctions extends BaseFunction {
    * @param zoom zoom in: [101-...], zoom out: [1-99]
    */
   public void captureScreenshot(String fileName, int zoom) {
-    JavascriptExecutor js = (JavascriptExecutor) driver.getWebDriver();
+    JavascriptExecutor js = (JavascriptExecutor) driver.getDriver();
     js.executeScript("document.body.style.zoom='" + zoom + "%'");
-    File scrFile = ((TakesScreenshot) driver.getWebDriver()).getScreenshotAs(OutputType.FILE);
+    File scrFile = ((TakesScreenshot) driver.getDriver()).getScreenshotAs(OutputType.FILE);
     File target = new File(PATH_TO_OUTPUT_FOLDER + fileName + ".png");
     try {
       if (target.exists()) target.delete();
@@ -42,7 +42,7 @@ public class FileFunctions extends BaseFunction {
     log.debug("Capture image of element {" + getElementInfo(element) + "}");
     File target = new File(PATH_TO_OUTPUT_FOLDER + fileName + ".png");
     if (target.exists()) target.delete();
-    File screen = ((TakesScreenshot) driver.getWebDriver()).getScreenshotAs(OutputType.FILE);
+    File screen = ((TakesScreenshot) driver.getDriver()).getScreenshotAs(OutputType.FILE);
 
     Point p = element.getLocation();
     int width = element.getSize().getWidth();
@@ -58,8 +58,8 @@ public class FileFunctions extends BaseFunction {
       e.printStackTrace();
     } catch (RasterFormatException ex) {
       log.error(String.format("%s\nelement - parentX: %d, parentY: %d, width: %d, height: %d\nbrowser - x: %d, y: %d",
-              ex.toString(), p.getX(), p.getY(), width, height, driver.getWebDriver().manage().window().getSize().width,
-              driver.getWebDriver().manage().window().getSize().height));
+              ex.toString(), p.getX(), p.getY(), width, height, driver.getDriver().manage().window().getSize().width,
+              driver.getDriver().manage().window().getSize().height));
     }
   }
 

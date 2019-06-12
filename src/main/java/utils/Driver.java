@@ -28,7 +28,7 @@ public class Driver {
     return instance;
   }
 
-  public WebDriver getWebDriver() {
+  public WebDriver getDriver() {
     if (driverMap.isEmpty()) {
       LogManager.getLogger().info("Opening browser in {" + (headless ? "headless" : "normal") + "} mode.");
       setProperties();

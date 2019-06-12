@@ -63,8 +63,7 @@ public class Generators {
     StringBuilder result = new StringBuilder();
     for (int i = 0; i < wordSize; i++) {
       char[] charArray = {gLower(1).charAt(0), gUpper(1).charAt(0), gNumbers(1).charAt(0)};
-      String temp = String.valueOf(charArray[random.nextInt(charArray.length)]);
-      result.append(temp);
+      result.append(charArray[random.nextInt(charArray.length)]);
     }
     return result.toString();
   }
