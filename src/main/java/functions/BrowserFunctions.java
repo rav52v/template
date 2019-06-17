@@ -108,7 +108,6 @@ public class BrowserFunctions extends BaseFunction {
       refreshingListAfterSize = elementList.size();
     }
     while (refreshingListAfterSize > refreshingListSize);
-
     log.debug("Found {" + elementList.size() + " elements}, operation took {" + getPassedTimeInMillis(startTime) + "}");
   }
 
@@ -121,8 +120,7 @@ public class BrowserFunctions extends BaseFunction {
     int i = 0;
     while (i++ < 10) {
       try {
-        Alert a = new WebDriverWait(driver.getDriver(), 5).until(ExpectedConditions.alertIsPresent());
-        a.accept();
+        new WebDriverWait(driver.getDriver(), 5).until(ExpectedConditions.alertIsPresent()).accept();
         log.debug("Accepted alert");
         break;
       } catch (NoAlertPresentException e) {

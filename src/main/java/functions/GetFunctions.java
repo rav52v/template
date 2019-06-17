@@ -16,8 +16,8 @@ public class GetFunctions extends BaseFunction {
     log.debug("Get text from element {" + getElementInfo(element) + "}");
     String value = element.getText();
 
-    if (value == null) value = element.getAttribute("value").trim();
-    else value = value.trim();
+    value = value == null || value.isEmpty() ? element.getAttribute("value").trim() : value.trim();
+    value = value.isEmpty() ? getValueFromReadOnlyElement(element) : value;
 
     log.debug("Got value {" + (value.length() < 50 ? value.replaceAll("[\n]", "") : value
             .substring(0, 50).concat("...")).replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
@@ -29,8 +29,8 @@ public class GetFunctions extends BaseFunction {
     log.debug("Get text from element {" + getElementInfo(element) + "}");
     String value = element.getText();
 
-    if (value == null) value = element.getAttribute("value").trim();
-    else value = value.trim();
+    value = value == null || value.isEmpty() ? element.getAttribute("value").trim() : value.trim();
+    value = value.isEmpty() ? getValueFromReadOnlyElement(element) : value;
 
     log.debug("Got value {" + (value.length() < 50 ? value.replaceAll("[\n]", "") : value
             .substring(0, 50).concat("...")).replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
@@ -48,7 +48,6 @@ public class GetFunctions extends BaseFunction {
   public String searchElementInElementAndGetText(WebElement element, By by) {
     log.debug("Search element located By {" + by + "} in element {"
             + getElementInfo(element) + "} and get text");
-
     String result = "";
     for (int i = 0; i < 5; i++) {
       try {
@@ -66,7 +65,6 @@ public class GetFunctions extends BaseFunction {
         }
       }
     }
-
     return result;
   }
 
@@ -86,7 +84,6 @@ public class GetFunctions extends BaseFunction {
         }
       }
     }
-
     return result;
   }
 
@@ -104,9 +101,7 @@ public class GetFunctions extends BaseFunction {
       log.error("Given list is empty");
       return null;
     }
-
     for (WebElement element : elementList) if (element.getText().matches(regex)) return element;
-
     log.debug("List doesn't contain given regex value {" + regex + "}");
     return null;
   }

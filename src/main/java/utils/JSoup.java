@@ -32,7 +32,7 @@ public class JSoup {
   public void exportTableToExcel(String url, String cssColumnTitles, String cssRows, String cssRecordsInRow, String fileName) {
     Document doc = null;
     try {
-      doc = Jsoup.connect(url).userAgent("ua").maxBodySize(999999999).get();
+      doc = Jsoup.connect(url).userAgent("ua").maxBodySize(Integer.MAX_VALUE).get();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -40,6 +40,6 @@ public class JSoup {
     for (Element row : doc.select(cssRows)) values.add(new ArrayList<>(row.select(cssRecordsInRow).eachText()));
     ExcelService.getExcelService().createTable(
             doc.select(cssColumnTitles).eachText(), values, fileName, Packages.OUTPUT_FOLDER);
-    LogManager.getLogger().info("Exported rows: " + values.size());
+    LogManager.getLogger().info("Exported rows: {" + values.size() + "}");
   }
 }

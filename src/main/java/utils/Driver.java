@@ -75,7 +75,7 @@ public class Driver {
 
   private void setProperties() {
     WebDriverManager.chromedriver().setup();
-    key = new Random().nextInt(1999999999);
+    key = new Random().nextInt(Integer.MAX_VALUE);
     driverMap.put(key, new ChromeDriver(setChromeOptions()));
   }
 }

@@ -13,16 +13,15 @@ public class Database {
   private Connection con;
   private Logger log;
 
-
   private Database() {
     log = LogManager.getLogger(this);
     try {
       con = DriverManager.getConnection(
-              getConfigService().getStringProperty("Sql.conUrl"),
-              getConfigService().getStringProperty("Sql.login"),
-              getConfigService().getStringProperty("Sql.password"));
+              getConfigService().getStringProperty("sql.conUrl"),
+              getConfigService().getStringProperty("sql.login"),
+              getConfigService().getStringProperty("sql.password"));
       con.setAutoCommit(true);
-      log.info("Connected to database {" + getConfigService().getStringProperty("Sql.conUrl") + "}");
+      log.info("Connected to database {" + getConfigService().getStringProperty("sql.conUrl") + "}");
     } catch (SQLException e) {
       e.printStackTrace();
     }

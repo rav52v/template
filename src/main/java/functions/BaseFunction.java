@@ -93,7 +93,6 @@ abstract class BaseFunction {
     double timeLeftInMinutes = (100.0 / percentDone) * (passedTimeInMinutes) - passedTimeInMinutes + 1.0;
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.MINUTE, (int) timeLeftInMinutes);
-
     return new SimpleDateFormat("HH:mm").format(calendar.getTime());
   }
 

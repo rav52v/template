@@ -1,7 +1,6 @@
 package main.java.runnable;
 
 import main.java.poms.MainPage;
-import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,30 +15,19 @@ public class App {
     Logger log = LogManager.getLogger();
 
 //    Gui.getInstance().openJPanel();
-//              TODO
 
 
     new MainPage();
 //    new SamplePage();
 
 
-//              TODO
     log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
 //    Gui.getInstance().showLogInfo();
   }
 
   private static String calculatePastTime(long start) {
-    long elapsed = System.currentTimeMillis() - start;
-    DateFormat df = new SimpleDateFormat("HH 'hours', mm 'mins,' ss 'seconds'");
+    DateFormat df = new SimpleDateFormat("HH:mm:ss");
     df.setTimeZone(TimeZone.getTimeZone("GMT+0"));
-    return df.format(new Date(elapsed));
+    return df.format(new Date(System.currentTimeMillis() - start));
   }
 }
-
-
-
-
-
-
-
-

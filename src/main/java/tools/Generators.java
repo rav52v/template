@@ -23,14 +23,12 @@ public class Generators {
     public String getName() {
       return namesArray[new Random().nextInt(namesArray.length)];
     }
-
   }
 
   private final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   private final String LOWER = UPPER.toLowerCase();
   private final String NUMBER = "0123456789";
   private Random random = new Random();
-
 
   public String gName() {
     Names[] namesArray = {Names.MALE, Names.FEMALE};

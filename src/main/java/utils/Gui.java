@@ -103,7 +103,7 @@ public class Gui extends JPanel {
             "Please enter values", 2, 1, getRandomThumbIcon());
 
 
-    // <== setter ==>
+    /* <== setter ==> */
     if (result == JOptionPane.OK_OPTION) {
       sampleMail = emailField.getText();
       samplePassword = passwordField.getText();

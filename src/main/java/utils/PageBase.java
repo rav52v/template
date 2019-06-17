@@ -1,6 +1,8 @@
 package main.java.utils;
 
 import main.java.functions.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.PageFactory;
 
 public abstract class PageBase {
@@ -11,6 +13,7 @@ public abstract class PageBase {
   protected InputFunctions input;
   protected ActionFunctions action;
   protected GetFunctions get;
+  protected Logger log;
 
   protected PageBase() {
     browser = new BrowserFunctions();
@@ -20,6 +23,7 @@ public abstract class PageBase {
     input = new InputFunctions();
     action = new ActionFunctions();
     get = new GetFunctions();
+    log = LogManager.getLogger();
 
     PageFactory.initElements(Driver.getDriverInstance().getDriver(), this);
   }

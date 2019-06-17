@@ -40,23 +40,33 @@ public class ExcelService {
     return topCellStyle;
   }
 
+  /**
+   * Creates the table:
+   * ColumnName1  ColumnName2 ColumnName3
+   * value1       value2     value3
+   * value1       value2     value3
+   * value1       value2     value3
+   *
+   * @param columns   List of column names
+   * @param values    List containing List of values for each column
+   * @param fileName  file name, e.g. "My sheet"
+   * @param directory e.g. Packages.STATISTICS_FOLDER
+   */
   public void createTable(List<String> columns, List<List<String>> values, String fileName, Packages directory) {
     workbook = new XSSFWorkbook();
     sheet = workbook.createSheet();
-    row = sheet.createRow(0);
 
     for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
-      XSSFCell cell = row.createCell(columnIndex);
+      XSSFCell cell = sheet.createRow(0).createCell(columnIndex);
       cell.setCellStyle(getDefaultColumnNameStyle());
       cell.setCellValue(columns.get(columnIndex));
     }
 
-
     for (int rowIndex = 1; rowIndex <= values.size(); rowIndex++) {
-      row = sheet.createRow(rowIndex);
       for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++)
-        row.createCell(columnIndex).setCellValue(values.get(rowIndex - 1).get(columnIndex));
+        sheet.createRow(rowIndex).createCell(columnIndex).setCellValue(values.get(rowIndex - 1).get(columnIndex));
     }
+
     for (int i = 0; i < columns.size(); i++) sheet.autoSizeColumn(i);
 
     try {
@@ -74,7 +84,7 @@ public class ExcelService {
    * @param regexColumnName name of new column we want to check if exist
    * @param fileName        e.g. my_file
    * @param directory       e.g. Packages.STATISTICS_FOLDER
-   * @return
+   * @return true if column with given name exists, or false if not
    */
   public boolean isColumnCreated(String regexColumnName, String fileName, Packages directory) {
     try {
@@ -82,8 +92,7 @@ public class ExcelService {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    sheet = workbook.getSheetAt(0);
-    row = sheet.getRow(0);
+    row = workbook.getSheetAt(0).getRow(0);
 
     for (int columnIndex = 0; columnIndex < row.getLastCellNum(); columnIndex++) {
       if (row.getCell(columnIndex).getStringCellValue().matches(regexColumnName)) return true;
@@ -105,8 +114,7 @@ public class ExcelService {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    sheet = workbook.getSheetAt(0);
-    row = sheet.getRow(0);
+    row = workbook.getSheetAt(0).getRow(0);
 
     XSSFCell cell = row.createCell(row.getLastCellNum() == -1 ? 0 : row.getLastCellNum());
     cell.setCellStyle(getDefaultColumnNameStyle());
@@ -150,7 +158,7 @@ public class ExcelService {
 
     if (sheet.getLastRowNum() == 0) new_blank_row_index = 1;
     else {
-      for (int rowIndex = 1; rowIndex <= 99999999; rowIndex++) {
+      for (int rowIndex = 1; rowIndex <= Integer.MAX_VALUE; rowIndex++) {
         if (isCellEmpty(rowIndex, indexOfColumn, fileName, directory)) {
           new_blank_row_index = rowIndex;
           break;
@@ -181,9 +189,8 @@ public class ExcelService {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    sheet = workbook.getSheetAt(0);
     int indexOfColumn = 0;
-    row = sheet.getRow(0);
+    row = workbook.getSheetAt(0).getRow(0);
 
     for (int columnIndex = 0; columnIndex < row.getLastCellNum(); columnIndex++) {
       if (row.getCell(columnIndex).getStringCellValue().matches(regexColumnName)) {
@@ -193,7 +200,7 @@ public class ExcelService {
     }
 
     if (isCellEmpty(1, indexOfColumn, fileName, directory)) return null;
-    for (int rowIndex = 1; rowIndex <= 99999999; rowIndex++) {
+    for (int rowIndex = 1; rowIndex <= Integer.MAX_VALUE; rowIndex++) {
       if (!isCellEmpty(rowIndex, indexOfColumn, fileName, directory)) {
         values.add(sheet.getRow(rowIndex).getCell(indexOfColumn).getStringCellValue());
       } else break;
