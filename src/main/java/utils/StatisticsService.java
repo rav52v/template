@@ -42,12 +42,13 @@ public class StatisticsService {
     log.debug("Statistics - {" + fileName + ".xlsx}: added new value: {" + value + "} in column {" + link + "}");
   }
 
-  public long getAvgNumericValueFromColumn(String regexColumnName, String fileName) {
-    ArrayList<Long> sorted = getSortedArrayFromNumericColumn(regexColumnName, fileName);
+  public long getAvgNumericValueFromColumn(String link, String fileName) {
+    String regexMatcher = "((https?)?:[/]{2}(www[.])?)|([.]((pl)|(com)|(org)|(de)|(uk)|(info)|(ru)|(nl)|(cn)|(eu)|(gb)|(tv)|(jp)|(hk)|(es)|(it)|(fr))[/].*)";
+    ArrayList<Long> sorted = getSortedArrayFromNumericColumn(link.replaceAll(regexMatcher, ".*"), fileName);
     long avg = sorted.stream().mapToLong(e -> e).sum() / sorted.size();
     long min = sorted.stream().mapToLong(e -> e).min().getAsLong();
     long max = sorted.stream().mapToLong(e -> e).max().getAsLong();
-    log.debug(String.format("Values: {min: %d max: %d avg: %d} for column: {%s}", min, max, avg, regexColumnName));
+    log.debug(String.format("Values: {min: %d max: %d avg: %d} for column: {%s}", min, max, avg, link));
     return avg;
   }
 
@@ -58,9 +59,4 @@ public class StatisticsService {
     Collections.sort(sorted);
     return sorted;
   }
-
-  public static void main(String[] args) {
-    System.out.println("https://www.youtube.com/".matches("((https?)?:[/]{2}(www[.])?)|([.]((pl)|(com)|(org)|(de)|(uk)|(info)|(ru)|(nl)|(cn)|(eu)|(gb)|(tv)|(jp)|(hk)|(es)|(it)|(fr))[/].*)"));
-  }
-
 }

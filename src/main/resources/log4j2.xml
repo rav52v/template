@@ -17,7 +17,7 @@
         <RollingFile name="FullLogFile" fileName="logs/log.log" append="true"
                      filePattern="logs/$${date:yyyy-MM-dd}/log_%d{MM_dd_yyyy}(%i).log">
             <Policies>
-                <SizeBasedTriggeringPolicy size="30KB"/>
+                <SizeBasedTriggeringPolicy size="150KB"/>
             </Policies>
             <DefaultRolloverStrategy max="3" fileIndex="min"/>
             <PatternLayout>
@@ -30,7 +30,6 @@
             <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
             <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
         </Console>
-
 
         <Console name="Console-error" target="SYSTEM_ERR">
             <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
