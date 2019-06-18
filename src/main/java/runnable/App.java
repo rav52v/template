@@ -1,6 +1,7 @@
 package main.java.runnable;
 
 import main.java.poms.MainPage;
+import main.java.poms.YoutubePlaylist;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,8 +18,8 @@ public class App {
 //    Gui.getInstance().openJPanel();
 
 
-    new MainPage();
-//    new SamplePage();
+    new YoutubePlaylist();
+//    new MainPage();
 
 
     log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");

@@ -27,10 +27,12 @@ public class MainPage extends PageBase {
   private By cloud = By.cssSelector("#latest-ul > li.latest-doodle.on > div > div > a > img");
 
   public MainPage() {
-    for (int i = 1; i <= 3; i++) {
-      System.out.println(i + "/3 started.");
+    for (int i = 1; i <= 1; i++) {
+      System.out.println(i + "/1 started.");
       thirdMethod();
     }
+    StatisticsService.getStatisticsService().getAvgNumericValueFromColumn("https://www.google.pl/", "page_load_times");
+    StatisticsService.getStatisticsService().getAvgNumericValueFromColumn("https://www.udemy.com/java-tutorial/", "page_load_times");
     StatisticsService.getStatisticsService().getAvgNumericValueFromColumn("https://allegro.pl/", "page_load_times");
     StatisticsService.getStatisticsService().getAvgNumericValueFromColumn("https://pl.aliexpress.com/", "page_load_times");
     StatisticsService.getStatisticsService().getAvgNumericValueFromColumn("https://www.olx.pl/", "page_load_times");
@@ -60,8 +62,8 @@ public class MainPage extends PageBase {
   }
 
   private void thirdMethod() {
-    browser.openPage("https://google.pl/");
-    browser.openPage("https://www.udemy.com/java-tutorial");
+    browser.openPage("https://www.google.pl/");
+    browser.openPage("https://www.udemy.com/java-tutorial/");
     browser.openPage("https://allegro.pl/");
     browser.openPage("https://pl.aliexpress.com/");
     browser.openPage("https://www.olx.pl/");

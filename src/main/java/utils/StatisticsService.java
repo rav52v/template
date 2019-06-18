@@ -25,19 +25,20 @@ public class StatisticsService {
 
   public void logPageLoadTime(String link, String value) {
     String fileName = "page_load_times";
-    String regex = "((https?)?:[/]{2}(www[.])?)|([.]((pl)|(com)|(org)|(de)|(uk)|(info)|(ru)|(nl)|(cn)|(eu)|(gb)|(tv)|(jp)|(hk)|(es)|(it)|(fr))[/].*)";
+    String regexMatcher = "((https?)?:[/]{2}(www[.])?)|([.]((pl)|(com)|(org)|(de)|(uk)|(info)|(ru)|(nl)|(cn)|(eu)|(gb)|(tv)|(jp)|(hk)|(es)|(it)|(fr))[/].*)";
+    String regexAddLink = "(?<=((pl)|(com)|(org)|(de)|(uk)|(info)|(ru)|(nl)|(cn)|(eu)|(gb)|(tv)|(jp)|(hk)|(es)|(it)|(fr)))[/].*";
 
     if (!Packages.STATISTICS_FOLDER.isFileInDirectory(fileName + ".xlsx"))
       ExcelService.getExcelService().createTable(
               new ArrayList<>(), new ArrayList<>(), fileName, Packages.STATISTICS_FOLDER);
 
-    if (!ExcelService.getExcelService().isColumnCreated(link, fileName, Packages.STATISTICS_FOLDER)) {
-      ExcelService.getExcelService().addColumn(link, fileName, Packages.STATISTICS_FOLDER);
+    if (!ExcelService.getExcelService().isColumnCreated(link.replaceAll(regexMatcher, ".*"), fileName, Packages.STATISTICS_FOLDER)) {
+      ExcelService.getExcelService().addColumn(link.replaceAll(regexAddLink, "/"), fileName, Packages.STATISTICS_FOLDER);
       log.debug("Statistics - {" + fileName + ".xlsx}: created new column: {" + link + "}");
     }
 
     ExcelService.getExcelService().addValueInFirstEmptyCellOfColumn(
-            link.replaceAll(regex, ".*"), value, fileName, Packages.STATISTICS_FOLDER);
+            link.replaceAll(regexMatcher, ".*"), value, fileName, Packages.STATISTICS_FOLDER);
     log.debug("Statistics - {" + fileName + ".xlsx}: added new value: {" + value + "} in column {" + link + "}");
   }
 
@@ -57,4 +58,9 @@ public class StatisticsService {
     Collections.sort(sorted);
     return sorted;
   }
+
+  public static void main(String[] args) {
+    System.out.println("https://www.youtube.com/".matches("((https?)?:[/]{2}(www[.])?)|([.]((pl)|(com)|(org)|(de)|(uk)|(info)|(ru)|(nl)|(cn)|(eu)|(gb)|(tv)|(jp)|(hk)|(es)|(it)|(fr))[/].*)"));
+  }
+
 }

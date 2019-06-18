@@ -92,7 +92,9 @@ public class ExcelService {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    row = workbook.getSheetAt(0).getRow(0);
+
+    row = isRowCreated(0, fileName, directory) ? workbook.getSheetAt(0).getRow(0)
+            : workbook.getSheetAt(0).createRow(0);
 
     for (int columnIndex = 0; columnIndex < row.getLastCellNum(); columnIndex++) {
       if (row.getCell(columnIndex).getStringCellValue().matches(regexColumnName)) return true;
@@ -114,7 +116,8 @@ public class ExcelService {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    row = workbook.getSheetAt(0).getRow(0);
+    row = isRowCreated(0, fileName, directory) ? workbook.getSheetAt(0).getRow(0)
+            : workbook.getSheetAt(0).createRow(0);
 
     XSSFCell cell = row.createCell(row.getLastCellNum() == -1 ? 0 : row.getLastCellNum());
     cell.setCellStyle(getDefaultColumnNameStyle());
