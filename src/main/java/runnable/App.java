@@ -1,6 +1,5 @@
 package main.java.runnable;
 
-import main.java.poms.MainPage;
 import main.java.poms.YoutubePlaylist;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 public class App {
@@ -18,7 +18,13 @@ public class App {
 //    Gui.getInstance().openJPanel();
 
 
-    new YoutubePlaylist();
+    YoutubePlaylist yt = new YoutubePlaylist();
+    List<String> links = yt.getLinks();
+
+
+    
+    yt.killBrowser();
+
 //    new MainPage();
 
 

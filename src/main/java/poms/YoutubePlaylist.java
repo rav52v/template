@@ -13,34 +13,27 @@ public class YoutubePlaylist extends PageBase {
   @FindBy(css = "div#contents>ytd-playlist-video-renderer")
   private List<WebElement> videos;
 
-  @FindBy(css = ".dupa")
-  private WebElement element;
-
-
   private By linkElement = By.cssSelector("div#content > a");
-  private By anotherBy = By.xpath("../div/a/figure/div/div/div");
-
-  private List<String> links;
-
 
   public YoutubePlaylist() {
-    getLinks();
-    saveLinks();
   }
 
-  private void getLinks() {
+  public List<String> getLinks() {
     browser.openPage("https://www.youtube.com/playlist?list=PLSCChOT7N7PMkRQtlKaSwmn2V0RyChBPB");
     browser.scrollDownRefreshingPageTillEnd(videos);
     log.info("Playlist size: " + videos.size());
+    List<String> links = new ArrayList<>();
+    for (WebElement video : videos)
+      links.add(video.findElement(linkElement).getAttribute("href").replaceAll("&list=.+", ""));
+
+    final String[] toFile = {""};
+    links.forEach(e -> toFile[0] += e.concat(System.lineSeparator()));
+    file.saveTextToFile(toFile[0].replaceAll("[\\s]+$", ""), "YouTube links", false);
+    log.info("Number of links: " + links.size());
+    return links;
   }
 
-  private void saveLinks() {
-    links = new ArrayList<>();
-    for (WebElement video : videos){
-      String link = video.findElement(linkElement).getAttribute("href").replaceAll("&list=.+", "");
-      log.debug(link);
-      links.add(link);
-    }
-    log.info("Links amount: " + links.size());
+  public void killBrowser() {
+    browser.closeDriver(0);
   }
 }
