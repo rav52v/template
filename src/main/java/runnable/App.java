@@ -1,6 +1,8 @@
 package main.java.runnable;
 
+import main.java.enums.Packages;
 import main.java.poms.YoutubePlaylist;
+import main.java.utils.YoutubeDownloaderService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,12 +20,11 @@ public class App {
 //    Gui.getInstance().openJPanel();
 
 
-    YoutubePlaylist yt = new YoutubePlaylist();
-    List<String> links = yt.getLinks();
+//    YoutubePlaylist yt = new YoutubePlaylist();
+//    List<String> links = yt.getLinks();
+//    yt.killBrowser();
+    YoutubeDownloaderService.getYoutubeService().downloadVideo("https://www.youtube.com/watch?v=HkuKHwetV6Q", Packages.OUTPUT_FOLDER.getPackagePath());
 
-
-    
-    yt.killBrowser();
 
 //    new MainPage();
 
