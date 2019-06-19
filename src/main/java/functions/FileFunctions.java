@@ -1,14 +1,23 @@
 package main.java.functions;
 
 import main.java.enums.Packages;
+import org.monte.media.Format;
+import org.monte.media.FormatKeys;
+import org.monte.media.math.Rational;
+import org.monte.screenrecorder.ScreenRecorder;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Point;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.RasterFormatException;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
+
+import static org.monte.media.FormatKeys.*;
+import static org.monte.media.VideoFormatKeys.*;
 
 public class FileFunctions extends BaseFunction {
 

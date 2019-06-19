@@ -1,6 +1,7 @@
 package main.java.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import main.java.tools.ScreenRecorderService;
 import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,10 +22,15 @@ public class Driver {
   private boolean headless = isGuiCreated() ?
           Gui.getInstance().isHeadless() : getConfigService().getBooleanProperty("general.headless");
 
-  private Driver(){}
+  private Driver() {
+  }
 
   public static Driver getDriverInstance() {
-    if (instance == null) instance = new Driver();
+    if (instance == null) {
+      instance = new Driver();
+      if (getConfigService().getBooleanProperty("general.recordScreen"))
+        ScreenRecorderService.getScreenRecorder().startRecordingScreen();
+    }
     return instance;
   }
 

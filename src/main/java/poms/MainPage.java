@@ -47,7 +47,6 @@ public class MainPage extends PageBase {
     browser.openPage("https://www.google.pl/");
     browser.sleeper(200);
     browser.switchToMainTab();
-    log.info(get.getCurrentUrl());
     browser.openPage("https://www.tutorialspoint.com/");
     browser.switchToSecondTab();
     browser.closeTab();
@@ -63,10 +62,10 @@ public class MainPage extends PageBase {
 
   private void thirdMethod() {
     browser.openPage("https://www.google.pl/");
-    browser.openPage("https://www.udemy.com/java-tutorial/");
-    browser.openPage("https://allegro.pl/");
-    browser.openPage("https://pl.aliexpress.com/");
-    browser.openPage("https://www.olx.pl/");
+//    browser.openPage("https://www.udemy.com/java-tutorial/");
+//    browser.openPage("https://allegro.pl/");
+//    browser.openPage("https://pl.aliexpress.com/");
+//    browser.openPage("https://www.olx.pl/");
     browser.openPage("https://www.t-mobile.pl/");
   }
 }
