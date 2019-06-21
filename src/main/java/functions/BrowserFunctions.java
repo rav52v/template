@@ -37,6 +37,7 @@ public class BrowserFunctions extends BaseFunction {
    * Closes focused tab
    */
   public void closeTab() {
+    log.debug("Close tab.");
     driver.getDriver().close();
   }
 

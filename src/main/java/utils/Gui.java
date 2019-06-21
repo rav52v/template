@@ -115,7 +115,8 @@ public class Gui extends JPanel {
     JPanel myPanel = new JPanel();
     myPanel.setForeground(Color.black);
     myPanel.setLocation(220, 10);
-    JTextArea textArea = new JTextArea(getTextFromFile(Paths.get("logs").toAbsolutePath().toString().concat("/last_test_log.log")), 28, 75);
+    JTextArea textArea = new JTextArea(getTextFromFile(Paths.get("logs").toAbsolutePath().toString().
+            concat(File.separator).concat("last-test_log.log")), 28, 75);
     textArea.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
     textArea.setBackground(Color.black);
     textArea.setForeground(new Color(80, 80, 255));

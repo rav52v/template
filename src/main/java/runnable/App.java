@@ -20,9 +20,7 @@ public class App {
     Logger log = LogManager.getLogger();
     int status = 0;
     try {
-
-
-//    Gui.getInstance().openJPanel();
+      Gui.getInstance().openJPanel();
 
 
 //    YoutubePlaylist yt = new YoutubePlaylist();
@@ -35,18 +33,16 @@ public class App {
       new MainPage();
 
 
-//    Gui.getInstance().showLogInfo();
-
-      if (getConfigService().getBooleanProperty("general.recordScreen"))
-        ScreenRecorderService.getScreenRecorder().stopRecordingScreen();
-
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
       log.error("Program crashed: " + e.getMessage());
       status--;
     } finally {
+      if (getConfigService().getBooleanProperty("general.recordScreen"))
+        ScreenRecorderService.getScreenRecorder().stopRecordingScreen();
       Driver.getDriverInstance().afterTest();
       log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
+      Gui.getInstance().showLogInfo();
       System.exit(status);
     }
   }
