@@ -21,7 +21,7 @@ public class Database {
               getConfigService().getStringProperty("sql.login"),
               getConfigService().getStringProperty("sql.password"));
       con.setAutoCommit(true);
-      log.info("Connected to database {" + getConfigService().getStringProperty("sql.conUrl") + "}");
+      log.info("Connected to database {" + getConfigService().getStringProperty("sql.conUrl") + "}.");
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -105,9 +105,9 @@ public class Database {
   public void insertRecords(String table, String[] columns, Object[] values) {
     if (columns.length != values.length) {
       log.error("Columns length {" + columns.length + "} is not the same as values length {"
-              + values.length + "}");
+              + values.length + "}.");
       throw new RuntimeException("Columns length {" + columns.length + "} is not the same as number of values {"
-              + values.length + "}");
+              + values.length + "}.");
     }
 
     String query = String.format("INSERT into %s (%s) VALUES (%s?)",

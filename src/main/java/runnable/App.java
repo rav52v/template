@@ -2,6 +2,8 @@ package main.java.runnable;
 
 import main.java.poms.MainPage;
 import main.java.tools.ScreenRecorderService;
+import main.java.utils.Driver;
+import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +18,9 @@ public class App {
   public static void main(String[] args) {
     long start = System.currentTimeMillis();
     Logger log = LogManager.getLogger();
+    int status = 0;
+    try {
+
 
 //    Gui.getInstance().openJPanel();
 
@@ -27,16 +32,23 @@ public class App {
 //    YoutubeDownloaderService.getYoutubeService().downloadVideo("https://www.youtube.com/watch?v=HkuKHwetV6Q", Packages.OUTPUT_FOLDER.getPackagePath());
 
 
-    new MainPage();
+      new MainPage();
 
 
-    log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
 //    Gui.getInstance().showLogInfo();
 
-    if (getConfigService().getBooleanProperty("general.recordScreen"))
-      ScreenRecorderService.getScreenRecorder().stopRecordingScreen();
+      if (getConfigService().getBooleanProperty("general.recordScreen"))
+        ScreenRecorderService.getScreenRecorder().stopRecordingScreen();
 
-    System.exit(0);
+    } catch (Exception e){
+      e.printStackTrace();
+      log.error("Program crashed: " + e.getMessage());
+      status--;
+    } finally {
+      Driver.getDriverInstance().afterTest();
+      log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
+      System.exit(status);
+    }
   }
 
   private static String calculatePastTime(long start) {

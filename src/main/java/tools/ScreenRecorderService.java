@@ -51,7 +51,7 @@ public class ScreenRecorderService {
               null,
               new File(PATH_TO_OUTPUT_FOLDER));
       screenRecorder.start();
-      log.debug("Recording started");
+      log.debug("Recording started.");
     } catch (IOException | AWTException e) {
       e.printStackTrace();
     }
@@ -60,7 +60,7 @@ public class ScreenRecorderService {
   public void stopRecordingScreen() {
     try {
       screenRecorder.stop();
-      log.debug("Recording stopped, new file created in directory: {" + PATH_TO_OUTPUT_FOLDER + "}");
+      log.debug("Recording stopped, new file created in directory: {" + PATH_TO_OUTPUT_FOLDER + "}.");
     } catch (IOException e) {
       e.printStackTrace();
     }

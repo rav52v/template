@@ -8,6 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 public class ActionFunctions extends BaseFunction {
 
   public void moveToElement(WebElement element) {
+    log.debug("Move to element: {" + getElementInfo(element) + "}.");
     new Actions(driver.getDriver()).moveToElement(element).perform();
   }
 
@@ -26,9 +27,5 @@ public class ActionFunctions extends BaseFunction {
 
   public void executeJavaScriptExecutor(String script, Object... args) {
     ((JavascriptExecutor) driver.getDriver()).executeScript(script, args);
-  }
-
-  public WebDriver getWebDriver() {
-    return driver.getDriver();
   }
 }

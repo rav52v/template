@@ -1,33 +1,18 @@
 package main.java.functions;
 
-import main.java.enums.Packages;
-import org.monte.media.Format;
-import org.monte.media.FormatKeys;
-import org.monte.media.math.Rational;
-import org.monte.screenrecorder.ScreenRecorder;
 import org.openqa.selenium.*;
-import org.openqa.selenium.Point;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.RasterFormatException;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
 
-import static org.monte.media.FormatKeys.*;
-import static org.monte.media.VideoFormatKeys.*;
-
 public class FileFunctions extends BaseFunction {
 
-  public FileFunctions() {
-    if (new File(Packages.OUTPUT_FOLDER.getPackagePath()).mkdirs())
-      log.debug("Created directory {" + PATH_TO_OUTPUT_FOLDER + "}");
-  }
-
   /**
-   * @param fileName name of captured file e.g. "sample_file"
+   * @param fileName e.g. "sample_file"
    * @param zoom     zoom in: [101-...], zoom out: [1-99]
    */
   public void captureScreenshot(String fileName, int zoom) {
@@ -40,12 +25,16 @@ public class FileFunctions extends BaseFunction {
       Files.copy(scrFile.toPath(), target.toPath());
       log.debug("File copied to {" + PATH_TO_OUTPUT_FOLDER + fileName + ".png}");
     } catch (IOException e) {
-      log.error(e.toString());
       e.printStackTrace();
+      log.error(e.toString());
     }
     js.executeScript("document.body.style.zoom='0'");
   }
 
+  /**
+   * @param fileName e.g. "file_name"
+   * @param element  element, you want to get screenshot
+   */
   public void captureScreenshotOfElement(String fileName, WebElement element) {
     log.debug("Capture image of element {" + getElementInfo(element) + "}");
     File target = new File(PATH_TO_OUTPUT_FOLDER + fileName + ".png");
@@ -62,6 +51,7 @@ public class FileFunctions extends BaseFunction {
       log.debug("File copied to {" + PATH_TO_OUTPUT_FOLDER + fileName + ".png}");
     } catch (IOException e) {
       e.printStackTrace();
+      log.error(e.getMessage());
     } catch (RasterFormatException ex) {
       log.error(String.format("%s\nelement - parentX: %d, parentY: %d, width: %d, height: %d\nbrowser - x: %d, y: %d",
               ex.toString(), p.getX(), p.getY(), width, height, driver.getDriver().manage().window().getSize().width,
@@ -75,6 +65,7 @@ public class FileFunctions extends BaseFunction {
       out.print(textValue);
     } catch (IOException e) {
       e.printStackTrace();
+      log.error(e.getMessage());
     }
   }
 
@@ -95,8 +86,8 @@ public class FileFunctions extends BaseFunction {
       reader.close();
       result = sb.toString();
     } catch (FileNotFoundException e) {
-      log.error(e.getMessage());
       e.printStackTrace();
+      log.error(e.getMessage());
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -106,7 +97,7 @@ public class FileFunctions extends BaseFunction {
   /**
    * @param elementList List<WebElement> containing URL address in attribute
    * @param attribute   name of attribute containing URL e.g. "src"
-   * @param fileName    output file name
+   * @param fileName    output file name e.g. "file_name"
    * @param fileFormat  file format e.g. "jpg"
    */
   public void saveImageFromUrl(List<WebElement> elementList, String attribute, String fileName, String fileFormat) {
@@ -117,6 +108,7 @@ public class FileFunctions extends BaseFunction {
                 PATH_TO_OUTPUT_FOLDER + String.format("%03d ", counter++) + fileName + "." + fileFormat));
       } catch (IOException e) {
         e.printStackTrace();
+        log.error(e.getMessage());
       }
     }
     log.debug("Downloaded {" + counter + "} images}");

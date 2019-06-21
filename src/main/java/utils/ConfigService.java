@@ -1,6 +1,7 @@
 package main.java.utils;
 
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.cfg4j.provider.ConfigurationProvider;
 import org.cfg4j.provider.ConfigurationProviderBuilder;
 import org.cfg4j.source.ConfigurationSource;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 public class ConfigService {
   private static final ConfigurationProvider configProvider = configProvider();
   private static ConfigService instance = null;
+  private static Logger log = LogManager.getLogger();
 
   private ConfigService() {
   }
@@ -25,7 +27,7 @@ public class ConfigService {
   public static ConfigService getConfigService() {
     if (instance == null) {
       instance = new ConfigService();
-      LogManager.getLogger().debug("Config created.");
+      log.debug("Config created.");
     }
     return instance;
   }
@@ -38,7 +40,7 @@ public class ConfigService {
         files = new File(new File("").getCanonicalFile().toPath().toAbsolutePath().toString()
                 + PATH_TO_CONFIG_PACKAGE).listFiles();
       } catch (IOException e) {
-        LogManager.getLogger().error("Something went wrong - check path to config package, message: " + e.getMessage());
+        log.error("Something went wrong - check path to config package, message: " + e.getMessage() + ".");
         e.printStackTrace();
       }
       ArrayList<Path> paths = new ArrayList<>();

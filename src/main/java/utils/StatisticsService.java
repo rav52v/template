@@ -4,7 +4,6 @@ import main.java.enums.Packages;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -19,8 +18,6 @@ public class StatisticsService {
   }
 
   private StatisticsService() {
-    if (new File(Packages.STATISTICS_FOLDER.getPackagePath()).mkdirs())
-      log.debug("Created directory {" + Packages.STATISTICS_FOLDER.getPackagePath() + "}");
   }
 
   public void logPageLoadTime(String link, String value) {
@@ -34,12 +31,12 @@ public class StatisticsService {
 
     if (!ExcelService.getExcelService().isColumnCreated(link.replaceAll(regexMatcher, ".*"), fileName, Packages.STATISTICS_FOLDER)) {
       ExcelService.getExcelService().addColumn(link.replaceAll(regexAddLink, "/"), fileName, Packages.STATISTICS_FOLDER);
-      log.debug("Statistics - {" + fileName + ".xlsx}: created new column: {" + link + "}");
+      log.debug("Statistics - {" + fileName + ".xlsx}: created new column: {" + link + "}.");
     }
 
     ExcelService.getExcelService().addValueInFirstEmptyCellOfColumn(
             link.replaceAll(regexMatcher, ".*"), value, fileName, Packages.STATISTICS_FOLDER);
-    log.debug("Statistics - {" + fileName + ".xlsx}: added new value: {" + value + "} in column {" + link + "}");
+    log.debug("Statistics - {" + fileName + ".xlsx}: added new value: {" + value + "} in column {" + link + "}.");
   }
 
   public long getAvgNumericValueFromColumn(String link, String fileName) {
@@ -48,7 +45,7 @@ public class StatisticsService {
     long avg = sorted.stream().mapToLong(e -> e).sum() / sorted.size();
     long min = sorted.stream().mapToLong(e -> e).min().getAsLong();
     long max = sorted.stream().mapToLong(e -> e).max().getAsLong();
-    log.debug(String.format("Values: {min: %d max: %d avg: %d} for column: {%s}", min, max, avg, link));
+    log.debug(String.format("Values: {min: %d max: %d avg: %d} for column: {%s}.", min, max, avg, link));
     return avg;
   }
 

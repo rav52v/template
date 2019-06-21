@@ -19,7 +19,7 @@ public class BrowserFunctions extends BaseFunction {
    * This method supports only one additional window
    */
   public void switchToSecondTab() {
-    log.debug("Switch to second tab");
+    log.debug("Switch to second tab.");
     if (mainWindowHandle == null) mainWindowHandle = driver.getMainWindowHandle();
     for (String winHandle : driver.getDriver().getWindowHandles())
       if (!winHandle.equals(mainWindowHandle)) driver.setDriver(driver.getDriver().switchTo().window(winHandle));
@@ -29,7 +29,7 @@ public class BrowserFunctions extends BaseFunction {
    * Switches back to main tab
    */
   public void switchToMainTab() {
-    log.debug("Switch to main tab");
+    log.debug("Switch to main tab.");
     driver.setDriver(driver.getDriver().switchTo().window(mainWindowHandle));
   }
 
@@ -40,32 +40,42 @@ public class BrowserFunctions extends BaseFunction {
     driver.getDriver().close();
   }
 
+  public void switchToIFrame(Object frame) {
+    log.debug("Switch to iframe: {" + frame + "}.");
+    driver.switchToIframe(frame);
+  }
+
+  public void switchBackFromIFrame() {
+    log.debug("Switch to default content.");
+    driver.getDriver().switchTo().defaultContent();
+  }
+
   /**
    * Opens new tab and focus
    */
   public void openNewTab() {
-    log.debug("Open new tab");
+    log.debug("Open new tab.");
     ((JavascriptExecutor) driver.getDriver()).executeScript("window.open();");
     switchToSecondTab();
   }
 
   public void openPage(String linkAddress) {
     long startTime = System.currentTimeMillis();
-    log.debug("Loading page (expected) {" + linkAddress + "}");
+    log.debug("Loading page (expected) {" + linkAddress + "}.");
     try {
       driver.getDriver().get(linkAddress);
       log.debug("Page loaded {" + driver.getDriver().getCurrentUrl() + "}, operation took {"
-              + getPassedTimeInMillis(startTime) + "}");
+              + getPassedTimeInMillis(startTime) + "}.");
     } catch (TimeoutException e) {
-      log.debug("Page was loading too long, page load time is: "
-              + getConfigService().getLongProperty("general.pageLoadTime"));
+      log.debug("Page was loading too long, page load time is: {"
+              + getConfigService().getLongProperty("general.pageLoadTime") + "}.");
     }
     StatisticsService.getStatisticsService()
             .logPageLoadTime(linkAddress, String.valueOf(getPassedTimeInMillis(startTime)));
     waitForPageLoading();
   }
 
-  public void closeDriver(int delayMillis) {
+  public void closeDriver(int...delayMillis) {
     mainWindowHandle = null;
     driver.afterTest(delayMillis);
   }
@@ -108,7 +118,7 @@ public class BrowserFunctions extends BaseFunction {
       refreshingListAfterSize = elementList.size();
     }
     while (refreshingListAfterSize > refreshingListSize);
-    log.debug("Found {" + elementList.size() + " elements}, operation took {" + getPassedTimeInMillis(startTime) + "}");
+    log.debug("Found {" + elementList.size() + " elements}, operation took {" + getPassedTimeInMillis(startTime) + "}.");
   }
 
   public Alert getAlertControl() {
@@ -121,10 +131,10 @@ public class BrowserFunctions extends BaseFunction {
     while (i++ < 10) {
       try {
         new WebDriverWait(driver.getDriver(), 5).until(ExpectedConditions.alertIsPresent()).accept();
-        log.debug("Accepted alert");
+        log.debug("Accepted alert.");
         break;
       } catch (NoAlertPresentException e) {
-        log.debug("Waiting for alert, attempt {" + i + "/10}");
+        log.debug("Waiting for alert, attempt {" + i + "/10}.");
       } finally {
         turnOnImplicitlyWaitTime();
       }

@@ -185,7 +185,6 @@ public class ColorUtils {
               * (pixB - b)) / 3;
     }
 
-
     private String getName() {
       return name;
     }

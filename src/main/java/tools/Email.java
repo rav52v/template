@@ -37,7 +37,6 @@ public class Email {
   }
 
   public void sendEmail(String subject, String value) {
-
     try {
       message.setFrom(new InternetAddress(from));
       message.setRecipients(Message.RecipientType.TO,
@@ -46,8 +45,7 @@ public class Email {
       message.setText(value);
       Transport.send(message);
     } catch (MessagingException e) {
-      throw new RuntimeException("");
+      throw new RuntimeException("Something went wrong: " + e.getMessage());
     }
-
   }
 }

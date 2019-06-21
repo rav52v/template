@@ -13,27 +13,27 @@ import java.util.List;
 public class GetFunctions extends BaseFunction {
 
   public String getTextFromElement(WebElement element) {
-    log.debug("Get text from element {" + getElementInfo(element) + "}");
+    log.debug("Get text from element {" + getElementInfo(element) + "}.");
     String value = element.getText();
 
     value = value == null || value.isEmpty() ? element.getAttribute("value").trim() : value.trim();
     value = value.isEmpty() ? getValueFromReadOnlyElement(element) : value;
 
     log.debug("Got value {" + (value.length() < 50 ? value.replaceAll("[\n]", "") : value
-            .substring(0, 50).concat("...")).replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
+            .substring(0, 50).concat("...")).replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}.");
     return value;
   }
 
   public String getTextFromParentElement(WebElement element) {
     element = element.findElement(By.xpath("./.."));
-    log.debug("Get text from element {" + getElementInfo(element) + "}");
+    log.debug("Get text from element {" + getElementInfo(element) + "}.");
     String value = element.getText();
 
     value = value == null || value.isEmpty() ? element.getAttribute("value").trim() : value.trim();
     value = value.isEmpty() ? getValueFromReadOnlyElement(element) : value;
 
     log.debug("Got value {" + (value.length() < 50 ? value.replaceAll("[\n]", "") : value
-            .substring(0, 50).concat("...")).replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}");
+            .substring(0, 50).concat("...")).replaceAll("([\n])|(^\\s*)|(\\s*$)|([ ]{3,})", "") + "}.");
     return value;
   }
 
@@ -46,8 +46,7 @@ public class GetFunctions extends BaseFunction {
   }
 
   public String searchElementInElementAndGetText(WebElement element, By by) {
-    log.debug("Search element located By {" + by + "} in element {"
-            + getElementInfo(element) + "} and get text");
+    log.debug("Search element located By {" + by + "} in element {" + getElementInfo(element) + "} and get text.");
     String result = "";
     for (int i = 0; i < 5; i++) {
       try {
@@ -61,7 +60,7 @@ public class GetFunctions extends BaseFunction {
         }
         if (i == 4) {
           result = "";
-          log.error("Element {" + getElementInfo(element) + "} was stale, tried 4 times.");
+          log.error("Element {" + getElementInfo(element) + "} is stale, tried 4 times.");
         }
       }
     }
@@ -70,7 +69,7 @@ public class GetFunctions extends BaseFunction {
 
   public String searchElementInElementAndGetAttribute(WebElement element, By by, String attributeName) {
     log.debug("Search element located By {" + by + "} in element {"
-            + getElementInfo(element) + "} and get attribute {" + attributeName + "}");
+            + getElementInfo(element) + "} and get attribute {" + attributeName + "}.");
     String result = "";
     for (int i = 0; i < 5; i++) {
       try {
@@ -80,7 +79,7 @@ public class GetFunctions extends BaseFunction {
         sleeper(500);
         if (i == 4) {
           result = "";
-          log.error("Element {" + getElementInfo(element) + "} was stale, tried 4 times.");
+          log.error("Element {" + getElementInfo(element) + "} is stale, tried 4 times.");
         }
       }
     }
@@ -98,11 +97,11 @@ public class GetFunctions extends BaseFunction {
    */
   public WebElement getElementContaingRegexValue(List<WebElement> elementList, String regex) {
     if (elementList.isEmpty()) {
-      log.error("Given list is empty");
+      log.error("Given list is empty.");
       return null;
     }
     for (WebElement element : elementList) if (element.getText().matches(regex)) return element;
-    log.debug("List doesn't contain given regex value {" + regex + "}");
+    log.debug("List doesn't contain given regex value {" + regex + "}.");
     return null;
   }
 
@@ -132,7 +131,7 @@ public class GetFunctions extends BaseFunction {
     Collections.sort(values);
     String differentValue = values.get(0).equals(values.get(1)) ? values.get(values.size() - 1) : values.get(0);
     for (WebElement element : webElements) if (element.getCssValue(cssProperty).equals(differentValue)) return element;
-    throw new RuntimeException("Couldn't find element with one different cssProperty: " + cssProperty);
+    throw new RuntimeException("Couldn't find element with one different cssProperty: {" + cssProperty + "}.");
   }
 
   public String getElementXPath(WebElement element) {

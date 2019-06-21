@@ -1,5 +1,7 @@
 package main.java.enums;
 
+import org.apache.logging.log4j.LogManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -7,6 +9,8 @@ import java.nio.file.Paths;
 public enum Packages {
   OUTPUT_FOLDER("outputFolder"),
   INPUT_FOLDER("inputFolder"),
+  DOWNLOAD_FOLDER("downloadFolder"),
+  THUMBS("thumbs"),
   STATISTICS_FOLDER("stats");
 
   private String folder;
@@ -16,10 +20,14 @@ public enum Packages {
   }
 
   /**
+   * Creates directory if does not exist
+   *
    * @return relative path to directory
    */
   public String getPackagePath() {
-    return Paths.get(folder).toAbsolutePath() + "\\";
+    if (new File(Paths.get(folder).toAbsolutePath().toString()).mkdirs())
+      LogManager.getLogger().debug("Created directory {" + Paths.get(folder).toAbsolutePath() + "}.");
+    return Paths.get(folder).toAbsolutePath() + File.separator;
   }
 
   /**
@@ -28,7 +36,7 @@ public enum Packages {
   public int getElementsInsideAmount() {
     try {
       return new File(new File("").getCanonicalFile().toPath().toAbsolutePath().toString()
-              + "/" + folder).listFiles().length;
+              + File.separator + folder).listFiles().length;
     } catch (IOException | NullPointerException e) {
       return 0;
     }
@@ -42,7 +50,7 @@ public enum Packages {
     File[] files;
     try {
       files = new File(new File("").getCanonicalFile().toPath().toAbsolutePath().toString()
-              + "/" + folder).listFiles();
+              + File.separator + folder).listFiles();
     } catch (IOException | NullPointerException e) {
       return false;
     }

@@ -1,8 +1,10 @@
 package main.java.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import main.java.enums.Packages;
 import main.java.tools.ScreenRecorderService;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -16,9 +18,10 @@ import static main.java.utils.ConfigService.getConfigService;
 import static main.java.utils.Gui.isGuiCreated;
 
 public class Driver {
+  private Logger log = LogManager.getLogger();
   private static Driver instance;
   private static Map<Integer, WebDriver> driverMap = new HashMap<>();
-  private static int key;
+  private int key;
   private boolean headless = isGuiCreated() ?
           Gui.getInstance().isHeadless() : getConfigService().getBooleanProperty("general.headless");
 
@@ -36,7 +39,7 @@ public class Driver {
 
   public WebDriver getDriver() {
     if (driverMap.isEmpty()) {
-      LogManager.getLogger().info("Opening browser in {" + (headless ? "headless" : "normal") + "} mode.");
+      log.info("Opening browser in {" + (headless ? "headless" : "normal") + "} mode.");
       setProperties();
       driverMap.get(key).manage().timeouts().implicitlyWait(getConfigService()
               .getLongProperty("general.implicitlyWaitTime"), TimeUnit.SECONDS);
@@ -53,24 +56,44 @@ public class Driver {
     driverMap.put(key, newDriver);
   }
 
-  private void closeDriver() {
-    driverMap.get(key).quit();
-    driverMap.clear();
-    LogManager.getLogger().info("The browser has been closed.");
+  public void switchToIframe(Object frame) {
+    if (frame instanceof Integer) driverMap.put(key, driverMap.get(key).switchTo().frame((int) frame));
+    else driverMap.put(key, driverMap.get(key).switchTo().frame((String) frame));
   }
 
-  public void afterTest(int sleepAfter) {
-    try {
-      Thread.sleep(sleepAfter);
-    } catch (InterruptedException ignored) {
+  private void closeDriver() {
+    if (!driverMap.isEmpty()) {
+      driverMap.get(key).quit();
+      driverMap.clear();
+      log.debug("The browser has been closed.");
+    } else log.debug("Don't need to close driver, it is already closed.");
+  }
+
+  public void afterTest(int...sleepAfter) {
+    if (sleepAfter.length > 0){
+      try {
+        Thread.sleep(sleepAfter[0]);
+      } catch (InterruptedException ignored) {
+      }
     }
     closeDriver();
   }
 
+  /**
+   * -disable infobar
+   * -set if headless
+   * -set download directory default path
+   * -set start maximized or window size in headless mode
+   *
+   * @return ChromeOptions
+   */
   private ChromeOptions setChromeOptions() {
     ChromeOptions chromeOptions = new ChromeOptions();
     chromeOptions.addArguments("--disable-infobars");
     chromeOptions.setHeadless(headless);
+    Map<String, Object> prefs = new HashMap<>();
+    prefs.put("download.default_directory", Packages.DOWNLOAD_FOLDER.getPackagePath());
+    chromeOptions.setExperimentalOption("prefs", prefs);
     if (headless) {
       chromeOptions.addArguments("--window-size=1500,4000");
       chromeOptions.addArguments("--disable-gpu");

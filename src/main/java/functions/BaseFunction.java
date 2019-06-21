@@ -19,7 +19,7 @@ import static main.java.utils.ConfigService.getConfigService;
 
 abstract class BaseFunction {
   Driver driver;
-  Logger log = LogManager.getLogger();
+  final Logger log = LogManager.getLogger();
   final String PATH_TO_INPUT_FOLDER = Packages.INPUT_FOLDER.getPackagePath();
   final String PATH_TO_OUTPUT_FOLDER = Packages.OUTPUT_FOLDER.getPackagePath();
   final long DEFAULT_WEB_DRIVER_WAIT_TIME = getConfigService().getLongProperty("general.webDriverWait");
@@ -54,8 +54,8 @@ abstract class BaseFunction {
         Long jQueryActive = (Long) ((JavascriptExecutor) driver)
                 .executeScript("if(window.jQuery) { return window.jQuery.active; } else { return -1; }");
 
-        if (!documentReadyState.equals("complete")) log.debug("Page loading: waiting for JavaScript");
-        if (jQueryActive == -1) log.debug("Page loading: waiting for jQuery");
+        if (!documentReadyState.equals("complete")) log.debug("Page loading: waiting for JavaScript...");
+        if (jQueryActive == -1) log.debug("Page loading: waiting for jQuery...");
 
         if (jQueryActive == -1) {
           noJQueryCounter++;

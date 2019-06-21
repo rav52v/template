@@ -24,7 +24,7 @@ public class InputFunctions extends BaseFunction {
   }
 
   public void sendKeysToElement(WebElement element, CharSequence... value) {
-    log.debug("Send keys {" + Arrays.toString(value) + "} to element {" + getElementInfo(element) + "}");
+    log.debug("Send keys {" + Arrays.toString(value) + "} to element {" + getElementInfo(element) + "}.");
     try {
       element.clear();
     } catch (Exception ignored) {
@@ -33,7 +33,7 @@ public class InputFunctions extends BaseFunction {
   }
 
   public void sendKeysToElementUsingClipboard(WebElement element, String value) {
-    log.debug("Storing text {" + value + "} in cache");
+    log.debug("Send keys (using clipboard) {" + value + "} to element {" + getElementInfo(element) + "}.");
     try {
       element.clear();
     } catch (Exception ignored) {
@@ -43,7 +43,7 @@ public class InputFunctions extends BaseFunction {
   }
 
   public void sendKeys(CharSequence... value) {
-    log.debug("Send keys {" + Arrays.toString(value) + "}");
+    log.debug("Send keys {" + Arrays.toString(value) + "}.");
     new Actions(driver.getDriver()).sendKeys(value).perform();
   }
 
@@ -52,7 +52,7 @@ public class InputFunctions extends BaseFunction {
     for (WebElement option : select.getOptions()) {
       if (option.getText().matches(regex)) {
         select.selectByVisibleText(option.getText());
-        log.debug("Option selected by visible text: {" + option.getText() + "}");
+        log.debug("Option selected by visible text: {" + option.getText() + "}.");
         break;
       }
     }
@@ -61,7 +61,7 @@ public class InputFunctions extends BaseFunction {
   public void selectByValue(WebElement selectElement, String value) {
     try {
       new Select(selectElement).selectByValue(value);
-      log.debug("Option selected by value: {" + value + "}");
+      log.debug("Option selected by value: {" + value + "}.");
     } catch (NoSuchElementException e) {
       log.error(e.toString());
       throw new RuntimeException(e.toString());
@@ -71,7 +71,7 @@ public class InputFunctions extends BaseFunction {
   public void selectByIndex(WebElement selectElement, int index) {
     try {
       new Select(selectElement).selectByIndex(index);
-      log.debug("Option selected by index: {" + index + "}");
+      log.debug("Option selected by index: {" + index + "}.");
     } catch (NoSuchElementException e) {
       log.error(e.toString());
       throw new RuntimeException(e.toString());

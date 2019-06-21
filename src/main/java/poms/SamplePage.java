@@ -1,5 +1,6 @@
 package main.java.poms;
 
+import main.java.utils.Driver;
 import main.java.utils.Gui;
 import main.java.utils.PageBase;
 import org.openqa.selenium.By;
@@ -35,8 +36,7 @@ public class SamplePage extends PageBase {
   private void testTimeouts(int time) {
     long startTime = System.currentTimeMillis();
     try {
-      new WebDriverWait(action.getWebDriver(), time)
-              .until(ExpectedConditions.invisibilityOf(element));
+      new WebDriverWait(Driver.getDriverInstance().getDriver(), time).until(ExpectedConditions.invisibilityOf(element));
     } catch (TimeoutException e) {
       System.out.printf("Score: %d --> Explicit: %d\n", (System.currentTimeMillis() - startTime), time);
     }

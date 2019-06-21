@@ -7,8 +7,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ClickFunctions extends BaseFunction {
 
+  /**
+   * This function is clicking element and enables you to manage timeout
+   *
+   * @param element     WebElement, you want to click
+   * @param maxWaitTime max waiting time for element in seconds
+   */
   public void clickOn(WebElement element, long... maxWaitTime) {
-    log.debug("Click element {" + getElementInfo(element) + "}");
+    log.debug("Click element {" + getElementInfo(element) + "}.");
     long timeOutInSeconds = maxWaitTime.length > 0 ? maxWaitTime[0] : DEFAULT_WEB_DRIVER_WAIT_TIME;
     changeImplicitlyWaitTime(0);
     new WebDriverWait(driver.getDriver(), timeOutInSeconds).until(ExpectedConditions.elementToBeClickable(element));
@@ -23,8 +29,14 @@ public class ClickFunctions extends BaseFunction {
     }
   }
 
+  /**
+   * This function is clicking element and enables you to manage timeout
+   *
+   * @param by          locator to WebElement, you want to click
+   * @param maxWaitTime max waiting time for element in seconds
+   */
   public void clickOn(By by, long... maxWaitTime) {
-    log.debug("Wait for element {" + by + "} to be clickable, then click it");
+    log.debug("Click element {" + by + "}.");
     long timeOutInSeconds = maxWaitTime.length > 0 ? maxWaitTime[0] : DEFAULT_WEB_DRIVER_WAIT_TIME;
     changeImplicitlyWaitTime(0);
     new WebDriverWait(driver.getDriver(), timeOutInSeconds).until(ExpectedConditions.elementToBeClickable(by));
@@ -51,12 +63,12 @@ public class ClickFunctions extends BaseFunction {
             .executeScript("arguments[0].click()", driver.getDriver().findElement(by));
   }
 
-  public void clickAndWaitForElement(WebElement element, By locator, long... maxWaitTime) {
+  public void clickAndWaitForElement(WebElement element, By by, long... maxWaitTime) {
     try {
       clickOn(element, maxWaitTime);
       changeImplicitlyWaitTime(0);
       new WebDriverWait(driver.getDriver(), DEFAULT_WEB_DRIVER_WAIT_TIME).until(ExpectedConditions
-              .visibilityOfElementLocated(locator));
+              .visibilityOfElementLocated(by));
       turnOnImplicitlyWaitTime();
     } catch (TimeoutException e) {
       log.error(e.toString());
@@ -68,7 +80,6 @@ public class ClickFunctions extends BaseFunction {
     try {
       new Actions(driver.getDriver()).moveToElement(element).build().perform();
       clickOn(by, maxWaitTime);
-      waitForPageLoading();
     } catch (WebDriverException e) {
       log.error(e.toString());
       throw new RuntimeException(e.toString());
@@ -79,7 +90,6 @@ public class ClickFunctions extends BaseFunction {
     try {
       new Actions(driver.getDriver()).moveToElement(elementToMove).build().perform();
       clickOn(elementTClick, maxWaitTime);
-      waitForPageLoading();
     } catch (WebDriverException e) {
       log.error(e.toString());
       throw new RuntimeException(e.toString());
@@ -87,12 +97,12 @@ public class ClickFunctions extends BaseFunction {
   }
 
   public void clickNTimes(WebElement element, int number, long... maxWaitTime) {
-    log.debug("Click element {" + number + "} times {" + getElementInfo(element) + "}");
+    log.debug("Click element {" + number + "} times {" + getElementInfo(element) + "}.");
     for (int i = 0; i < number; i++) clickOn(element, maxWaitTime);
   }
 
   public void doubleClick(WebElement element) {
-    log.debug("Double click element {" + getElementInfo(element) + "}");
+    log.debug("Double click element {" + getElementInfo(element) + "}.");
     new Actions(driver.getDriver()).doubleClick(element).perform();
   }
 

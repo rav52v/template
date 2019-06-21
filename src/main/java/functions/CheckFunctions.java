@@ -14,13 +14,13 @@ public class CheckFunctions extends BaseFunction {
 
   public boolean isElementDisplayed(WebElement element, int maxWaitTimeSec) {
     log.debug("Check if element {" + getElementInfo(element) + "} is displayed, max waiting time {" + maxWaitTimeSec
-            + " seconds}");
+            + " seconds}.");
     changeImplicitlyWaitTime(0);
     try {
       new WebDriverWait(driver.getDriver(), maxWaitTimeSec).until(ExpectedConditions.visibilityOf(element));
       return true;
     } catch (TimeoutException e) {
-      log.debug("Element is not displayed");
+      log.debug("Element is not displayed.");
       return false;
     } finally {
       turnOnImplicitlyWaitTime();
@@ -28,13 +28,13 @@ public class CheckFunctions extends BaseFunction {
   }
 
   public boolean isElementFound(By locator, int maxWaitTimeSec) {
-    log.debug("Check if element {" + locator + "} is found, max waiting time {" + maxWaitTimeSec + " seconds}");
+    log.debug("Check if element {" + locator + "} is found, max waiting time {" + maxWaitTimeSec + " seconds}.");
     changeImplicitlyWaitTime(0);
     try {
       new WebDriverWait(driver.getDriver(), maxWaitTimeSec).until(ExpectedConditions.presenceOfElementLocated(locator));
       return true;
     } catch (TimeoutException e) {
-      log.debug("Found not element");
+      log.debug("Found not element.");
       return false;
     } finally {
       turnOnImplicitlyWaitTime();
@@ -43,13 +43,13 @@ public class CheckFunctions extends BaseFunction {
 
   public boolean isElementFound(WebElement element, int maxWaitTimeSec) {
     log.debug("Check if element {" + getElementInfo(element)
-            + "} is found, max waiting time {" + maxWaitTimeSec + " seconds}");
+            + "} is found, max waiting time {" + maxWaitTimeSec + " seconds}.");
     changeImplicitlyWaitTime(0);
     try {
       new WebDriverWait(driver.getDriver(), maxWaitTimeSec).until(ExpectedConditions.visibilityOf(element));
       return true;
     } catch (TimeoutException e) {
-      log.debug("Found not element");
+      log.debug("Found not element.");
       return false;
     } finally {
       turnOnImplicitlyWaitTime();
@@ -57,14 +57,14 @@ public class CheckFunctions extends BaseFunction {
   }
 
   public boolean isElementFound(List<WebElement> element, int maxWaitTimeMillis) {
-    log.debug("Check if element is found (using list), max waiting time {" + maxWaitTimeMillis + " milliseconds}");
+    log.debug("Check if element is found (using list), max waiting time {" + maxWaitTimeMillis + " milliseconds}.");
     changeImplicitlyWaitTime(maxWaitTimeMillis);
     if (!element.isEmpty()) {
       turnOnImplicitlyWaitTime();
       return true;
     } else {
       turnOnImplicitlyWaitTime();
-      log.debug("Found not element");
+      log.debug("Found not element.");
       return false;
     }
   }
@@ -96,14 +96,14 @@ public class CheckFunctions extends BaseFunction {
   }
 
   public boolean nElementsAreDisplayed(By locator, int numberOfExpectedElements) {
-    log.debug("Check if {" + numberOfExpectedElements + "} elements {" + locator + "} are displayed");
+    log.debug("Check if {" + numberOfExpectedElements + "} elements {" + locator + "} are displayed.");
     changeImplicitlyWaitTime(0);
     try {
       new WebDriverWait(driver.getDriver(), DEFAULT_WEB_DRIVER_WAIT_TIME).until(
               ExpectedConditions.numberOfElementsToBe(locator, numberOfExpectedElements));
       return true;
     } catch (TimeoutException e) {
-      log.debug("Wrong number of elements is displayed");
+      log.debug("Wrong number of elements is displayed.");
       return false;
     } finally {
       turnOnImplicitlyWaitTime();
@@ -114,13 +114,13 @@ public class CheckFunctions extends BaseFunction {
     changeImplicitlyWaitTime(0);
     try {
       new WebDriverWait(driver.getDriver(), maxWaitTimeInSec)
-              .withMessage("Page title actual: {" + driver.getDriver().getTitle() + "} expected: {" + title + "}")
+              .withMessage("Page title actual: {" + driver.getDriver().getTitle() + "} expected: {" + title + "}.")
               .until(ExpectedConditions.titleContains(title));
       return true;
     } catch (TimeoutException e) {
-      log.error("Page title actual: {" + driver.getDriver().getTitle() + "} expected: {" + title + "}");
+      log.error("Page title actual: {" + driver.getDriver().getTitle() + "} expected: {" + title + "}.");
       log.debug("Probably page was loading too long, page load time is: {"
-              + getConfigService().getLongProperty("General.pageLoadTime") + "}");
+              + getConfigService().getLongProperty("General.pageLoadTime") + "}.");
       return false;
     } finally {
       turnOnImplicitlyWaitTime();

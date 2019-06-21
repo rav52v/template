@@ -1,5 +1,6 @@
 package main.java.utils;
 
+import main.java.enums.Packages;
 import org.apache.logging.log4j.LogManager;
 
 import javax.swing.*;
@@ -27,12 +28,7 @@ public class Gui extends JPanel {
 
   private Gui() {
     LogManager.getLogger().info("Opening Gui.");
-    try {
-      thumbs = new File(new File("").getCanonicalFile().toPath().toAbsolutePath().toString()
-              + "/thumbs").listFiles();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    thumbs = new File(Packages.THUMBS.getPackagePath()).listFiles();
   }
 
   public static boolean isGuiCreated() {
