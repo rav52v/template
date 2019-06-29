@@ -16,7 +16,7 @@ import java.util.TimeZone;
 
 import static main.java.utils.ConfigService.getConfigService;
 
-public class App {
+public class YoutubeApp {
   public static void main(String[] args) {
     long start = System.currentTimeMillis();
     Logger log = LogManager.getLogger();
