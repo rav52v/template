@@ -76,7 +76,7 @@ public class BrowserFunctions extends BaseFunction {
     waitForPageLoading();
   }
 
-  public void closeDriver(int...delayMillis) {
+  public void closeDriver(int... delayMillis) {
     mainWindowHandle = null;
     driver.afterTest(delayMillis);
   }
@@ -92,8 +92,8 @@ public class BrowserFunctions extends BaseFunction {
 
   /**
    * @param element   WebElement, we want to see in view port
-   * @param smooth    Set 'true' for slow animation
    * @param alignment One of "start", "center", "end", or "nearest"
+   * @param smooth    Set 'true' for slow animation
    */
   public void scrollIntoView(WebElement element, String alignment, boolean... smooth) {
     ((JavascriptExecutor) driver.getDriver()).executeScript(

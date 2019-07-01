@@ -20,7 +20,7 @@ public class App {
     Logger log = LogManager.getLogger();
     int status = 0;
     try {
-      Gui.getInstance().openJPanel();
+//      Gui.getInstance().openJPanel();
 
 
 //    YoutubePlaylist yt = new YoutubePlaylist();
@@ -42,7 +42,7 @@ public class App {
         ScreenRecorderService.getScreenRecorder().stopRecordingScreen();
       Driver.getDriverInstance().afterTest();
       log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
-      Gui.getInstance().showLogInfo();
+//      Gui.getInstance().showLogInfo();
       System.exit(status);
     }
   }

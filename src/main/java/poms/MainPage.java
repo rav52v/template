@@ -1,9 +1,12 @@
 package main.java.poms;
 
+import main.java.utils.Driver;
+import main.java.utils.ExplicitWaits;
 import main.java.utils.PageBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -22,10 +25,13 @@ public class MainPage extends PageBase {
   @FindBy(css = "body > p:nth-child(2) > a > img")
   private WebElement sample4;
 
+  @FindBy(css = "#main > input[type=text]:nth-child(16)")
+  private WebElement sample5;
+
   private By cloud = By.cssSelector("#latest-ul > li.latest-doodle.on > div > div > a > img");
 
   public MainPage() {
-    firstMethod();
+    secondMethod();
   }
 
   private void firstMethod() {
@@ -45,14 +51,11 @@ public class MainPage extends PageBase {
   }
 
   private void secondMethod() {
-    browser.openPage("https://www.w3schools.com/howto/tryit.asp?filename=tryhow_html_download_link2");
-
-    browser.switchToIFrame("iframeResult");
-    click.clickOn(sample4);
-    browser.switchBackFromIFrame();
-    click.clickOn(sample3);
-
-    browser.closeDriver(1000);
+    browser.openPage("https://www.w3schools.com/html/html_form_input_types.asp");
+    browser.scrollIntoView(sample5,"center", true);
+    new WebDriverWait(Driver.getDriverInstance().getDriver(), 60)
+            .until(ExplicitWaits.textToBePresentInField(sample5, "dupa"));
+    browser.closeDriver();
   }
 
   private void thirdMethod() {
