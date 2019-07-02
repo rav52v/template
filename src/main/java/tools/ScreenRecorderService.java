@@ -22,7 +22,7 @@ public class ScreenRecorderService {
 
   private ScreenRecorder screenRecorder;
   private Logger log = LogManager.getLogger();
-  private final String PATH_TO_OUTPUT_FOLDER = Packages.OUTPUT_FOLDER.getPackagePath();
+  private final String PATH_TO_OUTPUT_FOLDER = Packages.OUTPUT_PACKAGE.getPackagePath();
 
   private ScreenRecorderService(){
   }

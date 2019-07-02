@@ -20,8 +20,8 @@ import static main.java.utils.ConfigService.getConfigService;
 abstract class BaseFunction {
   Driver driver;
   final Logger log = LogManager.getLogger();
-  final String PATH_TO_INPUT_FOLDER = Packages.INPUT_FOLDER.getPackagePath();
-  final String PATH_TO_OUTPUT_FOLDER = Packages.OUTPUT_FOLDER.getPackagePath();
+  final String PATH_TO_INPUT_FOLDER = Packages.INPUT_PACKAGE.getPackagePath();
+  final String PATH_TO_OUTPUT_FOLDER = Packages.OUTPUT_PACKAGE.getPackagePath();
   final long DEFAULT_WEB_DRIVER_WAIT_TIME = getConfigService().getLongProperty("general.webDriverWait");
 
   BaseFunction() {

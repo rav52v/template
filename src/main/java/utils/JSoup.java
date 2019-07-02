@@ -39,7 +39,7 @@ public class JSoup {
     List<List<String>> values = new ArrayList<>();
     for (Element row : doc.select(cssRows)) values.add(new ArrayList<>(row.select(cssRecordsInRow).eachText()));
     ExcelService.getExcelService().createTable(
-            doc.select(cssColumnTitles).eachText(), values, fileName, Packages.OUTPUT_FOLDER);
+            doc.select(cssColumnTitles).eachText(), values, fileName, Packages.OUTPUT_PACKAGE);
     LogManager.getLogger().info("Exported rows: {" + values.size() + "}.");
   }
 }

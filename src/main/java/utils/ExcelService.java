@@ -50,7 +50,7 @@ public class ExcelService {
    * @param columns   List of column names
    * @param values    List containing List of values for each column
    * @param fileName  file name, e.g. "My sheet"
-   * @param directory e.g. Packages.STATISTICS_FOLDER
+   * @param directory e.g. Packages.STATISTICS_PACKAGE
    */
   public void createTable(List<String> columns, List<List<String>> values, String fileName, Packages directory) {
     workbook = new XSSFWorkbook();
@@ -83,7 +83,7 @@ public class ExcelService {
    *
    * @param regexColumnName name of new column we want to check if exist
    * @param fileName        e.g. my_file
-   * @param directory       e.g. Packages.STATISTICS_FOLDER
+   * @param directory       e.g. Packages.STATISTICS_PACKAGE
    * @return true if column with given name exists, or false if not
    */
   public boolean isColumnCreated(String regexColumnName, String fileName, Packages directory) {
@@ -107,7 +107,7 @@ public class ExcelService {
    *
    * @param columnName name of new column
    * @param fileName   e.g. my_file
-   * @param directory  e.g. Packages.STATISTICS_FOLDER
+   * @param directory  e.g. Packages.STATISTICS_PACKAGE
    */
   public void addColumn(String columnName, String fileName, Packages directory) {
     String path = directory.getPackagePath() + fileName + ".xlsx";
@@ -138,7 +138,7 @@ public class ExcelService {
    * @param regexColumnName name of column, we want to add record
    * @param value           new value of cell
    * @param fileName        e.g. my_file
-   * @param directory       e.g. Packages.STATISTICS_FOLDER
+   * @param directory       e.g. Packages.STATISTICS_PACKAGE
    */
   public void addValueInFirstEmptyCellOfColumn(String regexColumnName, String value, String fileName, Packages directory) {
     String path = directory.getPackagePath() + fileName + ".xlsx";
@@ -216,7 +216,7 @@ public class ExcelService {
    * @param rowIndex    number or row (starts from 0)
    * @param columnIndex number or column (starts from 0)
    * @param fileName    e.g. my_file
-   * @param directory   e.g. Packages.STATISTICS_FOLDER
+   * @param directory   e.g. Packages.STATISTICS_PACKAGE
    * @return true if cell is empty, or false if cell has value
    */
   private boolean isCellEmpty(int rowIndex, int columnIndex, String fileName, Packages directory) {
@@ -241,7 +241,7 @@ public class ExcelService {
   /**
    * @param rowIndex  number or row (starts from 0)
    * @param fileName  e.g. my_file
-   * @param directory e.g. Packages.STATISTICS_FOLDER
+   * @param directory e.g. Packages.STATISTICS_PACKAGE
    * @return true if row is created, or no if row does not exist
    */
   private boolean isRowCreated(int rowIndex, String fileName, Packages directory) {

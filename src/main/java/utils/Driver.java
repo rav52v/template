@@ -92,7 +92,7 @@ public class Driver {
     chromeOptions.addArguments("--disable-infobars");
     chromeOptions.setHeadless(headless);
     Map<String, Object> prefs = new HashMap<>();
-    prefs.put("download.default_directory", Packages.DOWNLOAD_FOLDER.getPackagePath());
+    prefs.put("download.default_directory", Packages.DOWNLOAD_PACKAGE.getPackagePath());
     chromeOptions.setExperimentalOption("prefs", prefs);
     if (headless) {
       chromeOptions.addArguments("--window-size=1500,4000");

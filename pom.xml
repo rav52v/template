@@ -76,6 +76,9 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <archive>
+                        <manifestEntries>
+                            <Multi-Release>true</Multi-Release>
+                        </manifestEntries>
                         <manifest>
                             <mainClass>main.java.runnable.App</mainClass>
                         </manifest>

@@ -28,7 +28,7 @@ public class YoutubeApp {
       YoutubePlaylist yt = new YoutubePlaylist();
       List<String> links = yt.getLinks();
 //    StatisticsService.getStatisticsService().getAvgNumericValueFromColumn("https://www.youtube.com/?gl=PL&hl=pl", "page_load_times");
-//    YoutubeDownloaderService.getYoutubeService().downloadVideo("https://www.youtube.com/watch?v=HkuKHwetV6Q", Packages.OUTPUT_FOLDER.getPackagePath());
+//    YoutubeDownloaderService.getYoutubeService().downloadVideo("https://www.youtube.com/watch?v=HkuKHwetV6Q", Packages.OUTPUT_PACKAGE.getPackagePath());
 
 
 

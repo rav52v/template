@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public enum Packages {
-  OUTPUT_FOLDER("outputFolder"),
-  INPUT_FOLDER("inputFolder"),
-  DOWNLOAD_FOLDER("downloadFolder"),
-  THUMBS("thumbs"),
-  STATISTICS_FOLDER("stats");
+  OUTPUT_PACKAGE("_output"),
+  INPUT_PACKAGE("_input"),
+  DOWNLOAD_PACKAGE("_downloads"),
+  THUMBS("_thumbs"),
+  STATISTICS_PACKAGE("_stats");
 
   private String folder;
 

@@ -25,17 +25,17 @@ public class StatisticsService {
     String regexMatcher = "((https?)?:[/]{2}(www[.])?)|([.]((pl)|(com)|(org)|(de)|(uk)|(info)|(ru)|(nl)|(cn)|(eu)|(gb)|(tv)|(jp)|(hk)|(es)|(it)|(fr))[/].*)";
     String regexAddLink = "(?<=((pl)|(com)|(org)|(de)|(uk)|(info)|(ru)|(nl)|(cn)|(eu)|(gb)|(tv)|(jp)|(hk)|(es)|(it)|(fr)))[/].*";
 
-    if (!Packages.STATISTICS_FOLDER.isFileInDirectory(fileName + ".xlsx"))
+    if (!Packages.STATISTICS_PACKAGE.isFileInDirectory(fileName + ".xlsx"))
       ExcelService.getExcelService().createTable(
-              new ArrayList<>(), new ArrayList<>(), fileName, Packages.STATISTICS_FOLDER);
+              new ArrayList<>(), new ArrayList<>(), fileName, Packages.STATISTICS_PACKAGE);
 
-    if (!ExcelService.getExcelService().isColumnCreated(link.replaceAll(regexMatcher, ".*"), fileName, Packages.STATISTICS_FOLDER)) {
-      ExcelService.getExcelService().addColumn(link.replaceAll(regexAddLink, "/"), fileName, Packages.STATISTICS_FOLDER);
+    if (!ExcelService.getExcelService().isColumnCreated(link.replaceAll(regexMatcher, ".*"), fileName, Packages.STATISTICS_PACKAGE)) {
+      ExcelService.getExcelService().addColumn(link.replaceAll(regexAddLink, "/"), fileName, Packages.STATISTICS_PACKAGE);
       log.debug("Statistics - {" + fileName + ".xlsx}: created new column: {" + link + "}.");
     }
 
     ExcelService.getExcelService().addValueInFirstEmptyCellOfColumn(
-            link.replaceAll(regexMatcher, ".*"), value, fileName, Packages.STATISTICS_FOLDER);
+            link.replaceAll(regexMatcher, ".*"), value, fileName, Packages.STATISTICS_PACKAGE);
     log.debug("Statistics - {" + fileName + ".xlsx}: added new value: {" + value + "} in column {" + link + "}.");
   }
 
@@ -52,7 +52,7 @@ public class StatisticsService {
   private ArrayList<Long> getSortedArrayFromNumericColumn(String regexColumnName, String fileName) {
     ArrayList<Long> sorted = new ArrayList<>();
     ExcelService.getExcelService().getDataFromColumn(
-            regexColumnName, fileName, Packages.STATISTICS_FOLDER).forEach(e -> sorted.add(Long.parseLong(e)));
+            regexColumnName, fileName, Packages.STATISTICS_PACKAGE).forEach(e -> sorted.add(Long.parseLong(e)));
     Collections.sort(sorted);
     return sorted;
   }
