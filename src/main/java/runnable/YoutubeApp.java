@@ -4,6 +4,7 @@ import main.java.poms.YoutubeDownloadPage;
 import main.java.poms.YoutubePlaylist;
 import main.java.tools.ScreenRecorderService;
 import main.java.utils.Driver;
+import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,13 +16,13 @@ import java.util.TimeZone;
 
 import static main.java.utils.ConfigService.getConfigService;
 
-public class App {
+public class YoutubeApp {
   public static void main(String[] args) {
     long start = System.currentTimeMillis();
     Logger log = LogManager.getLogger();
     int status = 0;
     try {
-//      Gui.getInstance().openJPanel();
+      Gui.getInstance().openJPanel();
 
 
       YoutubePlaylist yt = new YoutubePlaylist();
@@ -43,7 +44,7 @@ public class App {
         ScreenRecorderService.getScreenRecorder().stopRecordingScreen();
       Driver.getDriverInstance().afterTest();
       log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
-//      Gui.getInstance().showLogInfo();
+      Gui.getInstance().showLogInfo();
       System.exit(status);
     }
   }
