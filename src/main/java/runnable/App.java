@@ -1,7 +1,6 @@
 package main.java.runnable;
 
-import main.java.poms.YoutubeDownloadPage;
-import main.java.poms.YoutubePlaylist;
+import main.java.poms.SamplePage;
 import main.java.tools.ScreenRecorderService;
 import main.java.utils.Driver;
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import static main.java.utils.ConfigService.getConfigService;
@@ -24,14 +22,8 @@ public class App {
 //      Gui.getInstance().openJPanel();
 
 
-      YoutubePlaylist yt = new YoutubePlaylist();
-      List<String> links = yt.getLinks();
-//    StatisticsService.getStatisticsService().getAvgNumericValueFromColumn("https://www.youtube.com/?gl=PL&hl=pl", "page_load_times");
-//    YoutubeDownloaderService.getYoutubeService().downloadVideo("https://www.youtube.com/watch?v=HkuKHwetV6Q", Packages.OUTPUT_PACKAGE.getPackagePath());
+      new SamplePage();
 
-
-
-      new YoutubeDownloadPage(links);
 
 
     } catch (Exception e) {

@@ -1,5 +1,7 @@
 package main.java.tools;
 
+import com.github.javafaker.Faker;
+
 import java.util.Random;
 
 public class Generators {
@@ -71,5 +73,9 @@ public class Generators {
     String[] suffix = {"pl", "com", "gf", "cz", "gb", "it", "sk", "tr", "cn", "be", "au", "is", "fr"};
     return String.format("%s@%s.%s", gLower(10), server[random.nextInt(server.length)],
             suffix[random.nextInt(suffix.length)]);
+  }
+
+  public Faker getFaker() {
+    return new Faker();
   }
 }

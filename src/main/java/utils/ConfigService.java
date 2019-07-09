@@ -4,14 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.cfg4j.provider.ConfigurationProvider;
 import org.cfg4j.provider.ConfigurationProviderBuilder;
-import org.cfg4j.source.ConfigurationSource;
-import org.cfg4j.source.context.environment.Environment;
 import org.cfg4j.source.context.environment.ImmutableEnvironment;
 import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;
 import org.cfg4j.source.files.FilesConfigurationSource;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,25 +32,15 @@ public class ConfigService {
   private static ConfigurationProvider configProvider() {
     final String PATH_TO_CONFIG_PACKAGE = "./src/main/resources/config";
     ConfigFilesProvider configFilesProvider = () -> {
-      File[] files = new File[0];
-      try {
-        files = new File(new File("").getCanonicalFile().toPath().toAbsolutePath().toString()
-                + PATH_TO_CONFIG_PACKAGE).listFiles();
-      } catch (IOException e) {
-        log.error("Something went wrong - check path to config package, message: " + e.getMessage() + ".");
-        e.printStackTrace();
-      }
+      File[] files = new File(System.getProperty("user.dir"), PATH_TO_CONFIG_PACKAGE).listFiles();
       ArrayList<Path> paths = new ArrayList<>();
       Arrays.asList(files).forEach(file -> paths.add(file.toPath()));
       return paths;
     };
 
-    ConfigurationSource source = new FilesConfigurationSource(configFilesProvider);
-    Environment env = new ImmutableEnvironment(PATH_TO_CONFIG_PACKAGE);
-
     return new ConfigurationProviderBuilder()
-            .withConfigurationSource(source)
-            .withEnvironment(env)
+            .withConfigurationSource(new FilesConfigurationSource(configFilesProvider))
+            .withEnvironment(new ImmutableEnvironment(PATH_TO_CONFIG_PACKAGE))
             .build();
   }
 
