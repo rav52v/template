@@ -3,6 +3,7 @@ package main.java.runnable;
 import main.java.poms.SamplePage;
 import main.java.tools.ScreenRecorderService;
 import main.java.utils.Driver;
+import main.java.utils.Gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,10 +20,11 @@ public class App {
     Logger log = LogManager.getLogger();
     int status = 0;
     try {
-//      Gui.getInstance().openJPanel();
+      Gui.getInstance().openJPanel();
 
 
       new SamplePage();
+
 
 
 
@@ -35,7 +37,7 @@ public class App {
         ScreenRecorderService.getScreenRecorder().stopRecordingScreen();
       Driver.getDriverInstance().afterTest();
       log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
-//      Gui.getInstance().showLogInfo();
+      Gui.getInstance().showLogInfo();
       System.exit(status);
     }
   }

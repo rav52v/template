@@ -86,6 +86,32 @@ public class BrowserFunctions extends BaseFunction {
             .executeScript("window.scrollBy(arguments[0],arguments[1])", widthToScroll, heightToScroll);
   }
 
+  /**
+   * Scroll to the end of the page
+   */
+  public void scrollBottom() {
+    ((JavascriptExecutor) driver.getDriver())
+            .executeScript("window.scrollTo(0,Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,document.documentElement.clientHeight));");
+  }
+
+  /**
+   * @param speed     more = faster   (20-slow / 1000-fast)
+   * @param intervals breaks between each scroll in milliseconds
+   */
+  public void scrollBottomSlowMotion(int speed, int... intervals) {
+    JavascriptExecutor js = (JavascriptExecutor) driver.getDriver();
+    long pageY = (long) js.executeScript("return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,document.documentElement.clientHeight)");
+    long windowInnerY = (long) js.executeScript("return window.innerHeight");
+
+    for (long i = windowInnerY; i <= pageY; ) {
+      js.executeScript("window.scrollBy(0,arguments[0])", speed);
+      if (intervals.length != 0) sleeper(intervals[0]);
+      i += speed;
+      if (i >= pageY) sleeper(1500);
+      pageY = (long) js.executeScript("return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,document.documentElement.clientHeight)");
+    }
+  }
+
   public void scrollIntoView(WebElement element) {
     ((JavascriptExecutor) driver.getDriver()).executeScript("arguments[0].scrollIntoView()", element);
   }

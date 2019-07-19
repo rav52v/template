@@ -1,7 +1,6 @@
 package main.java.poms;
 
 import main.java.utils.PageBase;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -12,10 +11,10 @@ public class SamplePage extends PageBase {
 
 
   public SamplePage() {
-    browser.openPage("https://www.tutorialspoint.com/");
+    browser.openPage("https://www.youtube.com/playlist?list=PLMC9KNkIncKtPzgY-5rmhvj7fax8fdxoj");
 
-    input.sendKeysToElement(element, "dupa", Keys.valueOf("ENTER"));
 
-    browser.closeDriver(1000);
+
+    browser.closeDriver(0);
   }
 }
