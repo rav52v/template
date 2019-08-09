@@ -57,4 +57,16 @@ public enum Packages {
     for (File file : files) if (file.getName().equals(fileName)) return true;
     return false;
   }
+
+  /**
+   * @param fileName e.g. sample_file.txt
+   */
+  public void deleteFileFromDirectory(String fileName) {
+    try {
+      new File(new File("").getCanonicalFile().toPath().toAbsolutePath().toString()
+              + File.separator + folder + File.separator + fileName).delete();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }
