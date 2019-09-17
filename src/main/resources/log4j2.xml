@@ -3,7 +3,7 @@
 
     <Properties>
         <Property name="LOG_FILE_PATTERN">%d [%t] %-5level %msg%n</Property>
-        <Property name="LOG_CONSOLE_PATTERN">%d [%t] %-5level [%l] %msg%n</Property>
+        <Property name="LOG_CONSOLE_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSSS} [%t] %-5level [%l] %msg%n</Property>
     </Properties>
 
     <Appenders>

@@ -95,7 +95,7 @@ public class GetFunctions extends BaseFunction {
    * @param regex       text value to find - regex allowed
    * @return WebElement containing given regex value
    */
-  public WebElement getElementContaingRegexValue(List<WebElement> elementList, String regex) {
+  public WebElement getElementContainingRegexValue(List<WebElement> elementList, String regex) {
     if (elementList.isEmpty()) {
       log.error("Given list is empty.");
       return null;

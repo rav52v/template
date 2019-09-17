@@ -6,6 +6,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import static main.java.utils.ConfigService.getConfigService;
@@ -165,6 +167,23 @@ public class BrowserFunctions extends BaseFunction {
       } finally {
         turnOnImplicitlyWaitTime();
       }
+    }
+  }
+
+  public static void cleanApps() {
+    String line;
+    try {
+      Process p = Runtime.getRuntime().exec(System.getenv("windir") + "\\system32\\" + "tasklist.exe");
+      BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+      while ((line = input.readLine()) != null) {
+        if (line.contains("chromedriver.exe")) {
+          Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+        } else if (line.contains("chrome.exe")) {
+          Runtime.getRuntime().exec("taskkill /F /IM chrome.exe");
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 }

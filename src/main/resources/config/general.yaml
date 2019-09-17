@@ -4,5 +4,6 @@ general:
   webDriverWait: 5
   pageLoadTime: 60
   searchLinkAddress: https://www.google.com/
-  headless: false
+  headless: true
   recordScreen: false
+  close_drivers_before_start: false

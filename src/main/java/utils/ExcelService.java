@@ -253,4 +253,26 @@ public class ExcelService {
     }
     return workbook.getSheetAt(0).getRow(rowIndex) != null;
   }
+
+  public void addValueToCell(String value, int rowIndex, int columnIndex, String fileName) {
+    String path = fileName + ".xlsx";
+    try {
+      workbook = new XSSFWorkbook(new FileInputStream(path));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    row = workbook.getSheetAt(0).getRow(rowIndex) != null ? workbook.getSheetAt(0).getRow(rowIndex)
+            : workbook.getSheetAt(0).createRow(rowIndex);
+
+    XSSFCell cell = row.createCell(columnIndex);
+    cell.setCellValue(value);
+
+    try {
+      FileOutputStream out = new FileOutputStream(new File(fileName + ".xlsx"));
+      workbook.write(out);
+      out.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

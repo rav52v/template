@@ -5,10 +5,13 @@ import main.java.enums.Packages;
 import main.java.tools.ScreenRecorderService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -98,7 +101,6 @@ public class Driver {
       chromeOptions.addArguments("--window-size=1500,4000");
       chromeOptions.addArguments("--disable-gpu");
     } else chromeOptions.addArguments("--start-maximized");
-
     return chromeOptions;
   }
 

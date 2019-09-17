@@ -1,5 +1,6 @@
 package main.java.runnable;
 
+import main.java.functions.BrowserFunctions;
 import main.java.poms.SamplePage;
 import main.java.tools.ScreenRecorderService;
 import main.java.utils.Driver;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static main.java.functions.BrowserFunctions.cleanApps;
 import static main.java.utils.ConfigService.getConfigService;
 
 public class App {
@@ -19,13 +21,11 @@ public class App {
     long start = System.currentTimeMillis();
     Logger log = LogManager.getLogger();
     int status = 0;
+    if (getConfigService().getBooleanProperty("general.close_drivers_before_start")) cleanApps();
     try {
       Gui.getInstance().openJPanel();
 
-
       new SamplePage();
-
-
 
 
     } catch (Exception e) {
