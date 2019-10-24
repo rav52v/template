@@ -23,7 +23,7 @@ public class App {
     int status = 0;
     if (getConfigService().getBooleanProperty("general.close_drivers_before_start")) cleanApps();
     try {
-      Gui.getInstance().openJPanel();
+//      Gui.getInstance().openJPanel();
 
       new SamplePage();
 
@@ -37,7 +37,7 @@ public class App {
         ScreenRecorderService.getScreenRecorder().stopRecordingScreen();
       Driver.getDriverInstance().afterTest();
       log.info("Program has finished. Operation took {" + calculatePastTime(start) + "}.");
-      Gui.getInstance().showLogInfo();
+//      Gui.getInstance().showLogInfo();
       System.exit(status);
     }
   }

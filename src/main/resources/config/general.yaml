@@ -1,9 +1,9 @@
 general:
   linkAddress: about:blank
-  implicitlyWaitTime: 8
+  implicitlyWaitTime: 2
   webDriverWait: 5
   pageLoadTime: 60
   searchLinkAddress: https://www.google.com/
-  headless: true
+  headless: false
   recordScreen: false
   close_drivers_before_start: false

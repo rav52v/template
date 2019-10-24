@@ -18,13 +18,13 @@ public class InputFunctions extends BaseFunction {
    * @param value             CharSequence values
    */
   public void clickElementAndSendKeysToAnother(WebElement elementToClick, WebElement elementToSendKeys, CharSequence... value) {
-    log.debug("Click element {" + getElementInfo(elementToClick) + "}...");
+    log.debug("Click element {" + getElInfo(elementToClick) + "}...");
     new Actions(driver.getDriver()).moveToElement(elementToClick).click().sendKeys(value).perform();
     sendKeysToElement(elementToSendKeys, value);
   }
 
   public void sendKeysToElement(WebElement element, CharSequence... value) {
-    log.debug("Send keys {" + Arrays.toString(value) + "} to element {" + getElementInfo(element) + "}.");
+    log.debug("Send keys {" + Arrays.toString(value) + "} to element {" + getElInfo(element) + "}.");
     try {
       element.clear();
     } catch (Exception ignored) {
@@ -33,7 +33,7 @@ public class InputFunctions extends BaseFunction {
   }
 
   public void sendKeysToElementUsingClipboard(WebElement element, String value) {
-    log.debug("Send keys (using clipboard) {" + value + "} to element {" + getElementInfo(element) + "}.");
+    log.debug("Send keys (using clipboard) {" + value + "} to element {" + getElInfo(element) + "}.");
     try {
       element.clear();
     } catch (Exception ignored) {

@@ -14,7 +14,7 @@ public class ClickFunctions extends BaseFunction {
    * @param maxWaitTime max waiting time for element in seconds
    */
   public void clickOn(WebElement element, long... maxWaitTime) {
-    log.debug("Click element {" + getElementInfo(element) + "}.");
+    log.debug("Click element {" + getElInfo(element) + "}.");
     long timeOutInSeconds = maxWaitTime.length > 0 ? maxWaitTime[0] : DEFAULT_WEB_DRIVER_WAIT_TIME;
     changeImplicitlyWaitTime(0);
     new WebDriverWait(driver.getDriver(), timeOutInSeconds).until(ExpectedConditions.elementToBeClickable(element));
@@ -53,7 +53,7 @@ public class ClickFunctions extends BaseFunction {
   }
 
   public void clickUsingJavaScript(WebElement element) {
-    log.debug("Click element {" + getElementInfo(element) + "} using JavaScript.");
+    log.debug("Click element {" + getElInfo(element) + "} using JavaScript.");
     ((JavascriptExecutor) driver.getDriver()).executeScript("arguments[0].click()", element);
   }
 
@@ -97,12 +97,12 @@ public class ClickFunctions extends BaseFunction {
   }
 
   public void clickNTimes(WebElement element, int number, long... maxWaitTime) {
-    log.debug("Click element {" + number + "} times {" + getElementInfo(element) + "}.");
+    log.debug("Click element {" + number + "} times {" + getElInfo(element) + "}.");
     for (int i = 0; i < number; i++) clickOn(element, maxWaitTime);
   }
 
   public void doubleClick(WebElement element) {
-    log.debug("Double click element {" + getElementInfo(element) + "}.");
+    log.debug("Double click element {" + getElInfo(element) + "}.");
     new Actions(driver.getDriver()).doubleClick(element).perform();
   }
 

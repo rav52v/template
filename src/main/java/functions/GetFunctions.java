@@ -13,7 +13,7 @@ import java.util.List;
 public class GetFunctions extends BaseFunction {
 
   public String getTextFromElement(WebElement element) {
-    log.debug("Get text from element {" + getElementInfo(element) + "}.");
+    log.debug("Get text from element {" + getElInfo(element) + "}.");
     String value = element.getText();
 
     value = value == null || value.isEmpty() ? element.getAttribute("value").trim() : value.trim();
@@ -26,7 +26,7 @@ public class GetFunctions extends BaseFunction {
 
   public String getTextFromParentElement(WebElement element) {
     element = element.findElement(By.xpath("./.."));
-    log.debug("Get text from element {" + getElementInfo(element) + "}.");
+    log.debug("Get text from element {" + getElInfo(element) + "}.");
     String value = element.getText();
 
     value = value == null || value.isEmpty() ? element.getAttribute("value").trim() : value.trim();
@@ -46,7 +46,7 @@ public class GetFunctions extends BaseFunction {
   }
 
   public String searchElementInElementAndGetText(WebElement element, By by) {
-    log.debug("Search element located By {" + by + "} in element {" + getElementInfo(element) + "} and get text.");
+    log.debug("Search element located By {" + by + "} in element {" + getElInfo(element) + "} and get text.");
     String result = "";
     for (int i = 0; i < 5; i++) {
       try {
@@ -60,7 +60,7 @@ public class GetFunctions extends BaseFunction {
         }
         if (i == 4) {
           result = "";
-          log.error("Element {" + getElementInfo(element) + "} is stale, tried 4 times.");
+          log.error("Element {" + getElInfo(element) + "} is stale, tried 4 times.");
         }
       }
     }
@@ -69,7 +69,7 @@ public class GetFunctions extends BaseFunction {
 
   public String searchElementInElementAndGetAttribute(WebElement element, By by, String attributeName) {
     log.debug("Search element located By {" + by + "} in element {"
-            + getElementInfo(element) + "} and get attribute {" + attributeName + "}.");
+            + getElInfo(element) + "} and get attribute {" + attributeName + "}.");
     String result = "";
     for (int i = 0; i < 5; i++) {
       try {
@@ -79,7 +79,7 @@ public class GetFunctions extends BaseFunction {
         sleeper(500);
         if (i == 4) {
           result = "";
-          log.error("Element {" + getElementInfo(element) + "} is stale, tried 4 times.");
+          log.error("Element {" + getElInfo(element) + "} is stale, tried 4 times.");
         }
       }
     }

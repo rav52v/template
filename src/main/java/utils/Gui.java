@@ -66,15 +66,15 @@ public class Gui extends JPanel {
     myPanel.setFont(new Font("Arial", Font.PLAIN, 14));
     myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
 
-    myPanel.add(new Label("email:"));
+    myPanel.add(new JLabel("email:"));
     myPanel.add(emailField);
-    myPanel.add(new Label("password:"));
+    myPanel.add(new JLabel("password:"));
     myPanel.add(passwordField);
-    myPanel.add(new Label("link:"));
+    myPanel.add(new JLabel("link:"));
     myPanel.add(searchLinkField);
-    myPanel.add(new Label("file name:"));
+    myPanel.add(new JLabel("file name:"));
     myPanel.add(fileNameField);
-    myPanel.add(new Label("sampleInt"));
+    myPanel.add(new JLabel("sampleInt"));
     myPanel.add(limitField);
     headlessCheckBox.addActionListener(e -> {
       if (!headlessCheckBox.isSelected()) headlessCheckBox.setText("headless (suggested only for debugging!)");

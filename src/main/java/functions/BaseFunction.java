@@ -69,7 +69,7 @@ abstract class BaseFunction {
     sleeper(500);
   }
 
-  String getElementInfo(WebElement element) {
+  String getElInfo(WebElement element) {
     return (element.toString()).replaceAll("(^.*-> )|(]$)", "");
   }
 

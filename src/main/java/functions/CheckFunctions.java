@@ -13,7 +13,7 @@ import static main.java.utils.ConfigService.getConfigService;
 public class CheckFunctions extends BaseFunction {
 
   public boolean isElementDisplayed(WebElement element, int maxWaitTimeSec) {
-    log.debug("Check if element {" + getElementInfo(element) + "} is displayed, max waiting time {" + maxWaitTimeSec
+    log.debug("Check if element {" + getElInfo(element) + "} is displayed, max waiting time {" + maxWaitTimeSec
             + " seconds}.");
     changeImplicitlyWaitTime(0);
     try {
@@ -42,7 +42,7 @@ public class CheckFunctions extends BaseFunction {
   }
 
   public boolean isElementFound(WebElement element, int maxWaitTimeSec) {
-    log.debug("Check if element {" + getElementInfo(element)
+    log.debug("Check if element {" + getElInfo(element)
             + "} is found, max waiting time {" + maxWaitTimeSec + " seconds}.");
     changeImplicitlyWaitTime(0);
     try {

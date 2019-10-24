@@ -36,7 +36,7 @@ public class FileFunctions extends BaseFunction {
    * @param element  element, you want to get screenshot
    */
   public void captureScreenshotOfElement(String fileName, WebElement element) {
-    log.debug("Capture image of element {" + getElementInfo(element) + "}");
+    log.debug("Capture image of element {" + getElInfo(element) + "}");
     File target = new File(PATH_TO_OUTPUT_FOLDER + fileName + ".png");
     if (target.exists()) target.delete();
     File screen = ((TakesScreenshot) driver.getDriver()).getScreenshotAs(OutputType.FILE);
